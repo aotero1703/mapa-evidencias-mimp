@@ -396,8 +396,9 @@ function tipShow(btn,L,e){
   tip.hidden=false;
   if(e)tipMove(e);else{const rc=btn.getBoundingClientRect();place(rc.right,rc.top)}
 }
-function place(x,y){const tip=$('tip'),w=tip.offsetWidth,h=tip.offsetHeight,g=16;
-  let L=x+g,T=y+g;if(L+w>innerWidth-8)L=x-w-g;if(L<8)L=8;if(T+h>innerHeight-8)T=y-h-g;if(T<8)T=8;tip.style.left=L+'px';tip.style.top=T+'px'}
+document.body.appendChild($('tip'));
+function place(x,y){const tip=$('tip'),w=tip.offsetWidth,h=tip.offsetHeight,g=16,top=(document.querySelector('.site-header')?.getBoundingClientRect().bottom||0)+8;
+  let L=x+g,T=y+g;if(L+w>innerWidth-8)L=x-w-g;if(L<8)L=8;if(T+h>innerHeight-8)T=y-h-g;if(T<top)T=top;tip.style.left=L+'px';tip.style.top=T+'px'}
 function tipMove(e){if(!$('tip').hidden)place(e.clientX,e.clientY)}
 function tipHide(){$('tip').hidden=true}
 addEventListener('scroll',tipHide,{passive:true});
