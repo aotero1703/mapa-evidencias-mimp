@@ -98,7 +98,8 @@ button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{ou
 
 /* matriz */
 .mapscroll{overflow-x:auto;border-top:1px solid var(--line)}
-table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1040px;font-size:.86rem}
+.wrap.wide{max-width:1520px}
+table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1240px;font-size:.9rem}
 .egm th,.egm td{border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
 .egm th:last-child,.egm td:last-child{border-right:0}
 .egm thead tr.lv th{font-family:var(--f-head);font-size:.8rem;color:#fff;padding:9px 6px;text-align:center}
@@ -109,11 +110,11 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1040px;
 .egm thead tr.sb th:first-child{text-align:left;padding-left:16px}
 .egm tr.tem th{text-align:left;font-family:var(--f-head);font-size:.92rem;color:var(--blue-700);padding:10px 16px;background:var(--blue-50)}
 .egm tr.tem th small{font-family:var(--f-body);font-weight:600;color:var(--ink-soft);font-size:.78rem;margin-left:8px}
-.egm td.rl{padding:8px 12px 8px 16px;font-weight:600;color:var(--ink);min-width:200px;background:#fff}
+.egm td.rl{padding:10px 14px 10px 18px;font-weight:600;color:var(--ink);min-width:230px;background:#fff}
 .egm td.rl sup{color:var(--red-600)}
-.egm td.c{padding:0;text-align:center;min-width:62px;background:#fff}
+.egm td.c{padding:0;text-align:center;min-width:72px;background:#fff}
 .egm td.tot{text-align:center;font-weight:800;color:var(--ink-soft);background:#f8fafc;font-variant-numeric:tabular-nums;min-width:56px}
-.cell{display:flex;align-items:center;justify-content:center;gap:3px;width:100%;min-height:52px;padding:6px 2px;border:0;background:none;cursor:pointer;font:inherit}
+.cell{display:flex;align-items:center;justify-content:center;gap:3px;width:100%;min-height:64px;padding:8px 3px;border:0;background:none;cursor:pointer;font:inherit}
 .cell:hover{background:var(--blue-50)}
 .cell.sel{background:var(--blue-50);box-shadow:inset 0 0 0 2px var(--blue-600)}
 .cell.void{cursor:default;background:repeating-linear-gradient(135deg,#f1f5f9 0 6px,#fff 6px 12px)}
@@ -168,6 +169,18 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1040px;
 .logo-chip img{height:100%;width:auto;max-width:240px;object-fit:contain;display:block}
 .footer-fine{font-size:.8rem;text-align:center;max-width:90ch;margin:0 auto 6px}
 .footer-fine a{color:var(--sky-400);text-decoration:none}
+
+/* rectángulo flotante al pasar el cursor por una celda */
+.tip{position:fixed;z-index:80;width:340px;max-width:calc(100vw - 24px);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 40px -14px rgba(20,26,58,.38);padding:14px 16px 12px;pointer-events:none;font-size:.84rem;line-height:1.45}
+.tip::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;border-radius:12px 0 0 12px;background:var(--acc,var(--blue-600))}
+.tip .tk{font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+.tip .tc{font-family:var(--f-head);font-weight:600;font-size:.95rem;color:var(--blue-700);margin:2px 0 10px}
+.tip .te{border-top:1px solid var(--line);padding-top:9px}
+.tip .te h6{margin:0 0 3px;font-family:var(--f-head);font-size:.86rem;line-height:1.35;color:var(--ink)}
+.tip .tm{color:var(--ink-soft);font-size:.78rem;margin-bottom:5px}
+.tip .tr{margin:0;color:var(--ink);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.tip .tf{margin-top:9px;font-size:.76rem;font-weight:800;color:var(--sky-700)}
+@media (hover:none){.tip{display:none!important}}
 </style>
 <style>body{margin:0}[hidden]{display:none!important}img{max-width:100%}</style>
 </head>
@@ -208,7 +221,7 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1040px;
 
 <main>
   <section class="section" id="mapa">
-    <div class="wrap">
+    <div class="wrap wide">
       <h2>El mapa</h2>
       <p class="section-lede">Las filas son los temas y las columnas, los niveles de evidencia de la matriz, del A (diseños más rigurosos) al D (estudios cualitativos y marcos conceptuales). Haz clic en un círculo para ver los estudios. Los cuadros rayados son las brechas: ahí todavía no hay evidencia.</p>
       <div class="card">
@@ -233,6 +246,7 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1040px;
         <button type="button" id="sAll" hidden>Ver todos los estudios</button>
       </div>
       <div class="slist" id="sList"></div>
+      <div class="tip" id="tip" role="tooltip" hidden></div>
     </div>
   </section>
 
@@ -294,7 +308,7 @@ function dims(){
   const m={};rows.forEach(r=>{(m[r.tem]??={d:new Map(),sug:new Set()}).d.set(r.dim,(m[r.tem].d.get(r.dim)||0)+1);if(r.sug)m[r.tem].sug.add(r.dim)});
   return TEMS.filter(t=>S.tem==='all'||S.tem===t).map(t=>({t,ds:[...m[t].d.entries()].sort((a,b)=>b[1]-a[1]).map(e=>e[0]),sug:m[t].sug}));
 }
-const sz=(n,max)=>Math.round(20+16*Math.sqrt(n/max));
+const sz=(n,max)=>Math.round(24+20*Math.sqrt(n/max));
 function render(){
   const F=filtered(),C={};F.forEach(r=>(C[r.tem+'|'+r.dim+'|'+r.sub]??=[]).push(r));
   let max=1;Object.values(C).forEach(L=>{const a=L.filter(nac).length;max=Math.max(max,a,L.length-a)});
@@ -317,7 +331,8 @@ function render(){
     });
   });
   $('egm').innerHTML=h+'</tbody>';
-  $('egm').querySelectorAll('button.cell').forEach(b=>b.onclick=()=>{S.cell=S.cell===b.dataset.k?null:b.dataset.k;S.open=null;render();
+  $('egm').querySelectorAll('button.cell').forEach(b=>{b.onmouseenter=e=>tipShow(b,C[b.dataset.k],e);b.onmousemove=tipMove;b.onmouseleave=tipHide;b.onfocus=()=>tipShow(b,C[b.dataset.k]);b.onblur=tipHide;});
+  $('egm').querySelectorAll('button.cell').forEach(b=>b.onclick=()=>{tipHide();S.cell=S.cell===b.dataset.k?null:b.dataset.k;S.open=null;render();
     if(S.cell)$('studies').scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})});
   list(F,C);
 }
@@ -363,6 +378,29 @@ $('fQ').oninput=e=>{S.q=e.target.value;render()};
 $('fInt').onchange=e=>{S.int=e.target.checked;render()};
 $('sAll').onclick=()=>{S.cell=null;S.open=null;render()};
 render();
+
+/* rectángulo flotante: resume la celda y muestra una evaluación destacada */
+const ACC={A:'var(--blue-600)',B:'var(--sky-600)',C:'var(--sun-500)',D:'var(--red-500)'};
+function shortRes(r){
+  const t=(r.res||r.prop||'').replace(/\s+/g,' ').trim();
+  const m=t.match(/^.{40,260}?[.;](\s|$)/);return m?m[0].trim():(t.length>240?t.slice(0,240).trim()+'…':t)}
+function pickStudy(L){return [...L].sort((a,b)=>(!!b.tipo-!!a.tipo)||((/completo/i.test(b.est))-(/completo/i.test(a.est)))||((+b.y||0)-(+a.y||0)))[0]}
+function tipShow(btn,L,e){
+  if(!L||!L.length)return;const [t,d,sub]=btn.dataset.k.split('|');const r=pickStudy(L),a=L.filter(nac).length,b=L.length-a;
+  const au=r.a?r.a.split(';')[0].trim()+(r.a.includes(';')?' et al.':''):'Autor no registrado';
+  const amb=nac(r)?'Perú':(r.paises.length>2?'varios países':r.paises.join(', ')||'país sin registrar');
+  const tip=$('tip');tip.style.setProperty('--acc',ACC[sub[0]]);
+  tip.innerHTML=`<div class="tk">${esc(t)} · ${sub} ${esc(D.subs[sub])}</div><div class="tc">${esc(d)}: ${pl(L.length,'estudio','estudios')}${a&&b?` (${a} nac. · ${b} int.)`:''}</div>
+    <div class="te"><h6>${esc(r.t)}</h6><div class="tm">${esc(au)} · ${esc(r.y||'s. f.')} · ${esc(amb)}${r.tipo?' · evalúa una intervención':''}</div><p class="tr">${esc(shortRes(r))}</p></div>
+    <div class="tf">${L.length>1?`Haz clic para ver ${L.length===2?'los 2 estudios':'los '+L.length+' estudios'}`:'Haz clic para ver la ficha completa'}</div>`;
+  tip.hidden=false;
+  if(e)tipMove(e);else{const rc=btn.getBoundingClientRect();place(rc.right,rc.top)}
+}
+function place(x,y){const tip=$('tip'),w=tip.offsetWidth,h=tip.offsetHeight,g=16;
+  let L=x+g,T=y+g;if(L+w>innerWidth-8)L=x-w-g;if(L<8)L=8;if(T+h>innerHeight-8)T=y-h-g;if(T<8)T=8;tip.style.left=L+'px';tip.style.top=T+'px'}
+function tipMove(e){if(!$('tip').hidden)place(e.clientX,e.clientY)}
+function tipHide(){$('tip').hidden=true}
+addEventListener('scroll',tipHide,{passive:true});
 
 /* hero: anillos concéntricos como los del logo del Observatorio, que giran despacio; puntos de evidencia que orbitan */
 (function(){
