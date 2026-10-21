@@ -27,10 +27,8 @@ DUP={72:21,86:70,61:62}
 FLAGS={125:'Autores y país parecen copiados de otra fila (n.° 99); el país dice "Cacao" y el estudio es de Sudáfrica.',
  112:'La población objetivo es la del estudio n.° 111 (reclutas en Noruega), no la de este estudio.',
  115:'Los resultados son los del estudio n.° 114 (evaluación entre pares), no los de este estudio.',
- 123:'Los resultados son los del estudio n.° 122 (niñas refugiadas en Etiopía), no los de este estudio.',
  61:'Fila sin autor ni año; duplica el n.° 62.',
  89:'Variables Y y X vacías.',
- 52:'Campos de intervención vacíos.',53:'Campos de intervención vacíos.',
  50:'Resultados vacíos.'}
 out=[]
 for r in rows:
