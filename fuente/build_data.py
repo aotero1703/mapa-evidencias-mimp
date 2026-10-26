@@ -52,6 +52,9 @@ for r in rows:
       vy=clean(r['Variable(s) Y']),vx=clean(r['Variable(s) X']),res=clean(r['Resultados']),
       link=r['Vínculo'].strip(),pub=clean(r['Lugar de publicación']).replace('\n',' '),
       dup=DUP.get(n),flag=FLAGS.get(n,'')))
+TEMR={'Género': 'Igualdad de oportunidades', 'Violencia de género': 'Violencia contra las mujeres e integrantes del grupo familiar'}
+DIMR={'Brechas de género': 'Brechas entre mujeres y hombres', 'Violencia de pareja': 'Violencia en relación de pareja', 'Trata y explotación': 'Trata y explotación sexual', 'Ciberviolencia': 'Acoso y violencia en espacios virtuales', 'Alcohol como factor de riesgo': 'Prevalencia y factores de riesgo', 'Prevalencia y factores generales': 'Prevalencia y factores de riesgo', 'Marcos conceptuales y justicia': 'Acceso a la justicia y marcos conceptuales', 'Servicios de atención': 'Servicios de prevención y atención'}
+for x in out: x['tem']=TEMR.get(x['tem'],x['tem']); x['dim']=DIMR.get(x['dim'],x['dim'])
 json.dump(dict(rows=out,groups=GROUP,subs=SUB),open('data.json','w'),ensure_ascii=False)
 import collections
 print(collections.Counter(x['o'] for x in out), sum(1 for x in out if x['tipo']), len(json.dumps(out,ensure_ascii=False)))

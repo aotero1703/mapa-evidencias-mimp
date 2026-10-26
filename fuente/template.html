@@ -201,7 +201,7 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1240px;
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow">Evidencia para la política pública</span>
-      <h1>Mapa de Brechas de Evidencia <span>en igualdad de género, sistema de cuidados y violencia de género</span></h1>
+      <h1>Mapa de Brechas de Evidencia <span>en igualdad de oportunidades entre mujeres y hombres, sistema de cuidados y violencia contra las mujeres y los integrantes del grupo familiar</span></h1>
       <p class="lede" id="lede"></p>
       <div class="hero-actions">
         <a href="#mapa" class="btn btn-primary">Ver el mapa</a>
@@ -217,7 +217,7 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1240px;
   <section class="section" id="mapa">
     <div class="wrap wide">
       <h2>El mapa</h2>
-      <p class="section-lede">Las filas son los temas y las columnas, los niveles de evidencia de la matriz, del A (diseños más rigurosos) al D (estudios cualitativos y marcos conceptuales). Haz clic en un círculo para ver los estudios. Los cuadros rayados son las brechas: ahí todavía no hay evidencia.</p>
+      <p class="section-lede">El mapa responde a la Ley N.° 30364 y a los lineamientos de funcionamiento del Observatorio Nacional, que le encargan gestionar información y conocimiento para que las decisiones de política pública se basen en evidencia. Las filas son los temas y las columnas, los niveles de evidencia de la matriz, del A (diseños más rigurosos) al D (estudios cualitativos y marcos conceptuales). Haz clic en un círculo para ver los estudios. Los cuadros rayados son las brechas: ahí todavía no hay evidencia.</p>
       <div class="card">
         <div class="filters" role="search">
           <div class="chips" role="group" aria-label="Temática" id="temChips"></div>
@@ -260,7 +260,7 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1240px;
       <span class="logo-chip"><img src="__LOGO_MIMP__" alt="Ministerio de la Mujer y Poblaciones Vulnerables"></span>
       <span class="logo-chip"><img src="__LOGO_ON__" alt="Observatorio Nacional de la Violencia contra las Mujeres y los Integrantes del Grupo Familiar"></span>
     </div>
-    <p class="footer-fine">Fuente: <a href="matriz/Matriz_evidencias_MIMP_revisada.xlsx" download>Matriz de evidencias nacionales e internacionales</a> (Excel, versión revisada), Observatorio Nacional – MIMP (febrero 2025). Los registros duplicados se cuentan una sola vez. (*) Dimensiones de violencia de género agrupadas para este mapa, por validar.</p>
+    <p class="footer-fine">Fuente: <a href="matriz/Matriz_evidencias_MIMP_revisada.xlsx" download>Matriz de evidencias nacionales e internacionales</a> (Excel, versión revisada), Observatorio Nacional – MIMP (febrero 2025). Los registros duplicados se cuentan una sola vez. (*) Dimensiones de violencia agrupadas para este mapa según los tipos y modalidades de la Ley N.° 30364, por validar.</p>
     <p class="footer-fine">¿Consultas? <a href="https://www.gob.pe/institucion/mimp/tema/observatorio-nacional-de-la-violencia-contra-las-mujeres-y-los-integrantes-del-grupo-familiar" target="_blank" rel="noopener">Observatorio Nacional</a> · observatorioviolencia@mimp.gob.pe · (01) 626-1600, anexo 8503</p>
     <p class="visits" id="visits" hidden><span class="vdot" aria-hidden="true"></span><span><b id="visitsN"></b> visitas al mapa</span></p>
   </div>
@@ -269,7 +269,7 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1240px;
 <script>
 const D=__DATA__;
 const rows=D.rows.filter(r=>!r.dup);
-const TEMS=['Género','Sistema de cuidados','Violencia de género'];
+const TEMS=['Igualdad de oportunidades','Sistema de cuidados','Violencia contra las mujeres e integrantes del grupo familiar'];
 const SUBS=Object.keys(D.subs);
 const LVN={A:'Nivel A',B:'Nivel B',C:'Nivel C',D:'Nivel D'};
 const S={tem:'all',ori:'all',year:0,q:'',int:false,cell:null,open:null};
@@ -282,7 +282,7 @@ const pl=(n,a,b)=>n+' '+(n===1?a:b);
 (()=>{const n=rows.filter(nac),iv=n.filter(r=>r.tipo).length,cu=rows.filter(r=>r.tem==='Sistema de cuidados');
   let cells=0,empty=0;const have=new Set(rows.map(r=>r.tem+'|'+r.dim+'|'+r.sub));
   [...new Set(rows.map(r=>r.tem+'|'+r.dim))].forEach(td=>SUBS.forEach(s=>{cells++;if(!have.has(td+'|'+s))empty++}));
-  $('lede').innerHTML=`La matriz del Observatorio reúne <strong>${rows.length} estudios</strong> sobre género, cuidados y violencia. <strong>${n.length}</strong> son peruanos, pero solo <strong>${iv}</strong> miden el efecto de un programa o una política. Este mapa ordena esa evidencia por tema y por rigor para ver dónde ya sabemos qué funciona y dónde falta investigar.`;
+  $('lede').innerHTML=`La matriz del Observatorio reúne <strong>${rows.length} estudios</strong> sobre igualdad de oportunidades, sistema de cuidados y violencia contra las mujeres y los integrantes del grupo familiar. <strong>${n.length}</strong> son peruanos, pero solo <strong>${iv}</strong> miden el efecto de un programa o una política. Este mapa ordena esa evidencia por tema y por rigor para ver dónde ya sabemos qué funciona y dónde falta investigar.`;
   $('heroPanel').innerHTML=[
     ['Estudios',rows.length,`${n.length} nacionales · ${rows.length-n.length} internacionales`],
     ['Evalúan intervenciones',rows.filter(r=>r.tipo).length,`${iv} de ellas en el Perú`],
@@ -356,7 +356,7 @@ function list(F,C){
 }
 (()=>{const by=f=>rows.filter(f),n=by(nac);
   const nC=n.filter(r=>r.g==='C').length,cu=by(r=>r.tem==='Sistema de cuidados'),cuE=cu.filter(r=>r.sub==='A.3'||r.g==='B');
-  const ve=by(r=>r.tem==='Violencia de género'&&nac(r)&&r.sub==='A.3'),vp=ve.filter(r=>/completo/i.test(r.est)&&!/sin publicación/i.test(r.est));
+  const ve=by(r=>r.tem==='Violencia contra las mujeres e integrantes del grupo familiar'&&nac(r)&&r.sub==='A.3'),vp=ve.filter(r=>/completo/i.test(r.est)&&!/sin publicación/i.test(r.est));
   const ma=by(r=>r.sub==='A.1'),maN=ma.filter(nac);
   $('hub').innerHTML=[
     [Math.round(nC/n.length*100)+'%','La evidencia peruana es sobre todo observacional',`${nC} de los ${n.length} estudios nacionales describen asociaciones. Conocemos bien los factores de riesgo, pero poco sobre qué intervenciones funcionan.`],
