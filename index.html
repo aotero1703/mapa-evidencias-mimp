@@ -183,6 +183,9 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1240px;
 .logo-chip img{height:100%;width:auto;max-width:240px;object-fit:contain;display:block}
 .footer-fine{font-size:.8rem;text-align:center;max-width:90ch;margin:0 auto 6px}
 .footer-fine a{color:var(--sky-400);text-decoration:none}
+.visits{display:flex;justify-content:center;align-items:center;gap:8px;margin:14px auto 0;font-size:.82rem;color:#b9c2e6}
+.visits b{font-family:var(--f-head);font-weight:600;font-size:1rem;color:#fff;font-variant-numeric:tabular-nums}
+.visits .vdot{width:8px;height:8px;border-radius:50%;background:var(--sun-500);box-shadow:0 0 0 3px rgba(242,169,59,.25)}
 
 /* rectángulo flotante al pasar el cursor por una celda */
 .tip{position:fixed;z-index:80;width:340px;max-width:calc(100vw - 24px);background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 40px -14px rgba(20,26,58,.38);padding:14px 16px 12px;pointer-events:none;font-size:.84rem;line-height:1.45}
@@ -283,6 +286,7 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1240px;
     </div>
     <p class="footer-fine">Fuente: <a href="matriz/Matriz_evidencias_MIMP_revisada.xlsx" download>Matriz de evidencias nacionales e internacionales</a> (Excel, versión revisada), Observatorio Nacional – MIMP (febrero 2025). Los registros duplicados se cuentan una sola vez. (*) Dimensiones de violencia de género agrupadas para este mapa, por validar.</p>
     <p class="footer-fine">¿Consultas? <a href="https://www.gob.pe/institucion/mimp/tema/observatorio-nacional-de-la-violencia-contra-las-mujeres-y-los-integrantes-del-grupo-familiar" target="_blank" rel="noopener">Observatorio Nacional</a> · observatorioviolencia@mimp.gob.pe · (01) 626-1600, anexo 8503</p>
+    <p class="visits" id="visits" hidden><span class="vdot" aria-hidden="true"></span><span><b id="visitsN"></b> visitas al mapa</span></p>
   </div>
 </footer>
 
@@ -441,6 +445,14 @@ addEventListener('scroll',tipHide,{passive:true});
   hero.addEventListener('mousemove',e=>{const r=hero.getBoundingClientRect();mx=(e.clientX-r.left)/r.width-.5;my=(e.clientY-r.top)/r.height-.5});
   requestAnimationFrame(frame);
 })();
+
+/* contador de visitas: suma 1 por sesión del navegador y muestra el total */
+(async()=>{try{
+  let nueva=true;try{nueva=!sessionStorage.getItem('mapaVisita');sessionStorage.setItem('mapaVisita','1')}catch(e){}
+  const r=await fetch('/api/visitas',{method:nueva?'POST':'GET',cache:'no-store'});if(!r.ok)return;
+  const {total}=await r.json();if(!total)return;
+  $('visitsN').textContent=total.toLocaleString('es-PE');$('visits').hidden=false;
+}catch(e){}})();
 </script>
 
 </body>
