@@ -123,7 +123,7 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
       <div class="body">
         <h2>Datos oficiales de otras entidades</h2>
         <p>Acceso directo a las encuestas y registros del INEI, el Poder Judicial, el Ministerio Público y el Programa Warmi Ñan.</p>
-        <div class="facts"><span>6 fuentes</span><span>Encuestas y registros</span></div>
+        <div class="facts"><span>7 fuentes</span><span>Encuestas y registros</span></div>
         <div class="basis"><b>R.M. N.° 027-2025-MIMP:</b> articular la información de las entidades del Sistema Nacional.</div>
         <span class="go">Ver las fuentes <i>→</i></span>
       </div>
@@ -183,6 +183,7 @@ TABLERO=head('Indicadores principales · Banco de Evidencias','Tablero de indica
 
 SRC=[('Encuestas nacionales','Encuestas',[
   ('INEI','Encuesta Demográfica y de Salud Familiar (ENDES)','Prevalencia de violencia familiar contra mujeres de 15 a 49 años y castigo físico a hijas e hijos, con resultados nacionales y por región.','https://proyectos.inei.gob.pe/endes/'),
+  ('INEI','Encuesta Nacional sobre Relaciones Sociales (ENARES) 2024','Tolerancia social hacia la violencia contra las mujeres y violencia contra niñas, niños y adolescentes en el hogar y la escuela.','https://www.gob.pe/institucion/inei/campa%C3%B1as/112686-resultados-de-la-encuesta-nacional-sobre-relaciones-sociales-2024-enares'),
   ('INEI','Microdatos por encuesta','Bases de datos de ENDES, ENARES, ENAHO y otras encuestas para hacer análisis propios.','https://proyectos.inei.gob.pe/microdatos/Consulta_por_Encuesta.asp')]),
  ('Registros administrativos','Registros',[
   ('Programa Warmi Ñan · MIMP','Banco de datos del Portal Estadístico','Casos atendidos en los Centros Emergencia Mujer y Familia y en los demás servicios del programa.','https://portalestadistico.warminan.gob.pe/banco-de-datos/'),
