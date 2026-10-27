@@ -36,6 +36,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .site-nav{display:flex;align-items:center;gap:16px}
 .site-nav a{color:var(--ink-soft);text-decoration:none;font-weight:600;font-size:.86rem;white-space:nowrap}
 .site-nav a:hover{color:var(--blue-600)}
+.crumb-h{display:block;width:max-content;color:#cdd3ea;text-decoration:none;font-weight:700;font-size:.86rem;margin-bottom:16px}
+.crumb-h:hover{color:#fff}
 .nav-cta{background:var(--red-600);color:#fff!important;padding:8px 16px;border-radius:8px}
 @media (max-width:820px){.site-nav a:not(.nav-cta){display:none}.brand-text{display:none}}
 @media (max-width:460px){.brand .sep,.brand .on{display:none}}
@@ -183,15 +185,16 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1240px;
 
 <header class="site-header">
   <div class="wrap header-inner">
-    <div class="brand">
+    <a class="brand" href="./" aria-label="Volver al Banco de Evidencias">
       <img src="__LOGO_MIMP__" alt="Ministerio de la Mujer y Poblaciones Vulnerables">
       <span class="sep"></span>
       <img class="on" src="__LOGO_ON__" alt="Observatorio Nacional de la Violencia contra las Mujeres y los Integrantes del Grupo Familiar">
-    </div>
+    </a>
     <nav class="site-nav">
-      <a href="#mapa">El mapa</a>
-      <a href="#hallazgos">Hallazgos</a>
-      <a href="#mapa" class="nav-cta">Explorar</a>
+      <a href="./">Banco de Evidencias</a>
+      <a href="tablero.html">Indicadores</a>
+      <a href="fuentes.html">Fuentes externas</a>
+      <a href="#mapa" class="nav-cta">Explorar el mapa</a>
     </nav>
   </div>
 </header>
@@ -200,7 +203,8 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1240px;
   <canvas id="heroCanvas" aria-hidden="true"></canvas>
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">Evidencia para la política pública</span>
+      <a class="crumb-h" href="./">← Banco de Evidencias</a>
+      <span class="eyebrow">Evidencia científica</span>
       <h1>Mapa de Brechas de Evidencia <span>en igualdad de oportunidades entre mujeres y hombres, sistema de cuidados y violencia contra las mujeres y los integrantes del grupo familiar</span></h1>
       <p class="lede" id="lede"></p>
       <div class="hero-actions">
@@ -262,7 +266,7 @@ table.egm{border-collapse:separate;border-spacing:0;width:100%;min-width:1240px;
     </div>
     <p class="footer-fine">Fuente: <a href="matriz/Matriz_evidencias_MIMP_revisada.xlsx" download>Matriz de evidencias nacionales e internacionales</a> (Excel, versión revisada), Observatorio Nacional – MIMP (febrero 2025). Los registros duplicados se cuentan una sola vez. (*) Dimensiones de violencia agrupadas para este mapa según los tipos y modalidades de la Ley N.° 30364, por validar.</p>
     <p class="footer-fine">¿Consultas? <a href="https://www.gob.pe/institucion/mimp/tema/observatorio-nacional-de-la-violencia-contra-las-mujeres-y-los-integrantes-del-grupo-familiar" target="_blank" rel="noopener">Observatorio Nacional</a> · observatorioviolencia@mimp.gob.pe · (01) 626-1600, anexo 8503</p>
-    <p class="visits" id="visits" hidden><span class="vdot" aria-hidden="true"></span><span><b id="visitsN"></b> visitas al mapa</span></p>
+    <p class="visits" id="visits" hidden><span class="vdot" aria-hidden="true"></span><span><b id="visitsN"></b> visitas al banco de evidencias</span></p>
   </div>
 </footer>
 
@@ -424,7 +428,7 @@ addEventListener('scroll',tipHide,{passive:true});
 
 /* contador de visitas: suma 1 por sesión del navegador y muestra el total */
 (async()=>{try{
-  let nueva=true;try{nueva=!sessionStorage.getItem('mapaVisita');sessionStorage.setItem('mapaVisita','1')}catch(e){}
+  let nueva=true;try{nueva=!sessionStorage.getItem('bancoVisita');sessionStorage.setItem('bancoVisita','1')}catch(e){}
   const r=await fetch('/api/visitas',{method:nueva?'POST':'GET',cache:'no-store'});if(!r.ok)return;
   const {total}=await r.json();if(!total)return;
   $('visitsN').textContent=total.toLocaleString('es-PE');$('visits').hidden=false;
