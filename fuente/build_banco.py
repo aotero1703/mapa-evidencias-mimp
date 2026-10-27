@@ -103,7 +103,7 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
       <div class="body">
         <h2>Estudios e investigaciones</h2>
         <p>Artículos, evaluaciones de impacto y revisiones nacionales e internacionales, con su ficha, sus resultados y el enlace al estudio original.</p>
-        <div class="facts"><span>133 estudios</span><span>102 nacionales</span><span>23 evalúan intervenciones</span></div>
+        <div class="facts"><span>133 estudios</span><span>102 nacionales</span><span>19 dimensiones</span></div>
         <div class="basis"><b>Art. 43:</b> el Observatorio elabora informes, estudios y propuestas.</div>
         <span class="go">Buscar estudios <i>→</i></span>
       </div>
@@ -212,42 +212,35 @@ FUENTES=head('Fuentes externas · Banco de Evidencias','Acceso directo a las fue
 '''+FOOTER+'</body>\n</html>\n'
 
 
-EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e internacionales sobre igualdad de oportunidades, sistema de cuidados y violencia contra las mujeres y los integrantes del grupo familiar, con ficha y resultados.','evidencia.html')+header('ev')+'''
+EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e internacionales sobre igualdad de oportunidades, sistema de cuidados y violencia contra las mujeres y los integrantes del grupo familiar, organizados por dimensión.','evidencia.html')+header('ev')+'''
 <main>
 <section class="page-hero">
   <div class="wrap">
     <a class="crumb" href="./">← Banco de Evidencias</a>
     <h1>Evidencia científica</h1>
-    <p>Estudios nacionales e internacionales revisados por el Observatorio. Busca por tema, población o palabra clave, y abre la ficha de cada estudio para ver qué se evaluó y qué se encontró.</p>
-    <div class="actions"><a class="btn btn-light" href="matriz/Matriz_evidencias_MIMP_revisada.xlsx" download>Descargar la matriz (Excel)</a></div>
+    <p>Estudios nacionales e internacionales revisados por el Observatorio, ordenados por dimensión. Elige una dimensión para ver sus estudios, o busca un tema concreto.</p>
+    <div class="hsearch"><input type="search" id="q" placeholder="Buscar en todo el banco: Cuna Más, Línea 100, alcohol, adolescentes…" aria-label="Buscar en todo el banco"></div>
   </div>
 </section>
 <section class="section">
   <div class="wrap">
-    <div class="levels" aria-label="Niveles de evidencia">
-      <div class="A"><b>A</b><strong>Más sólida.</strong> Metaanálisis, revisiones sistemáticas y ensayos aleatorios.</div>
-      <div class="B"><b>B</b><strong>Cuasi-experimental.</strong> Regresión discontinua, variables instrumentales, panel, emparejamiento.</div>
-      <div class="C"><b>C</b><strong>Observacional.</strong> Factores asociados, correlaciones, registros administrativos.</div>
-      <div class="D"><b>D</b><strong>Exploratoria.</strong> Estudios cualitativos, opinión de expertos y marcos conceptuales.</div>
+    <div id="home">
+      <div class="shelf-head"><h2>Dimensiones</h2><p id="homeCount"></p></div>
+      <div class="shelves" id="shelves"></div>
+      <p class="dl-note">¿Necesitas toda la base? <a href="matriz/Matriz_evidencias_MIMP_revisada.xlsx" download>Descarga la matriz completa en Excel</a>.</p>
     </div>
-    <div class="lib">
-      <aside class="filters" aria-label="Filtros">
-        <h3>Tema</h3><div id="fTem"></div>
-        <h3>Nivel de evidencia</h3><div id="fLv"></div>
-        <h3>Ámbito</h3><div id="fAmb"></div>
-        <h3>Tipo de estudio</h3><div id="fInt"></div>
-        <h3>Dimensión</h3><div id="fDim"></div>
-        <button type="button" class="clear" id="clear">Quitar filtros</button>
-      </aside>
-      <div>
-        <div class="searchbar">
-          <input type="search" id="q" placeholder="Buscar: Cuna Más, Línea 100, alcohol, adolescentes…" aria-label="Buscar estudios">
-          <select id="sort" aria-label="Ordenar"><option value="y">Más recientes primero</option><option value="lv">Evidencia más sólida primero</option><option value="t">Por título (A–Z)</option></select>
+    <div id="results" hidden>
+      <button type="button" class="back" id="back">← Todas las dimensiones</button>
+      <h2 id="rTitle"></h2>
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="Ámbito">
+          <button type="button" data-amb="" aria-pressed="true">Todos</button><button type="button" data-amb="Nacional" aria-pressed="false">Nacional</button><button type="button" data-amb="Internacional" aria-pressed="false">Internacional</button>
         </div>
+        <select id="sort" aria-label="Ordenar"><option value="y">Más recientes primero</option><option value="t">Por título (A–Z)</option></select>
         <p class="count" id="count"></p>
-        <div class="cards" id="cards"></div>
-        <button type="button" class="more" id="more" hidden>Ver más estudios</button>
       </div>
+      <div class="cards" id="cards"></div>
+      <button type="button" class="more" id="more" hidden>Ver más estudios</button>
     </div>
   </div>
 </section>
@@ -255,42 +248,45 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
 '''+FOOTER+r'''<script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const nac=r=>r.o==='peru'||r.o==='multi';
-const amb=r=>nac(r)?'Nacional':(r.o==='intl'?'Internacional':'Sin dato');
-const LV={A:'A · Más sólida',B:'B · Cuasi-experimental',C:'C · Observacional',D:'D · Exploratoria'};
-let R=[],S={tem:new Set(),lv:new Set(),amb:new Set(),int:new Set(),dim:new Set(),q:'',sort:'y',open:null,shown:20};
+let R=[],S={dim:'',amb:'',q:'',sort:'y',open:null,shown:20};
 function gist(r){const t=(r.res||r.prop||'').replace(/\s+/g,' ').trim();const m=t.match(/^.{40,280}?[.;](\s|$)/);return m?m[0].trim():(t.length>260?t.slice(0,260).trim()+'…':t)}
-function pass(r,skip){const q=S.q.trim().toLowerCase();
-  return (skip==='tem'||!S.tem.size||S.tem.has(r.tem))&&(skip==='lv'||!S.lv.size||S.lv.has(r.g))&&(skip==='amb'||!S.amb.size||S.amb.has(amb(r)))
-   &&(skip==='int'||!S.int.size||S.int.has(r.tipo?'Evalúa una intervención':'Otros estudios'))&&(skip==='dim'||!S.dim.size||S.dim.has(r.dim))
-   &&(!q||[r.t,r.a,r.dim,r.tem,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,r.paises.join(' ')].join(' ').toLowerCase().includes(q))}
-function facet(id,key,vals,lab){const c={};R.filter(r=>pass(r,key)).forEach(r=>{const v=vals(r);c[v]=(c[v]||0)+1});
-  const all=[...new Set(R.map(vals))];const order=key==='lv'?['A','B','C','D']:all.sort((a,b)=>(c[b]||0)-(c[a]||0)||a.localeCompare(b));
-  $(id).innerHTML=order.filter(v=>key!=='dim'||S.tem.size===0||R.some(r=>r.dim===v&&S.tem.has(r.tem))).map(v=>`<label><input type="checkbox" data-k="${key}" value="${esc(v)}" ${S[key].has(v)?'checked':''}><span>${esc(lab?lab(v):v)}</span><em>${c[v]||0}</em></label>`).join('')}
-function render(){
-  facet('fTem','tem',r=>r.tem);facet('fLv','lv',r=>r.g,v=>LV[v]);facet('fAmb','amb',amb);facet('fInt','int',r=>r.tipo?'Evalúa una intervención':'Otros estudios');facet('fDim','dim',r=>r.dim);
-  document.querySelectorAll('.filters input').forEach(i=>i.onchange=()=>{const s=S[i.dataset.k];i.checked?s.add(i.value):s.delete(i.value);if(i.dataset.k==='tem')S.dim.clear();S.shown=20;render()});
-  let L=R.filter(r=>pass(r));
-  L.sort(S.sort==='lv'?(a,b)=>a.sub.localeCompare(b.sub)||(+b.y||0)-(+a.y||0):S.sort==='t'?(a,b)=>a.t.localeCompare(b.t,'es'):(a,b)=>(+b.y||0)-(+a.y||0));
-  const p=L.filter(nac).length;
-  $('count').innerHTML=`<b>${L.length}</b> ${L.length===1?'estudio':'estudios'}${L.length?` · ${p} nacionales · ${(k=>k+(k===1?' evalúa':' evalúan'))(L.filter(r=>r.tipo).length)} una intervención`:''}`;
-  $('cards').innerHTML=L.length?L.slice(0,S.shown).map(card).join(''):'<div class="empty">No hay estudios con esos filtros. Prueba con otra palabra o quita algún filtro.</div>';
+const pl=(n,a,b)=>n+' '+(n===1?a:b);
+function home(){
+  const g={};R.forEach(r=>{(g[r.dim]??=[]).push(r)});
+  const dims=Object.keys(g).sort((a,b)=>g[b].length-g[a].length||a.localeCompare(b,'es'));
+  $('homeCount').textContent=`${R.length} estudios en ${dims.length} dimensiones`;
+  $('shelves').innerHTML=dims.map(d=>{const L=g[d],n=L.filter(r=>r.amb==='Nacional').length,yr=Math.max(...L.map(r=>+r.y||0));
+    return `<button type="button" class="shelf" data-d="${esc(d)}"><span class="num">${L.length}</span><span class="name">${esc(d)}</span>
+      <span class="meta">${pl(n,'nacional','nacionales')} · ${pl(L.length-n,'internacional','internacionales')}${yr?` · el más reciente de ${yr}`:''}</span><span class="go">Ver estudios →</span></button>`}).join('');
+  document.querySelectorAll('.shelf').forEach(b=>b.onclick=()=>{S.dim=b.dataset.d;S.amb='';S.shown=20;S.open=null;show()});
+}
+function show(){
+  const res=!!(S.dim||S.q.trim());$('home').hidden=res;$('results').hidden=!res;
+  if(!res)return;
+  document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.amb===S.amb));
+  const q=S.q.trim().toLowerCase();
+  let L=R.filter(r=>(!S.dim||r.dim===S.dim)&&(!S.amb||r.amb===S.amb)&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,r.paises.join(' ')].join(' ').toLowerCase().includes(q)));
+  L.sort(S.sort==='t'?(a,b)=>a.t.localeCompare(b.t,'es'):(a,b)=>(+b.y||0)-(+a.y||0));
+  $('rTitle').textContent=S.dim||`Resultados para «${S.q.trim()}»`;
+  $('count').textContent=pl(L.length,'estudio','estudios');
+  $('cards').innerHTML=L.length?L.slice(0,S.shown).map(card).join(''):'<div class="empty">No hay estudios con esa búsqueda. Prueba con otra palabra o vuelve a las dimensiones.</div>';
   $('more').hidden=L.length<=S.shown;$('more').textContent=`Ver más estudios (${L.length-S.shown} restantes)`;
-  document.querySelectorAll('.paper [data-open]').forEach(b=>b.onclick=()=>{const n=+b.dataset.open;S.open=S.open===n?null:n;render()});
+  document.querySelectorAll('.paper [data-open]').forEach(b=>b.onclick=()=>{const n=+b.dataset.open;S.open=S.open===n?null:n;show()});
 }
 function card(r){const o=S.open===r.n,au=r.a?r.a.split(';')[0].trim()+(r.a.includes(';')?' et al.':''):'Autor no registrado';
-  const pais=nac(r)?'Perú':(r.paises.length>2?'Varios países':r.paises.join(', ')||'País no registrado');
+  const pais=r.amb==='Nacional'?'Perú':(r.paises.length>2?'Varios países':r.paises.join(', ')||'Varios países');
   const f=(t,v)=>v?`<dt>${t}</dt><dd>${esc(v)}</dd>`:'';
-  return `<article class="paper"><div class="tags"><span class="tag lv ${r.g}">Nivel ${r.sub}</span><span class="tag">${esc(r.subl)}</span><span class="tag ${nac(r)?'pe':'int'}">${esc(pais)}</span>${r.tipo?'<span class="tag iv">Evalúa una intervención</span>':''}</div>
-   <h3>${esc(r.t)}</h3><div class="by">${esc(au)} · ${esc(r.y||'s. f.')} · ${esc(r.tem)}${r.dim?' / '+esc(r.dim):''}</div>
+  return `<article class="paper"><div class="tags">${S.dim?'':`<span class="tag dimtag">${esc(r.dim)}</span>`}<span class="tag ${r.amb==='Nacional'?'pe':'int'}">${r.amb} · ${esc(pais)}</span></div>
+   <h3>${esc(r.t)}</h3><div class="by">${esc(au)} · ${esc(r.y||'s. f.')}</div>
    <p class="gist">${esc(gist(r))}</p>
    <div class="row"><button type="button" data-open="${r.n}" aria-expanded="${o}">${o?'Cerrar ficha':'Ver ficha completa'}</button>${r.link?`<a href="${esc(r.link)}" target="_blank" rel="noopener">Leer el estudio ↗</a>`:''}</div>
-   ${o?`<dl>${f('Autoría',r.a)}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Diseño de aleatorización',r.ale)}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
-$('q').oninput=e=>{S.q=e.target.value;S.shown=20;render()};
-$('sort').onchange=e=>{S.sort=e.target.value;render()};
-$('more').onclick=()=>{S.shown+=20;render()};
-$('clear').onclick=()=>{['tem','lv','amb','int','dim'].forEach(k=>S[k].clear());S.q='';$('q').value='';S.shown=20;render()};
-fetch('data/estudios.json').then(r=>r.json()).then(d=>{R=d.rows;render()}).catch(()=>{$('cards').innerHTML='<div class="empty">No se pudieron cargar los estudios. Recarga la página.</div>'});
+   ${o?`<dl>${f('Autoría',r.a)}${f('País',r.paises.join(', '))}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
+$('q').oninput=e=>{S.q=e.target.value;if(S.q.trim())S.dim='';S.shown=20;show()};
+$('sort').onchange=e=>{S.sort=e.target.value;show()};
+$('back').onclick=()=>{S.dim='';S.q='';$('q').value='';S.amb='';S.open=null;show();scrollTo({top:0})};
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{S.amb=b.dataset.amb;S.shown=20;show()});
+$('more').onclick=()=>{S.shown+=20;show()};
+fetch('data/estudios.json').then(r=>r.json()).then(d=>{R=d.rows;home();show()}).catch(()=>{$('shelves').innerHTML='<div class="empty">No se pudieron cargar los estudios. Recarga la página.</div>'});
 </script>
 </body>
 </html>
