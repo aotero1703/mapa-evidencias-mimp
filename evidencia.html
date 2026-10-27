@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Evidencia científica · Banco de Evidencias</title>
-<meta name="description" content="Estudios nacionales e internacionales sobre igualdad de oportunidades, sistema de cuidados y violencia contra las mujeres y los integrantes del grupo familiar, organizados por dimensión.">
+<meta name="description" content="Estudios nacionales e internacionales sobre la violencia contra las mujeres y los integrantes del grupo familiar, ordenados por tipo y modalidad de violencia según la Ley N.° 30364.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mapa-evidencias-mimp.vercel.app/evidencia.html">
 <meta property="og:site_name" content="Observatorio Nacional · MIMP">
 <meta property="og:title" content="Evidencia científica · Banco de Evidencias">
-<meta property="og:description" content="Estudios nacionales e internacionales sobre igualdad de oportunidades, sistema de cuidados y violencia contra las mujeres y los integrantes del grupo familiar, organizados por dimensión.">
+<meta property="og:description" content="Estudios nacionales e internacionales sobre la violencia contra las mujeres y los integrantes del grupo familiar, ordenados por tipo y modalidad de violencia según la Ley N.° 30364.">
 <meta property="og:image" content="https://mapa-evidencias-mimp.vercel.app/og-banco.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:locale" content="es_PE">
@@ -37,20 +37,23 @@
   <div class="wrap">
     <a class="crumb" href="./">← Banco de Evidencias</a>
     <h1>Evidencia científica</h1>
-    <p>Estudios nacionales e internacionales revisados por el Observatorio, ordenados por dimensión. Elige una dimensión para ver sus estudios, o busca un tema concreto.</p>
+    <p>Estudios nacionales e internacionales revisados por el Observatorio, ordenados según los tipos y modalidades de violencia de la Ley N.° 30364. Elige un tipo de violencia para ver sus estudios, o busca un tema concreto.</p>
     <div class="hsearch"><input type="search" id="q" placeholder="Buscar en todo el banco: Cuna Más, Línea 100, alcohol, adolescentes…" aria-label="Buscar en todo el banco"></div>
   </div>
 </section>
 <section class="section">
   <div class="wrap">
     <div id="home">
-      <div class="shelf-head"><h2>Dimensiones</h2><p id="homeCount"></p></div>
-      <div class="shelves" id="shelves"></div>
+      <div class="shelf-head"><div><h2>Violencia contra las mujeres y los integrantes del grupo familiar</h2><p class="shelf-sub">Por tipo de violencia, según el artículo 8 de la Ley N.° 30364. Un estudio puede abordar más de un tipo.</p></div><p id="vCount"></p></div>
+      <div class="shelves" id="shelvesV"></div>
+      <div class="shelf-head second"><div><h2>Factores de prevención</h2><p class="shelf-sub">Estudios sobre igualdad de oportunidades y sistema de cuidados: autonomía económica, educación, salud y corresponsabilidad en los cuidados.</p></div><p id="pCount"></p></div>
+      <div class="shelves small" id="shelvesP"></div>
       <p class="dl-note">¿Necesitas toda la base? <a href="matriz/Matriz_evidencias_MIMP_revisada.xlsx" download>Descarga la matriz completa en Excel</a>.</p>
     </div>
     <div id="results" hidden>
-      <button type="button" class="back" id="back">← Todas las dimensiones</button>
+      <button type="button" class="back" id="back">← Volver al banco</button>
       <h2 id="rTitle"></h2>
+      <div class="mods" id="mods" role="group" aria-label="Modalidad de violencia"></div>
       <div class="toolbar">
         <div class="seg" role="group" aria-label="Ámbito">
           <button type="button" data-amb="" aria-pressed="true">Todos</button><button type="button" data-amb="Nacional" aria-pressed="false">Nacional</button><button type="button" data-amb="Internacional" aria-pressed="false">Internacional</button>
@@ -87,45 +90,58 @@
 <script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let R=[],S={dim:'',amb:'',q:'',sort:'y',open:null,shown:20};
-function gist(r){const t=(r.res||r.prop||'').replace(/\s+/g,' ').trim();const m=t.match(/^.{40,280}?[.;](\s|$)/);return m?m[0].trim():(t.length>260?t.slice(0,260).trim()+'…':t)}
+const TIPOS=['Violencia física','Violencia psicológica','Violencia sexual','Violencia económica o patrimonial','Estudios generales sobre violencia'];
+const TDESC={'Violencia física':'Daño a la integridad corporal o a la salud.','Violencia psicológica':'Control, aislamiento, humillación o daño emocional.','Violencia sexual':'Actos de naturaleza sexual sin consentimiento, incluida la trata con fines de explotación sexual.','Violencia económica o patrimonial':'Menoscabo de los recursos económicos o patrimoniales.','Estudios generales sobre violencia':'Marcos conceptuales, prevalencia general, factores de riesgo y servicios.'};
+const GEN='Varias o sin modalidad específica';
+let R=[],S={kind:'',val:'',mod:'',amb:'',q:'',sort:'y',open:null,shown:20};
 const pl=(n,a,b)=>n+' '+(n===1?a:b);
+function gist(r){const t=(r.res||r.prop||'').replace(/\s+/g,' ').trim();const m=t.match(/^.{40,280}?[.;](\s|$)/);return m?m[0].trim():(t.length>260?t.slice(0,260).trim()+'…':t)}
+function shelf(kind,val,L,desc){const n=L.filter(r=>r.amb==='Nacional').length;
+  if(!L.length)return `<div class="shelf empty-shelf" aria-disabled="true"><span class="num">0</span><span class="name">${esc(val)}</span><span class="meta">${esc(desc||'')}</span><span class="go muted">Aún no hay estudios en el banco</span></div>`;
+  return `<button type="button" class="shelf" data-k="${kind}" data-v="${esc(val)}"><span class="num">${L.length}</span><span class="name">${esc(val)}</span>
+   ${desc?`<span class="desc">${esc(desc)}</span>`:''}<span class="meta">${pl(n,'nacional','nacionales')} · ${pl(L.length-n,'internacional','internacionales')}</span><span class="go">Ver estudios →</span></button>`}
 function home(){
-  const g={};R.forEach(r=>{(g[r.dim]??=[]).push(r)});
-  const dims=Object.keys(g).sort((a,b)=>g[b].length-g[a].length||a.localeCompare(b,'es'));
-  $('homeCount').textContent=`${R.length} estudios en ${dims.length} dimensiones`;
-  $('shelves').innerHTML=dims.map(d=>{const L=g[d],n=L.filter(r=>r.amb==='Nacional').length,yr=Math.max(...L.map(r=>+r.y||0));
-    return `<button type="button" class="shelf" data-d="${esc(d)}"><span class="num">${L.length}</span><span class="name">${esc(d)}</span>
-      <span class="meta">${pl(n,'nacional','nacionales')} · ${pl(L.length-n,'internacional','internacionales')}${yr?` · el más reciente de ${yr}`:''}</span><span class="go">Ver estudios →</span></button>`}).join('');
-  document.querySelectorAll('.shelf').forEach(b=>b.onclick=()=>{S.dim=b.dataset.d;S.amb='';S.shown=20;S.open=null;show()});
+  const V=R.filter(r=>r.tipos),P=R.filter(r=>!r.tipos);
+  $('vCount').textContent=pl(V.length,'estudio','estudios');$('pCount').textContent=pl(P.length,'estudio','estudios');
+  $('shelvesV').innerHTML=TIPOS.map(t=>shelf('tipo',t,V.filter(r=>r.tipos.includes(t)),TDESC[t])).join('');
+  const g={};P.forEach(r=>(g[r.dim]??=[]).push(r));
+  $('shelvesP').innerHTML=Object.keys(g).sort((a,b)=>g[b].length-g[a].length||a.localeCompare(b,'es')).map(d=>shelf('dim',d,g[d])).join('');
+  document.querySelectorAll('button.shelf').forEach(b=>b.onclick=()=>{S.kind=b.dataset.k;S.val=b.dataset.v;S.mod='';S.amb='';S.shown=20;S.open=null;show();$('results').scrollIntoView({block:'start'})});
 }
+function inShelf(r){return S.kind==='tipo'?(r.tipos||[]).includes(S.val):S.kind==='dim'?(!r.tipos&&r.dim===S.val):true}
 function show(){
-  const res=!!(S.dim||S.q.trim());$('home').hidden=res;$('results').hidden=!res;
-  if(!res)return;
+  const q=S.q.trim().toLowerCase(),res=!!(S.kind||q);$('home').hidden=res;$('results').hidden=!res;if(!res)return;
   document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.amb===S.amb));
-  const q=S.q.trim().toLowerCase();
-  let L=R.filter(r=>(!S.dim||r.dim===S.dim)&&(!S.amb||r.amb===S.amb)&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,r.paises.join(' ')].join(' ').toLowerCase().includes(q)));
+  const base=R.filter(r=>inShelf(r)&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,r.paises.join(' '),(r.mod||[]).join(' ')].join(' ').toLowerCase().includes(q)));
+  if(S.kind==='tipo'){const c={};base.forEach(r=>r.mod.forEach(m=>c[m]=(c[m]||0)+1));
+    const ms=Object.keys(c).sort((a,b)=>(a===GEN)-(b===GEN)||c[b]-c[a]);
+    $('mods').innerHTML='<span class="mods-l">Modalidad (Reglamento, art. 8):</span>'+[`<button type="button" class="dim" data-m="" aria-pressed="${!S.mod}">Todas <em>${base.length}</em></button>`].concat(ms.map(m=>`<button type="button" class="dim" data-m="${esc(m)}" aria-pressed="${S.mod===m}">${esc(m)} <em>${c[m]}</em></button>`)).join('');
+    $('mods').hidden=false;document.querySelectorAll('#mods .dim').forEach(b=>b.onclick=()=>{S.mod=b.dataset.m;S.shown=20;show()});
+  }else $('mods').hidden=true;
+  let L=base.filter(r=>(!S.mod||(r.mod||[]).includes(S.mod))&&(!S.amb||r.amb===S.amb));
   L.sort(S.sort==='t'?(a,b)=>a.t.localeCompare(b.t,'es'):(a,b)=>(+b.y||0)-(+a.y||0));
-  $('rTitle').textContent=S.dim||`Resultados para «${S.q.trim()}»`;
+  $('rTitle').textContent=S.kind?S.val:`Resultados para «${S.q.trim()}»`;
   $('count').textContent=pl(L.length,'estudio','estudios');
-  $('cards').innerHTML=L.length?L.slice(0,S.shown).map(card).join(''):'<div class="empty">No hay estudios con esa búsqueda. Prueba con otra palabra o vuelve a las dimensiones.</div>';
+  $('cards').innerHTML=L.length?L.slice(0,S.shown).map(card).join(''):'<div class="empty">No hay estudios con esos filtros. Prueba con otra palabra u otra modalidad.</div>';
   $('more').hidden=L.length<=S.shown;$('more').textContent=`Ver más estudios (${L.length-S.shown} restantes)`;
   document.querySelectorAll('.paper [data-open]').forEach(b=>b.onclick=()=>{const n=+b.dataset.open;S.open=S.open===n?null:n;show()});
 }
 function card(r){const o=S.open===r.n,au=r.a?r.a.split(';')[0].trim()+(r.a.includes(';')?' et al.':''):'Autor no registrado';
   const pais=r.amb==='Nacional'?'Perú':(r.paises.length>2?'Varios países':r.paises.join(', ')||'Varios países');
+  const tags=r.tipos?(r.mod.filter(m=>m!==GEN).map(m=>`<span class="tag dimtag">${esc(m)}</span>`).join('')):`<span class="tag dimtag">${esc(r.dim)}</span>`;
+  const tipos=r.tipos?r.tipos.filter(t=>t!=='Estudios generales sobre violencia').map(t=>t.replace('Violencia ','')):[];
   const f=(t,v)=>v?`<dt>${t}</dt><dd>${esc(v)}</dd>`:'';
-  return `<article class="paper"><div class="tags">${S.dim?'':`<span class="tag dimtag">${esc(r.dim)}</span>`}<span class="tag ${r.amb==='Nacional'?'pe':'int'}">${r.amb} · ${esc(pais)}</span></div>
-   <h3>${esc(r.t)}</h3><div class="by">${esc(au)} · ${esc(r.y||'s. f.')}</div>
+  return `<article class="paper"><div class="tags">${tags}<span class="tag ${r.amb==='Nacional'?'pe':'int'}">${r.amb} · ${esc(pais)}</span></div>
+   <h3>${esc(r.t)}</h3><div class="by">${esc(au)} · ${esc(r.y||'s. f.')}${tipos.length?` · Violencia ${tipos.join(', ')}`:''}</div>
    <p class="gist">${esc(gist(r))}</p>
    <div class="row"><button type="button" data-open="${r.n}" aria-expanded="${o}">${o?'Cerrar ficha':'Ver ficha completa'}</button>${r.link?`<a href="${esc(r.link)}" target="_blank" rel="noopener">Leer el estudio ↗</a>`:''}</div>
-   ${o?`<dl>${f('Autoría',r.a)}${f('País',r.paises.join(', '))}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
-$('q').oninput=e=>{S.q=e.target.value;if(S.q.trim())S.dim='';S.shown=20;show()};
+   ${o?`<dl>${f('Autoría',r.a)}${f('País',r.paises.join(', '))}${f('Tipo de violencia',r.tipos?r.tipos.join(', '):'')}${f('Modalidad',r.tipos?r.mod.join(', '):'')}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
+$('q').oninput=e=>{S.q=e.target.value;if(S.q.trim()){S.kind='';S.val='';S.mod=''}S.shown=20;show()};
 $('sort').onchange=e=>{S.sort=e.target.value;show()};
-$('back').onclick=()=>{S.dim='';S.q='';$('q').value='';S.amb='';S.open=null;show();scrollTo({top:0})};
+$('back').onclick=()=>{Object.assign(S,{kind:'',val:'',mod:'',q:'',amb:'',open:null});$('q').value='';show();scrollTo({top:0})};
 document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{S.amb=b.dataset.amb;S.shown=20;show()});
 $('more').onclick=()=>{S.shown+=20;show()};
-fetch('data/estudios.json').then(r=>r.json()).then(d=>{R=d.rows;home();show()}).catch(()=>{$('shelves').innerHTML='<div class="empty">No se pudieron cargar los estudios. Recarga la página.</div>'});
+fetch('data/estudios.json').then(r=>r.json()).then(d=>{R=d.rows;home();show()}).catch(()=>{$('shelvesV').innerHTML='<div class="empty">No se pudieron cargar los estudios. Recarga la página.</div>'});
 </script>
 </body>
 </html>
