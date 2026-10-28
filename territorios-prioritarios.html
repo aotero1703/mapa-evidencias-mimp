@@ -168,7 +168,7 @@ const T={
  economica:{n:'Económica o patrimonial',k:'Económica o patrimonial',ramp:['#f4e4da','#dcab90','#a95b36','#5f2a14'],cnt:R.meta.eco}};
 const S={tipo:'total',dep:'',sel:null,q:'all'};
 const $=id=>document.getElementById(id), fmt=n=>typeof n==='number'?n.toLocaleString('es-PE'):(n==='<5'?'Menos de 5':n);
-const col=(t,l)=>l==='Sin casos'?'#e7edf2':l==='Dato reservado'?'#a5abb5':T[t].ramp[3-LV.indexOf(l)], base=t=>T[t].ramp[2], tint=t=>T[t].ramp[0];
+const col=(t,l)=>l==='Sin casos'?'#e7edf2':l==='Dato reservado'?'#e7edf2':T[t].ramp[3-LV.indexOf(l)], base=t=>T[t].ramp[2], tint=t=>T[t].ramp[0];
 const OFFICIAL_2025={fisica:62617,psicologica:74004,sexual:32180,economica:735,tent:270};
 const annualCount=(p,t)=>t==='total'?p.n:p.tipos[T[t].k];
 const quarterly=(p,t)=>t==='total'?p.trim:p.trimt[t];
@@ -216,8 +216,8 @@ function draw(){
   paths.attr('fill',f=>{const p=P[f.properties.c];if(!p)return 'var(--nodata)';return col(S.tipo,priority(p))})
    .attr('opacity',f=>{const p=P[f.properties.c];return S.dep&&p&&p.dep!==S.dep?.18:1}).classed('sel',f=>f.properties.c===S.sel);
   $('mapTitle').textContent=S.tipo==='total'?'Casos atendidos · Todos los tipos':`Casos atendidos · Violencia ${T[S.tipo].n.toLowerCase()}`;
-  $('mapContext').textContent=`Periodo: ${periodLabel()}. Ámbito: ${scopeName()}. Colores: cuartiles de tasas positivas conocidas de casos atendidos por 100 mil habitantes. Gris claro: cero casos registrados; gris oscuro: dato reservado (menos de 5). Las categorías son relativas a la atención registrada, no prevalencia ni riesgo causal.`;
-  $('legend').innerHTML=[...LV,'Sin casos','Dato reservado'].map(l=>`<span><i style="background:${col(S.tipo,l)}"></i>${l}</span>`).join('');
+  $('mapContext').textContent=`Periodo: ${periodLabel()}. Ámbito: ${scopeName()}. Colores: cuartiles de tasas positivas conocidas de casos atendidos por 100 mil habitantes. Las provincias con cero casos o sin tasa exacta se muestran en gris neutro, fuera de las cuatro categorías. Las categorías son relativas a la atención registrada, no prevalencia ni riesgo causal.`;
+  $('legend').innerHTML=LV.map(l=>`<span><i style="background:${col(S.tipo,l)}"></i>${l}</span>`).join('');
   const L=list().slice(0,10);
   $('rankSub').textContent=`Provincias de ${S.dep||'todo el Perú'} con mayor tasa de casos atendidos por 100 mil habitantes, ${periodLabel()}, ${S.tipo==='total'?'todos los tipos':'violencia '+T[S.tipo].n.toLowerCase()}. La tasa refleja atención registrada, no prevalencia. Selecciona una provincia para ver su ficha.`;
   $('rank').innerHTML=L.map((p,i)=>`<button type="button" class="zoom${p.c===S.sel?' on':''}" data-c="${p.c}" style="--c:${base(S.tipo)}"><span class="rk">${i+1}</span>${miniMap(p)}<b>${p.prov}</b><span class="d">${p.dep}</span><span class="v">${fmt(Math.round(rate(p)))} casos atendidos por 100 mil hab.</span></button>`).join('');
