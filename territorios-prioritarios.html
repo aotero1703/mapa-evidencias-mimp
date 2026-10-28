@@ -215,7 +215,7 @@ function draw(){
   renderTypes();
   paths.attr('fill',f=>{const p=P[f.properties.c];if(!p)return 'var(--nodata)';return col(S.tipo,priority(p))})
    .attr('opacity',f=>{const p=P[f.properties.c];return S.dep&&p&&p.dep!==S.dep?.18:1}).classed('sel',f=>f.properties.c===S.sel);
-  $('mapTitle').textContent=S.tipo==='total'?'Casos atendidos · Todos los tipos':`Casos atendidos · Violencia ${T[S.tipo].n.toLowerCase()}`;
+  $('mapTitle').textContent=S.tipo==='total'?'Casos atendidos · Total':`Casos atendidos · Violencia ${T[S.tipo].n.toLowerCase()}`;
   $('mapContext').textContent=`Periodo: ${periodLabel()}. Ámbito: ${scopeName()}. Colores: niveles relativos de la tasa de atención por 100 mil habitantes, calculados por cuartiles de tasas positivas conocidas. No son niveles de riesgo. Las provincias con cero casos o sin tasa exacta se muestran en gris neutro, fuera de las cuatro categorías. El riesgo severo se presenta por separado en la ficha y no determina los colores del mapa.`;
   $('legend').innerHTML=LV.map(l=>`<span><i style="background:${col(S.tipo,l)}"></i>${l}</span>`).join('');
   const L=list().slice(0,10);
