@@ -264,7 +264,7 @@ $('quarter').onchange=e=>{S.q=e.target.value;draw()};
 $('dep').onchange=e=>{S.dep=e.target.value;S.sel=null;draw();zoomTo(S.dep?GEO.features.filter(f=>P[f.properties.c]&&P[f.properties.c].dep===S.dep):null,.08)};
 $('reset').onclick=()=>{S.dep='';$('dep').value='';S.sel=null;draw();zoomTo(null)};
 draw();
-fetch('datos-sexo-edad-2025.csv').then(r=>{if(!r.ok)throw Error('No existe el archivo agregado');return r.text()}).then(csv=>{const map=new Map();for(const line of csv.trim().split(/\r?\n/).slice(1)){const [c,q,sex,age,type,n]=line.split(',');if(!n)continue;const key=[String(c).padStart(4,'0'),q,sex,age,type].join('|');map.set(key,(map.get(key)||0)+Number(n))}if(map.size<1000)throw Error('Archivo agregado incompleto');DEMOG=map;$('demogFilters').hidden=false;$('sexFilter').onchange=e=>{S.sex=e.target.value;draw()};$('ageFilter').onchange=e=>{S.age=e.target.value;draw()};draw()}).catch(e=>console.warn('Filtros demográficos pendientes de datos:',e.message));
+fetch('desagregacion_sexo_edad_2025.csv').then(r=>{if(!r.ok)throw Error('No existe el archivo agregado');return r.text()}).then(csv=>{const map=new Map();for(const line of csv.trim().split(/\r?\n/).slice(1)){const [c,q,sex,age,type,n]=line.split(',');if(!n)continue;const key=[String(c).padStart(4,'0'),q,sex,age,type].join('|');map.set(key,(map.get(key)||0)+Number(n))}if(map.size<1000)throw Error('Archivo agregado incompleto');DEMOG=map;$('demogFilters').hidden=false;$('sexFilter').onchange=e=>{S.sex=e.target.value;draw()};$('ageFilter').onchange=e=>{S.age=e.target.value;draw()};draw()}).catch(e=>console.warn('Filtros demográficos pendientes de datos:',e.message));
 </script>
 
 </body></html>
