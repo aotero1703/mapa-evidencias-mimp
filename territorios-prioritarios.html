@@ -168,16 +168,17 @@ const T={
  economica:{n:'Económica o patrimonial',k:'Económica o patrimonial',ramp:['#f4e4da','#dcab90','#a95b36','#5f2a14'],cnt:R.meta.eco}};
 const S={tipo:'total',dep:'',sel:null,q:'all'};
 const $=id=>document.getElementById(id), fmt=n=>typeof n==='number'?n.toLocaleString('es-PE'):(n==='<5'?'Menos de 5':n);
-const col=(t,l)=>T[t].ramp[3-LV.indexOf(l)], base=t=>T[t].ramp[2], tint=t=>T[t].ramp[0];
+const col=(t,l)=>l==='Sin casos'?'#e7edf2':l==='Dato reservado'?'#a5abb5':T[t].ramp[3-LV.indexOf(l)], base=t=>T[t].ramp[2], tint=t=>T[t].ramp[0];
 const OFFICIAL_2025={fisica:62617,psicologica:74004,sexual:32180,economica:735,tent:270};
 const annualCount=(p,t)=>t==='total'?p.n:p.tipos[T[t].k];
 const quarterly=(p,t)=>t==='total'?p.trim:p.trimt[t];
 const count=(p,t)=>S.q==='all'?annualCount(p,t):quarterly(p,t)[Number(S.q)];
 const periodLabel=()=>S.q==='all'?'enero–diciembre de 2025':['enero–marzo de 2025','abril–junio de 2025','julio–septiembre de 2025','octubre–diciembre de 2025'][Number(S.q)];
 const countValue=v=>typeof v==='number'?v:0;
-const rate=p=>p.pob>0?countValue(count(p,S.tipo))/p.pob*100000:0;
-const allRates=()=>R.provincias.map(rate).sort((a,b)=>a-b);
-const priority=p=>{const rr=allRates(),v=rate(p),n=rr.length;return v>=rr[Math.floor(n*.75)]?'Muy alta':v>=rr[Math.floor(n*.5)]?'Alta':v>=rr[Math.floor(n*.25)]?'Media':'Baja'};
+const rate=p=>{const n=count(p,S.tipo);return typeof n==='number'&&p.pob>0?n/p.pob*100000:null};
+let thresholds=[];
+const updateThresholds=()=>{const rr=R.provincias.map(rate).filter(v=>v!==null&&v>0).sort((a,b)=>a-b);const at=q=>rr.length?rr[Math.min(rr.length-1,Math.ceil(q*rr.length)-1)]:Infinity;thresholds=[at(.25),at(.5),at(.75)]};
+const priority=p=>{const v=rate(p);if(v===null)return 'Dato reservado';if(v===0)return 'Sin casos';if(v>thresholds[2])return 'Muy alta';if(v>thresholds[1])return 'Alta';if(v>thresholds[0])return 'Media';return 'Baja'};
 const officialNote='Fuente: registro de casos 2025 y reportes Warmi Ñan. Clasificación oficial según TIPO_VIO; las modalidades son respuestas múltiples.';
 const sumCases=(rows,k)=>{let n=0,hidden=0;for(const p of rows){const v=count(p,k);if(typeof v==='number')n+=v;else if(v==='<5')hidden++}return hidden?`${fmt(n)}–${fmt(n+4*hidden)}`:fmt(n)};
 const scope=()=>S.sel&&P[S.sel]?[P[S.sel]]:R.provincias.filter(p=>!S.dep||p.dep===S.dep);
@@ -206,16 +207,17 @@ function zoomTo(feats,pad){
   $('reset').hidden=k===1;
 }
 function tip(e,f){const p=P[f.properties.c],t=$('tip');
- t.innerHTML=p?`<b>${p.prov}</b> · ${p.dep}<br>Tasa relativa <b style="color:${col(S.tipo,priority(p))}">${priority(p).toLowerCase()}</b><br>${fmt(count(p,S.tipo))} casos · ${periodLabel()}`:'<b>Sin datos</b>';
+ t.innerHTML=p?`<b>${p.prov}</b> · ${p.dep}<br>Clasificación <b style="color:${col(S.tipo,priority(p))}">${priority(p).toLowerCase()}</b><br>${fmt(count(p,S.tipo))} casos · ${periodLabel()}`:'<b>Sin datos</b>';
  t.hidden=false;t.style.left=Math.min(e.clientX+14,innerWidth-t.offsetWidth-8)+'px';t.style.top=Math.min(e.clientY+14,innerHeight-t.offsetHeight-8)+'px'}
-const list=()=>R.provincias.filter(p=>!S.dep||p.dep===S.dep).sort((a,b)=>rate(b)-rate(a));
+const list=()=>R.provincias.filter(p=>(!S.dep||p.dep===S.dep)&&rate(p)!==null&&rate(p)>0).sort((a,b)=>rate(b)-rate(a));
 function draw(){
+  updateThresholds();
   renderTypes();
   paths.attr('fill',f=>{const p=P[f.properties.c];if(!p)return 'var(--nodata)';return col(S.tipo,priority(p))})
    .attr('opacity',f=>{const p=P[f.properties.c];return S.dep&&p&&p.dep!==S.dep?.18:1}).classed('sel',f=>f.properties.c===S.sel);
   $('mapTitle').textContent=S.tipo==='total'?'Casos atendidos · Todos los tipos':`Casos atendidos · Violencia ${T[S.tipo].n.toLowerCase()}`;
-  $('mapContext').textContent=`Periodo: ${periodLabel()}. Ámbito: ${scopeName()}. Colores: cuartiles de la tasa de casos atendidos por 100 mil habitantes entre provincias. Son niveles relativos de atención registrada, no prevalencia ni riesgo causal.`;
-  $('legend').innerHTML=LV.map(l=>`<span><i style="background:${col(S.tipo,l)}"></i>${l}</span>`).join('');
+  $('mapContext').textContent=`Periodo: ${periodLabel()}. Ámbito: ${scopeName()}. Colores: cuartiles de tasas positivas conocidas de casos atendidos por 100 mil habitantes. Gris claro: cero casos registrados; gris oscuro: dato reservado (menos de 5). Las categorías son relativas a la atención registrada, no prevalencia ni riesgo causal.`;
+  $('legend').innerHTML=[...LV,'Sin casos','Dato reservado'].map(l=>`<span><i style="background:${col(S.tipo,l)}"></i>${l}</span>`).join('');
   const L=list().slice(0,10);
   $('rankSub').textContent=`Provincias de ${S.dep||'todo el Perú'} con mayor tasa de casos atendidos por 100 mil habitantes, ${periodLabel()}, ${S.tipo==='total'?'todos los tipos':'violencia '+T[S.tipo].n.toLowerCase()}. La tasa refleja atención registrada, no prevalencia. Selecciona una provincia para ver su ficha.`;
   $('rank').innerHTML=L.map((p,i)=>`<button type="button" class="zoom${p.c===S.sel?' on':''}" data-c="${p.c}" style="--c:${base(S.tipo)}"><span class="rk">${i+1}</span>${miniMap(p)}<b>${p.prov}</b><span class="d">${p.dep}</span><span class="v">${fmt(Math.round(rate(p)))} casos atendidos por 100 mil hab.</span></button>`).join('');
@@ -235,9 +237,9 @@ function ficha(p,auto){if(!p){$('ficha').innerHTML='<p>Elige una provincia en el
   const ch=typeof tri[0]==='number'&&tri[0]>0&&typeof tri[3]==='number'?Math.round((tri[3]-tri[0])/tri[0]*100):null;
   const mini=['total','fisica','psicologica','sexual','economica'].map(k=>{const v=count(p,k);return `<button type="button" data-t="${k}" aria-pressed="${S.tipo===k}" style="--c:${base(k)};--t:${tint(k)}"><b>${fmt(v)}</b><span>${T[k].n.replace(' o patrimonial','')}</span></button>`}).join('');
   $('ficha').innerHTML=`<p class="sub">${auto?'Provincia destacada por tasa de atención':'Provincia seleccionada'}</p><h3>${p.prov}</h3><div class="dep">Provincia: ${p.prov} · Departamento: ${p.dep} · ${fmt(p.pob)} habitantes</div>
-   <span class="pill" style="background:${col(S.tipo,lv)};color:${LV.indexOf(lv)>=2?'#171c33':'#fff'}">Tasa de atención ${lv.toLowerCase()}</span>
+   <span class="pill" style="background:${col(S.tipo,lv)};color:${LV.indexOf(lv)>=2?'#171c33':'#fff'}">${lv==='Sin casos'||lv==='Dato reservado'?lv:'Tasa de atención '+lv.toLowerCase()}</span>
    <div class="stats"><div class="stat"><b>${fmt(nT)}</b><span>${S.tipo==='total'?'casos registrados (todos los tipos)':'casos de violencia '+T[S.tipo].n.toLowerCase()} · ${periodLabel()}</span></div>
-   <div class="stat"><b>${fmt(Math.round(rate(p)))}</b><span>casos atendidos por 100 mil hab. · ${periodLabel()}</span></div>
+   <div class="stat"><b>${rate(p)===null?'Reservado':fmt(Math.round(rate(p)))}</b><span>casos atendidos por 100 mil hab. · ${periodLabel()}</span></div>
    <div class="stat"><b>${p.psev}%</b><span>de casos con riesgo severo · total 2025 (no filtrado por trimestre)</span></div>
    <div class="stat"><b>${fmt(p.tent)}</b><span>tentativas de feminicidio en ${p.prov} · total 2025 (no filtrado por trimestre)</span></div></div>
    <p class="sub">Casos por tipo de violencia · ${p.prov} · ${periodLabel()}</p><div class="mini">${mini}</div>
