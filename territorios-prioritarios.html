@@ -168,11 +168,13 @@ const T={
 const S={tipo:'total',dep:'',sel:null};
 const $=id=>document.getElementById(id), fmt=n=>typeof n==='number'?n.toLocaleString('es-PE'):(n==='<5'?'Menos de 5':n);
 const col=(t,l)=>T[t].ramp[3-LV.indexOf(l)], base=t=>T[t].ramp[2], tint=t=>T[t].ramp[0];
+const OFFICIAL_2025={fisica:62617,psicologica:74004,sexual:32180,economica:735,tent:270};
 const count=(p,t)=>t==='total'?p.n:p.tipos[T[t].k];
+const officialNote='Fuente: reportes nacionales Warmi Ñan, enero–diciembre 2025. Los desgloses provinciales corresponden a la base georreferenciada del tablero y pueden diferir del total nacional.';
 const sumCases=(rows,k)=>{let n=0,hidden=0;for(const p of rows){const v=count(p,k);if(typeof v==='number')n+=v;else if(v==='<5')hidden++}return hidden?`${fmt(n)}–${fmt(n+4*hidden)}`:fmt(n)};
 const scope=()=>S.sel&&P[S.sel]?[P[S.sel]]:R.provincias.filter(p=>!S.dep||p.dep===S.dep);
 const scopeName=()=>S.sel&&P[S.sel]?P[S.sel].prov:S.dep||'Perú';
-function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${sumCases(rows,k)} casos · ${scopeName()}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
+function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${!S.dep&&!S.sel&&k!=='total'?fmt(OFFICIAL_2025[k]):sumCases(rows,k)} casos · ${scopeName()}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
 function tentativeRange(rows){let lo=0,hi=0;for(const p of rows){if(typeof p.tent==='number'){lo+=p.tent;hi+=p.tent}else if(p.tent==='<5'){hi+=4}}return {lo,hi}}
 function tentLabel(r){return r.lo===r.hi?fmt(r.lo):`${fmt(r.lo)}–${fmt(r.hi)}`}
 // El selector se actualiza según el territorio seleccionado.
@@ -231,7 +233,7 @@ function ficha(p,auto){if(!p){$('ficha').innerHTML='<p>Elige una provincia en el
    <div class="stat"><b>${p.psev}%</b><span>de casos con riesgo severo</span></div>
    <div class="stat"><b>${fmt(p.tent)}</b><span>tentativas de feminicidio en ${p.prov} (2025)</span></div></div>
    <p class="sub">Casos por tipo de violencia · ${p.prov} (2025)</p><div class="mini">${mini}</div>
-   <p class="method">Tentativas de feminicidio (2025): ${p.dep}, ${tentLabel(tentativeRange(R.provincias.filter(x=>x.dep===p.dep)))}; Perú, ${tentLabel(tentativeRange(R.provincias))}. Los rangos incluyen cifras provinciales protegidas (menos de 5); no son totales exactos.</p>
+   <p class="method">Tentativas de feminicidio (2025): ${p.dep}, ${tentLabel(tentativeRange(R.provincias.filter(x=>x.dep===p.dep)))}; Perú, ${tentLabel(tentativeRange(R.provincias))}. Total nacional oficial: 270 tentativas. Los rangos departamentales provienen de cifras provinciales reservadas y no deben interpretarse como totales oficiales.</p>
    <p class="method">Un caso puede registrar más de un tipo de violencia. Por eso, la suma por tipos puede superar el total de casos.</p>
    <p class="sub">Evolución trimestral · ${S.tipo==='total'?'Todos los tipos':'Violencia '+T[S.tipo].n.toLowerCase()} · ${p.prov} (2025)</p><div class="cols">${columns(tri,base(S.tipo))}</div><p class="context">Total anual de la serie: ${fmt(tri.reduce((a,b)=>a+b,0))} casos${tri.reduce((a,b)=>a+b,0)===nT?' · coincide con el indicador anual':' · revisar consistencia con el indicador anual'}.</p>
    ${ch!==null?`<p class="trend">${ch===0?'Los casos se mantuvieron igual':`Los casos <b>${ch>0?'aumentaron':'disminuyeron'} ${Math.abs(ch)}%</b>`} entre enero–marzo y octubre–diciembre de 2025.</p>`:''}
