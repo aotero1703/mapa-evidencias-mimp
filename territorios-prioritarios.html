@@ -1,6 +1,7 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 @media(max-width:700px){.types{grid-template-columns:repeat(2,minmax(0,1fr))}.mini{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .context{font-size:.83rem;color:var(--ink-soft);margin:8px 0 0}.method{font-size:.82rem;color:var(--ink-soft);background:#f2f5fa;border-radius:10px;padding:10px 12px;margin-top:10px}
+.period-filter{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 18px;padding:14px 16px;border:1px solid #dce4ee;border-radius:14px;background:#f6f9fc}.period-filter select{border:1px solid #c6d2df;border-radius:9px;padding:9px 12px;background:#fff;color:#172244}.period-filter span{font-size:.82rem;color:#59657b}.cols .active-quarter{stroke:#172244;stroke-width:2.5}
 </style></head><body>
 <title>Territorios Prioritarios · Observatorio Nacional</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -122,12 +123,12 @@ footer b{color:#fff}
   <div class="wrap">
     <span class="badge">Prototipo · uso interno</span>
     <h1>Territorios Prioritarios</h1>
-    <p>¿En qué provincias conviene intervenir primero? Lo estimamos con los casos atendidos por los Centros Emergencia Mujer y Familia en 2025, proyectados a enero–marzo de 2026.</p>
+    <p>¿En qué provincias conviene intervenir primero? Explora los casos atendidos por los Centros Emergencia Mujer y Familia durante 2025. Compara departamentos, provincias, tipos de violencia y trimestres.</p>
   </div>
 </section>
 
 <main class="wrap">
-  <div class="types" id="types" role="group" aria-label="Tipo de violencia"></div>
+  <div class="period-filter"><label for="quarter"><b>Periodo de análisis</b></label><select id="quarter" aria-label="Trimestre de 2025"><option value="all">Todo 2025</option><option value="0">Enero–marzo 2025</option><option value="1">Abril–junio 2025</option><option value="2">Julio–septiembre 2025</option><option value="3">Octubre–diciembre 2025</option></select><span>Los indicadores y el ranking se actualizan con el periodo elegido.</span></div><div class="types" id="types" role="group" aria-label="Tipo de violencia"></div>
 
   <div class="grid">
     <div class="card">
@@ -165,16 +166,23 @@ const T={
  psicologica:{n:'Psicológica',k:'Psicológica',ramp:['#fbeecf','#efc977','#d19718','#8a5d04'],cnt:R.meta.nac['Psicológica']},
  sexual:{n:'Sexual',k:'Sexual',ramp:['#ece4f6','#c0a8e1','#7c54b9','#41216f'],cnt:R.meta.nac['Sexual']},
  economica:{n:'Económica o patrimonial',k:'Económica o patrimonial',ramp:['#f4e4da','#dcab90','#a95b36','#5f2a14'],cnt:R.meta.eco}};
-const S={tipo:'total',dep:'',sel:null};
+const S={tipo:'total',dep:'',sel:null,q:'all'};
 const $=id=>document.getElementById(id), fmt=n=>typeof n==='number'?n.toLocaleString('es-PE'):(n==='<5'?'Menos de 5':n);
 const col=(t,l)=>T[t].ramp[3-LV.indexOf(l)], base=t=>T[t].ramp[2], tint=t=>T[t].ramp[0];
 const OFFICIAL_2025={fisica:62617,psicologica:74004,sexual:32180,economica:735,tent:270};
-const count=(p,t)=>t==='total'?p.n:p.tipos[T[t].k];
+const annualCount=(p,t)=>t==='total'?p.n:p.tipos[T[t].k];
+const quarterly=(p,t)=>t==='total'?p.trim:p.trimt[t];
+const count=(p,t)=>S.q==='all'?annualCount(p,t):quarterly(p,t)[Number(S.q)];
+const periodLabel=()=>S.q==='all'?'enero–diciembre de 2025':['enero–marzo de 2025','abril–junio de 2025','julio–septiembre de 2025','octubre–diciembre de 2025'][Number(S.q)];
+const countValue=v=>typeof v==='number'?v:0;
+const rate=p=>p.pob>0?countValue(count(p,S.tipo))/p.pob*100000:0;
+const allRates=()=>R.provincias.map(rate).sort((a,b)=>a-b);
+const priority=p=>{const rr=allRates(),v=rate(p),n=rr.length;return v>=rr[Math.floor(n*.75)]?'Muy alta':v>=rr[Math.floor(n*.5)]?'Alta':v>=rr[Math.floor(n*.25)]?'Media':'Baja'};
 const officialNote='Fuente: registro de casos 2025 y reportes Warmi Ñan. Clasificación oficial según TIPO_VIO; las modalidades son respuestas múltiples.';
-const sumCases=(rows,k)=>{let n=0,hidden=0;for(const p of rows){const v=count(p,k);if(typeof v==='number')n+=v;else if(v==='<5')hidden++}return hidden?`${fmt(n+hidden)}–${fmt(n+4*hidden)}`:fmt(n)};
+const sumCases=(rows,k)=>{let n=0,hidden=0;for(const p of rows){const v=count(p,k);if(typeof v==='number')n+=v;else if(v==='<5')hidden++}return hidden?`${fmt(n)}–${fmt(n+4*hidden)}`:fmt(n)};
 const scope=()=>S.sel&&P[S.sel]?[P[S.sel]]:R.provincias.filter(p=>!S.dep||p.dep===S.dep);
 const scopeName=()=>S.sel&&P[S.sel]?P[S.sel].prov:S.dep||'Perú';
-function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${!S.dep&&!S.sel?(k==='total'?fmt(R.meta.casos):fmt(OFFICIAL_2025[k])):sumCases(rows,k)} casos · ${scopeName()}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
+function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${S.q==='all'&&!S.dep&&!S.sel?(k==='total'?fmt(R.meta.casos):fmt(OFFICIAL_2025[k])):sumCases(rows,k)} casos · ${scopeName()}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
 function tentativeRange(rows){let lo=0,hi=0;for(const p of rows){if(typeof p.tent==='number'){lo+=p.tent;hi+=p.tent}else if(p.tent==='<5'){hi+=4}}return {lo,hi}}
 function tentLabel(r){return r.lo===r.hi?fmt(r.lo):`${fmt(r.lo)}–${fmt(r.hi)}`}
 // El selector se actualiza según el territorio seleccionado.
@@ -198,19 +206,19 @@ function zoomTo(feats,pad){
   $('reset').hidden=k===1;
 }
 function tip(e,f){const p=P[f.properties.c],t=$('tip');
- t.innerHTML=p?`<b>${p.prov}</b> · ${p.dep}<br>Prioridad <b style="color:${col(S.tipo,p.nivel[S.tipo])}">${p.nivel[S.tipo].toLowerCase()}</b><br>${fmt(count(p,S.tipo))} casos registrados en 2025`:'<b>Sin datos</b>';
+ t.innerHTML=p?`<b>${p.prov}</b> · ${p.dep}<br>Prioridad <b style="color:${col(S.tipo,priority(p))}">${priority(p).toLowerCase()}</b><br>${fmt(count(p,S.tipo))} casos registrados en 2025`:'<b>Sin datos</b>';
  t.hidden=false;t.style.left=Math.min(e.clientX+14,innerWidth-t.offsetWidth-8)+'px';t.style.top=Math.min(e.clientY+14,innerHeight-t.offsetHeight-8)+'px'}
-const list=()=>R.provincias.filter(p=>!S.dep||p.dep===S.dep).sort((a,b)=>b.pred[S.tipo]-a.pred[S.tipo]);
+const list=()=>R.provincias.filter(p=>!S.dep||p.dep===S.dep).sort((a,b)=>rate(b)-rate(a));
 function draw(){
   renderTypes();
-  paths.attr('fill',f=>{const p=P[f.properties.c];if(!p)return 'var(--nodata)';return col(S.tipo,p.nivel[S.tipo])})
+  paths.attr('fill',f=>{const p=P[f.properties.c];if(!p)return 'var(--nodata)';return col(S.tipo,priority(p))})
    .attr('opacity',f=>{const p=P[f.properties.c];return S.dep&&p&&p.dep!==S.dep?.18:1}).classed('sel',f=>f.properties.c===S.sel);
-  $('mapTitle').textContent=S.tipo==='total'?'Prioridad territorial · Todos los tipos':`Prioridad territorial · Violencia ${T[S.tipo].n.toLowerCase()}`;
-  $('mapContext').textContent=`Ámbito: ${scopeName()}. Colores: prioridad estimada por provincia para ${S.tipo==='total'?'el conjunto de casos':'violencia '+T[S.tipo].n.toLowerCase()}, según el indicador del modelo. No representan el número absoluto de casos ni una medida directa de prevalencia. La estimación de prioridad de 2026 es preliminar y requiere recalibración con la clasificación oficial de 2025.`;
+  $('mapTitle').textContent=S.tipo==='total'?'Casos atendidos · Todos los tipos':`Casos atendidos · Violencia ${T[S.tipo].n.toLowerCase()}`;
+  $('mapContext').textContent=`Periodo: ${periodLabel()}. Ámbito: ${scopeName()}. Colores: cuartiles de la tasa de casos atendidos por 100 mil habitantes entre provincias. Son niveles relativos de atención registrada, no prevalencia ni riesgo causal.`;
   $('legend').innerHTML=LV.map(l=>`<span><i style="background:${col(S.tipo,l)}"></i>${l}</span>`).join('');
   const L=list().slice(0,10);
-  $('rankSub').textContent=`Ámbito: ${S.dep||'todo el Perú'}. Provincias ordenadas por casos esperados por cada 100 mil habitantes (${S.tipo==='total'?'todos los tipos':'violencia '+T[S.tipo].n.toLowerCase()}), enero–marzo de 2026. Esta es una clasificación del indicador estimado, no una comparación directa de prevalencia. Selecciona una provincia para actualizar su ficha.`;
-  $('rank').innerHTML=L.map((p,i)=>`<button type="button" class="zoom${p.c===S.sel?' on':''}" data-c="${p.c}" style="--c:${base(S.tipo)}"><span class="rk">${i+1}</span>${miniMap(p)}<b>${p.prov}</b><span class="d">${p.dep}</span><span class="v">${fmt(Math.round(p.pred[S.tipo]))} casos esperados por 100 mil hab.</span></button>`).join('');
+  $('rankSub').textContent=`Provincias de ${S.dep||'todo el Perú'} con mayor tasa de casos atendidos por 100 mil habitantes, ${periodLabel()}, ${S.tipo==='total'?'todos los tipos':'violencia '+T[S.tipo].n.toLowerCase()}. La tasa refleja atención registrada, no prevalencia. Selecciona una provincia para ver su ficha.`;
+  $('rank').innerHTML=L.map((p,i)=>`<button type="button" class="zoom${p.c===S.sel?' on':''}" data-c="${p.c}" style="--c:${base(S.tipo)}"><span class="rk">${i+1}</span>${miniMap(p)}<b>${p.prov}</b><span class="d">${p.dep}</span><span class="v">${fmt(Math.round(rate(p)))} casos atendidos por 100 mil hab.</span></button>`).join('');
   document.querySelectorAll('#rank .zoom').forEach(b=>b.onclick=()=>{pick(b.dataset.c);document.querySelector('.grid').scrollIntoView({block:'start',behavior:RM?'auto':'smooth'})});
   ficha(S.sel?P[S.sel]:list()[0],!S.sel);
 }
@@ -220,26 +228,27 @@ function miniMap(p){
   const pr=d3.geoMercator().fitExtent([[6,6],[94,94]],{type:'FeatureCollection',features:dep}),pa=d3.geoPath(pr);
   return `<svg viewBox="0 0 100 100" aria-hidden="true">${dep.map(f=>`<path d="${pa(f)}" fill="${f===me?base(S.tipo):'#dfe2ea'}" stroke="#fff" stroke-width=".6"/>`).join('')}</svg>`}
 function columns(v,color){const w=300,h=120,bw=46,gap=(w-4*bw)/5,mx=Math.max(...v.filter(x=>typeof x==='number'),1);
-  return `<svg viewBox="0 0 ${w} ${h+34}" role="img" aria-label="Casos por trimestre: ${v.join(', ')}">`+v.map((x,i)=>{const bh=typeof x==='number'?Math.max(x===0?0:3,x/mx*(h-22)):0,xx=gap+i*(bw+gap);
-   return `<rect x="${xx}" y="${h-bh}" width="${bw}" height="${bh}" rx="5" fill="${color}"/><text x="${xx+bw/2}" y="${h-bh-6}" text-anchor="middle" font-size="12" font-weight="700" fill="#171c33">${fmt(x)}</text><text x="${xx+bw/2}" y="${h+18}" text-anchor="middle" font-size="11" fill="#4a5068">${['Ene–Mar','Abr–Jun','Jul–Set','Oct–Dic'][i]}</text>`}).join('')+`<line x1="0" x2="${w}" y1="${h}" y2="${h}" stroke="#e3e6ee"/></svg>`}
+  return `<svg viewBox="0 0 ${w} ${h+34}" role="img" aria-label="Casos por trimestre: ${v.join(', ')}">`+v.map((x,i)=>{const bh=typeof x==='number'?Math.max(x===0?0:3,x/mx*(h-22)):0,xx=gap+i*(bw+gap),active=S.q!=='all'&&Number(S.q)===i;
+   return `<rect class="${active?'active-quarter':''}" x="${xx}" y="${h-bh}" width="${bw}" height="${bh}" rx="5" fill="${color}" opacity="${S.q==='all'||active?1:.32}"/><text x="${xx+bw/2}" y="${h-bh-6}" text-anchor="middle" font-size="12" font-weight="700" fill="#171c33">${fmt(x)}</text><text x="${xx+bw/2}" y="${h+18}" text-anchor="middle" font-size="11" fill="#4a5068">${['Ene–Mar','Abr–Jun','Jul–Set','Oct–Dic'][i]}</text>`}).join('')+`<line x1="0" x2="${w}" y1="${h}" y2="${h}" stroke="#e3e6ee"/></svg>`}
 function ficha(p,auto){if(!p){$('ficha').innerHTML='<p>Elige una provincia en el mapa.</p>';return}
-  const lv=p.nivel[S.tipo],tri=S.tipo==='total'?p.trim:p.trimt[S.tipo],nT=count(p,S.tipo);
+  const lv=priority(p),tri=quarterly(p,S.tipo),nT=count(p,S.tipo);
   const ch=typeof tri[0]==='number'&&tri[0]>0&&typeof tri[3]==='number'?Math.round((tri[3]-tri[0])/tri[0]*100):null;
   const mini=['total','fisica','psicologica','sexual','economica'].map(k=>{const v=count(p,k);return `<button type="button" data-t="${k}" aria-pressed="${S.tipo===k}" style="--c:${base(k)};--t:${tint(k)}"><b>${fmt(v)}</b><span>${T[k].n.replace(' o patrimonial','')}</span></button>`}).join('');
-  $('ficha').innerHTML=`<p class="sub">${auto?'Provincia con mayor indicador estimado':'Provincia seleccionada'} · ${p.dep}</p><h3>${p.prov}</h3><div class="dep">${p.dep} · ${fmt(p.pob)} habitantes</div>
-   <span class="pill" style="background:${col(S.tipo,lv)};color:${LV.indexOf(lv)>=2?'#171c33':'#fff'}">Prioridad ${lv.toLowerCase()}</span>
-   <div class="stats"><div class="stat"><b>${fmt(nT)}</b><span>${S.tipo==='total'?'casos registrados (todos los tipos)':'casos de violencia '+T[S.tipo].n.toLowerCase()} en 2025</span></div>
-   <div class="stat"><b>${fmt(Math.round(p.pred[S.tipo]))}</b><span>estimación preliminar por 100 mil hab. (2026; pendiente de recalibración)</span></div>
+  $('ficha').innerHTML=`<p class="sub">${auto?'Provincia destacada por tasa de atención':'Provincia seleccionada'}</p><h3>${p.prov}</h3><div class="dep">Provincia: ${p.prov} · Departamento: ${p.dep} · ${fmt(p.pob)} habitantes</div>
+   <span class="pill" style="background:${col(S.tipo,lv)};color:${LV.indexOf(lv)>=2?'#171c33':'#fff'}">Tasa de atención ${lv.toLowerCase()}</span>
+   <div class="stats"><div class="stat"><b>${fmt(nT)}</b><span>${S.tipo==='total'?'casos registrados (todos los tipos)':'casos de violencia '+T[S.tipo].n.toLowerCase()} · ${periodLabel()}</span></div>
+   <div class="stat"><b>${fmt(Math.round(rate(p)))}</b><span>casos atendidos por 100 mil hab. · ${periodLabel()}</span></div>
    <div class="stat"><b>${p.psev}%</b><span>de casos con riesgo severo</span></div>
    <div class="stat"><b>${fmt(p.tent)}</b><span>tentativas de feminicidio en ${p.prov} (2025)</span></div></div>
-   <p class="sub">Casos por tipo de violencia · ${p.prov} (2025)</p><div class="mini">${mini}</div>
+   <p class="sub">Casos por tipo de violencia · ${p.prov} · ${periodLabel()}</p><div class="mini">${mini}</div>
    <p class="method">Tentativas de feminicidio (2025): ${p.dep}, ${tentLabel(tentativeRange(R.provincias.filter(x=>x.dep===p.dep)))}; Perú, 270. Total nacional oficial: 270 tentativas. Los rangos departamentales provienen de cifras provinciales reservadas y no deben interpretarse como totales oficiales.</p>
    <p class="method">Cada caso se cuenta una vez según su tipo principal (TIPO_VIO). Las modalidades específicas pueden coexistir.</p>
-   <p class="sub">Evolución trimestral · ${S.tipo==='total'?'Todos los tipos':'Violencia '+T[S.tipo].n.toLowerCase()} · ${p.prov} (2025)</p><div class="cols">${columns(tri,base(S.tipo))}</div><p class="context">Total anual: ${typeof nT==='number'?fmt(nT):'menos de 5'} casos. ${tri.some(x=>typeof x!=='number')?'Los valores trimestrales inferiores a 5 se ocultan por confidencialidad.':tri.reduce((a,b)=>a+b,0)===nT?'Los cuatro trimestres coinciden con el total anual.':'Revisar consistencia de la serie.'}</p>
-   ${ch!==null?`<p class="trend">${ch===0?'Los casos se mantuvieron igual':`Los casos <b>${ch>0?'aumentaron':'disminuyeron'} ${Math.abs(ch)}%</b>`} entre enero–marzo y octubre–diciembre de 2025.</p>`:''}
+   <p class="sub">Evolución trimestral · ${S.tipo==='total'?'Todos los tipos':'Violencia '+T[S.tipo].n.toLowerCase()} · ${p.prov} (2025)</p><div class="cols">${columns(tri,base(S.tipo))}</div><p class="context">Total anual: ${typeof annualCount(p,S.tipo)==='number'?fmt(annualCount(p,S.tipo)):'menos de 5'} casos. ${tri.some(x=>typeof x!=='number')?'Los valores trimestrales inferiores a 5 se ocultan por confidencialidad.':tri.reduce((a,b)=>a+b,0)===annualCount(p,S.tipo)?'Los cuatro trimestres coinciden con el total anual.':'Revisar consistencia de la serie.'}</p>
+   ${S.q==='all'&&ch!==null?`<p class="trend">${ch===0?'Los casos se mantuvieron igual':`Los casos <b>${ch>0?'aumentaron':'disminuyeron'} ${Math.abs(ch)}%</b>`} entre enero–marzo y octubre–diciembre de 2025.</p>`:''}
    ${p.n<50?'<p class="note">Pocos casos registrados: puede reflejar menor acceso a un CEM más que menos violencia.</p>':''}`;
   document.querySelectorAll('.mini button').forEach(b=>b.onclick=()=>setTipo(b.dataset.t));
 }
+$('quarter').onchange=e=>{S.q=e.target.value;draw()};
 $('dep').onchange=e=>{S.dep=e.target.value;S.sel=null;draw();zoomTo(S.dep?GEO.features.filter(f=>P[f.properties.c]&&P[f.properties.c].dep===S.dep):null,.08)};
 $('reset').onclick=()=>{S.dep='';$('dep').value='';S.sel=null;draw();zoomTo(null)};
 draw();
