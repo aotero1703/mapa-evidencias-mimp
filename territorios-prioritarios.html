@@ -174,7 +174,7 @@ const officialNote='Fuente: registro de casos 2025 y reportes Warmi Ñan. Clasif
 const sumCases=(rows,k)=>{let n=0,hidden=0;for(const p of rows){const v=count(p,k);if(typeof v==='number')n+=v;else if(v==='<5')hidden++}return hidden?`${fmt(n+hidden)}–${fmt(n+4*hidden)}`:fmt(n)};
 const scope=()=>S.sel&&P[S.sel]?[P[S.sel]]:R.provincias.filter(p=>!S.dep||p.dep===S.dep);
 const scopeName=()=>S.sel&&P[S.sel]?P[S.sel].prov:S.dep||'Perú';
-function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${!S.dep&&!S.sel&&k!=='total'?fmt(OFFICIAL_2025[k]):sumCases(rows,k)} casos · ${scopeName()}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
+function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${!S.dep&&!S.sel?(k==='total'?fmt(R.meta.casos):fmt(OFFICIAL_2025[k])):sumCases(rows,k)} casos · ${scopeName()}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
 function tentativeRange(rows){let lo=0,hi=0;for(const p of rows){if(typeof p.tent==='number'){lo+=p.tent;hi+=p.tent}else if(p.tent==='<5'){hi+=4}}return {lo,hi}}
 function tentLabel(r){return r.lo===r.hi?fmt(r.lo):`${fmt(r.lo)}–${fmt(r.hi)}`}
 // El selector se actualiza según el territorio seleccionado.
@@ -206,7 +206,7 @@ function draw(){
   paths.attr('fill',f=>{const p=P[f.properties.c];if(!p)return 'var(--nodata)';return col(S.tipo,p.nivel[S.tipo])})
    .attr('opacity',f=>{const p=P[f.properties.c];return S.dep&&p&&p.dep!==S.dep?.18:1}).classed('sel',f=>f.properties.c===S.sel);
   $('mapTitle').textContent=S.tipo==='total'?'Prioridad territorial · Todos los tipos':`Prioridad territorial · Violencia ${T[S.tipo].n.toLowerCase()}`;
-  $('mapContext').textContent=`Ámbito: ${scopeName()}. Colores: prioridad estimada por provincia para ${S.tipo==='total'?'el conjunto de casos':'violencia '+T[S.tipo].n.toLowerCase()}, según el indicador del modelo. No representan el número absoluto de casos ni una medida directa de prevalencia.`;
+  $('mapContext').textContent=`Ámbito: ${scopeName()}. Colores: prioridad estimada por provincia para ${S.tipo==='total'?'el conjunto de casos':'violencia '+T[S.tipo].n.toLowerCase()}, según el indicador del modelo. No representan el número absoluto de casos ni una medida directa de prevalencia. La estimación de prioridad de 2026 es preliminar y requiere recalibración con la clasificación oficial de 2025.`;
   $('legend').innerHTML=LV.map(l=>`<span><i style="background:${col(S.tipo,l)}"></i>${l}</span>`).join('');
   const L=list().slice(0,10);
   $('rankSub').textContent=`Ámbito: ${S.dep||'todo el Perú'}. Provincias ordenadas por casos esperados por cada 100 mil habitantes (${S.tipo==='total'?'todos los tipos':'violencia '+T[S.tipo].n.toLowerCase()}), enero–marzo de 2026. Esta es una clasificación del indicador estimado, no una comparación directa de prevalencia. Selecciona una provincia para actualizar su ficha.`;
@@ -229,7 +229,7 @@ function ficha(p,auto){if(!p){$('ficha').innerHTML='<p>Elige una provincia en el
   $('ficha').innerHTML=`<p class="sub">${auto?'Provincia con mayor indicador estimado':'Provincia seleccionada'} · ${p.dep}</p><h3>${p.prov}</h3><div class="dep">${p.dep} · ${fmt(p.pob)} habitantes</div>
    <span class="pill" style="background:${col(S.tipo,lv)};color:${LV.indexOf(lv)>=2?'#171c33':'#fff'}">Prioridad ${lv.toLowerCase()}</span>
    <div class="stats"><div class="stat"><b>${fmt(nT)}</b><span>${S.tipo==='total'?'casos registrados (todos los tipos)':'casos de violencia '+T[S.tipo].n.toLowerCase()} en 2025</span></div>
-   <div class="stat"><b>${fmt(Math.round(p.pred[S.tipo]))}</b><span>casos esperados por 100 mil hab. (2026)</span></div>
+   <div class="stat"><b>${fmt(Math.round(p.pred[S.tipo]))}</b><span>estimación preliminar por 100 mil hab. (2026; pendiente de recalibración)</span></div>
    <div class="stat"><b>${p.psev}%</b><span>de casos con riesgo severo</span></div>
    <div class="stat"><b>${fmt(p.tent)}</b><span>tentativas de feminicidio en ${p.prov} (2025)</span></div></div>
    <p class="sub">Casos por tipo de violencia · ${p.prov} (2025)</p><div class="mini">${mini}</div>
