@@ -1,0 +1,62 @@
+# Catálogo de "tipos de solución" del Banco de Evidencias (inspirado en la Plataforma de Evidencias del BID),
+# organizado por los ejes de la Ley N.° 30364. Cada caso remite al N.° de la matriz. POR VALIDAR por el Observatorio.
+# Efectividad: Efectivo · Prometedor · Evidencias mixtas · Sin efecto · En evaluación
+# Efecto de cada caso: Positivo · Mixto · Sin efecto · Sin resultados aún
+import json
+EJES=[
+ ('prevencion','Prevención','Acciones para evitar que la violencia ocurra: cambiar normas y estereotipos, fortalecer la autonomía de las mujeres y reducir factores de riesgo.','Ley N.° 30364, Título III'),
+ ('atencion','Atención y recuperación','Servicios que reciben, orientan y acompañan a las víctimas, y el cuidado de quienes las atienden.','Ley N.° 30364, Título III'),
+ ('proteccion','Protección y sanción','Medidas de protección, procesos de tutela y respuesta del sistema de justicia.','Ley N.° 30364, Título II'),
+ ('reeducacion','Reeducación de personas agresoras','Programas para que las personas agresoras dejen de ejercer violencia.','Ley N.° 30364, Título III'),
+]
+SOL=[
+ dict(id='transferencias',eje='prevencion',n='Transferencias monetarias condicionadas',ef='Prometedor',tipos=['Física'],
+  d='Entrega periódica de dinero a hogares en pobreza a cambio de cumplir compromisos de salud y educación, como el programa JUNTOS.',
+  ev='En el Perú, JUNTOS redujo entre 25% y 30% la violencia física de pareja contra las mujeres usuarias. Es un solo estudio, por eso se considera prometedor.',
+  casos=[(93,'Positivo')]),
+ dict(id='hombres',eje='prevencion',n='Trabajo con hombres para transformar masculinidades',ef='Prometedor',tipos=['Física','Psicológica','Sexual'],
+  d='Grupos de reflexión con hombres para cuestionar las ideas que justifican la violencia y promover relaciones igualitarias.',
+  ev='En dos ensayos aleatorios (República Democrática del Congo y Costa de Marfil) los hombres mejoraron sus actitudes y redujeron su intención de ejercer violencia. La violencia reportada por las mujeres bajó, pero sin significancia estadística.',
+  casos=[(121,'Positivo'),(124,'Mixto')]),
+ dict(id='celular',eje='prevencion',n='Mensajes por celular y WhatsApp',ef='Evidencias mixtas',tipos=['Sexual','Psicológica'],
+  d='Mensajes de texto, voz o WhatsApp con información y ejercicios para prevenir la violencia o vincular a las personas con servicios.',
+  ev='Hablemos entre Patas (Perú) redujo la violencia sexual de pareja de 22,8% a 18%. Mobile Link (Camboya) no redujo la violencia. Otra evaluación en el Perú aún no publica resultados.',
+  casos=[(134,'Positivo'),(123,'Sin efecto'),(133,'Sin resultados aún')]),
+ dict(id='escuelas',eje='prevencion',n='Programas en escuelas y con adolescentes',ef='Evidencias mixtas',tipos=['Física','Sexual'],
+  d='Sesiones en colegios o espacios seguros con contenidos sobre relaciones sanas, habilidades para la vida y salud sexual.',
+  ev='Skhokho (Sudáfrica) redujo la violencia en el enamoramiento, pero sin significancia estadística. COMPASS (niñas refugiadas en Etiopía) no redujo la violencia, aunque mejoró otros resultados. En el Perú hay una evaluación en curso sobre embarazo adolescente.',
+  casos=[(125,'Mixto'),(122,'Sin efecto'),(14,'Sin resultados aún')]),
+ dict(id='testigos',eje='prevencion',n='Formación de testigos que intervienen',ef='Prometedor',tipos=['Sexual'],
+  d='Capacitación para que las personas reconozcan situaciones de violencia sexual y sepan intervenir de forma segura.',
+  ev='En un piloto en el Perú aumentó la disposición de los participantes a intervenir y bajó la aceptación de mitos sobre la violación. Falta medir si reduce la violencia.',
+  casos=[(92,'Positivo')]),
+ dict(id='comunidad',eje='prevencion',n='Liderazgos comunitarios',ef='En evaluación',tipos=['Física','Psicológica','Sexual'],
+  d='Formación de líderes locales como voluntarios para prevenir, detectar y derivar casos de violencia en su comunidad.',
+  ev='Hay una evaluación en curso en el Perú; todavía no publica resultados.',
+  casos=[(135,'Sin resultados aún')]),
+ dict(id='cuidado',eje='prevencion',n='Servicios de cuidado infantil',ef='Prometedor',tipos=[],
+  d='Cuidado diurno para niñas y niños pequeños, como Cuna Más, que libera tiempo de las madres para trabajar o estudiar y fortalece su autonomía económica.',
+  ev='Las usuarias de Cuna Más tienen 14% más probabilidad de estar ocupadas. Un estudio cualitativo en Lima coincide en que el servicio facilita su empleo.',
+  casos=[(55,'Positivo'),(42,'Positivo')]),
+ dict(id='estereotipos',eje='prevencion',n='Cuestionar estereotipos en la educación',ef='Prometedor',tipos=[],
+  d='Videos, modelos de rol o información que cuestionan lo que mujeres y hombres «pueden» estudiar o hacer.',
+  ev='En colegios del Perú aumentó el reconocimiento de las alumnas en matemáticas y que los docentes les sugieran estudiar ingeniería. Un video educativo en Kenia redujo el sesgo de género en las decisiones del hogar. Dos evaluaciones peruanas aún no publican resultados.',
+  casos=[(2,'Positivo'),(4,'Mixto'),(116,'Positivo'),(15,'Sin resultados aún'),(132,'Sin resultados aún')]),
+ dict(id='empleo',eje='prevencion',n='Lenguaje inclusivo en convocatorias de empleo',ef='Evidencias mixtas',tipos=[],
+  d='Cambios en la redacción de avisos y convocatorias para que más mujeres postulen.',
+  ev='En experimentos de elección, el lenguaje inclusivo aumentó la preferencia de las mujeres por los avisos. En avisos reales del sector tecnológico no tuvo efectos generales, y en Estados Unidos atrajo más postulaciones de ambos sexos.',
+  casos=[(40,'Positivo'),(3,'Sin efecto'),(112,'Mixto'),(131,'Sin resultados aún')]),
+ dict(id='integracion',eje='prevencion',n='Integración de mujeres en espacios masculinizados',ef='Evidencias mixtas',tipos=[],
+  d='Incorporar mujeres en equipos tradicionalmente masculinos para cambiar actitudes de género.',
+  ev='En el servicio militar de Noruega, compartir escuadrón con mujeres mejoró las actitudes de los hombres, pero el efecto no se mantuvo en el tiempo.',
+  casos=[(111,'Mixto')]),
+ dict(id='equipos',eje='atencion',n='Cuidado de los equipos que atienden a víctimas',ef='Prometedor',tipos=['Psicológica'],
+  d='Programas para prevenir el desgaste emocional del personal que atiende casos de violencia, como el de la Línea 100.',
+  ev='Redujo el estrés traumático secundario de los operadores de la Línea 100, aunque no el síndrome de agotamiento profesional en general.',
+  casos=[(136,'Positivo')]),
+]
+EF=['Efectivo','Prometedor','Evidencias mixtas','Sin efecto','En evaluación']
+json.dump({'ejes':[dict(id=a,n=b,d=c,base=e) for a,b,c,e in EJES],'efectividad':EF,
+  'soluciones':[dict(s,casos=[{'n':n,'efecto':e} for n,e in s['casos']]) for s in SOL]},
+  open('data/soluciones.json','w',encoding='utf-8'),ensure_ascii=False,separators=(',',':'))
+print(len(SOL),'soluciones,',sum(len(s['casos']) for s in SOL),'casos')

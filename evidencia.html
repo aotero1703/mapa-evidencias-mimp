@@ -37,12 +37,29 @@
   <div class="wrap">
     <a class="crumb" href="./">← Banco de Evidencias</a>
     <h1>Evidencia científica</h1>
-    <p>Estudios nacionales e internacionales revisados por el Observatorio, ordenados según los tipos y modalidades de violencia de la Ley N.° 30364. Elige un tipo de violencia para ver sus estudios, o busca un tema concreto.</p>
+    <p>¿Qué funciona para prevenir y atender la violencia contra las mujeres y los integrantes del grupo familiar? Revisa las soluciones evaluadas, ordenadas por los ejes de la Ley N.° 30364, o explora todos los estudios por tipo de violencia.</p>
     <div class="hsearch"><input type="search" id="q" placeholder="Buscar en todo el banco: Cuna Más, Línea 100, alcohol, adolescentes…" aria-label="Buscar en todo el banco"></div>
   </div>
 </section>
 <section class="section">
   <div class="wrap">
+    <div class="tabs" role="tablist" aria-label="Secciones de la evidencia">
+      <button type="button" role="tab" id="tF" aria-selected="true" aria-controls="tabF">¿Qué funciona?</button>
+      <button type="button" role="tab" id="tE" aria-selected="false" aria-controls="tabE">Todos los estudios</button>
+    </div>
+    <div id="tabF" role="tabpanel" aria-labelledby="tF">
+      <div id="solHome">
+        <div class="ejes" id="ejes"></div>
+        <div class="toolbar sol-tools">
+          <div class="seg" role="group" aria-label="Efectividad" id="efSeg"></div>
+          <label class="chk"><input type="checkbox" id="soloPeru"> Solo con evidencia del Perú</label>
+        </div>
+        <div class="sols" id="sols"></div>
+        <div class="eflegend" id="eflegend"></div>
+      </div>
+      <div id="solDet" hidden></div>
+    </div>
+    <div id="tabE" role="tabpanel" aria-labelledby="tE" hidden>
     <div id="home">
       <div class="shelf-head"><div><h2>Violencia contra las mujeres y los integrantes del grupo familiar</h2><p class="shelf-sub">Por tipo de violencia, según el artículo 8 de la Ley N.° 30364. Un estudio puede abordar más de un tipo.</p></div><p id="vCount"></p></div>
       <div class="shelves" id="shelvesV"></div>
@@ -63,6 +80,7 @@
       </div>
       <div class="cards" id="cards"></div>
       <button type="button" class="more" id="more" hidden>Ver más estudios</button>
+    </div>
     </div>
   </div>
 </section>
@@ -136,12 +154,50 @@ function card(r){const o=S.open===r.n,au=r.a?r.a.split(';')[0].trim()+(r.a.inclu
    <p class="gist">${esc(gist(r))}</p>
    <div class="row"><button type="button" data-open="${r.n}" aria-expanded="${o}">${o?'Cerrar ficha':'Ver ficha completa'}</button>${r.link?`<a href="${esc(r.link)}" target="_blank" rel="noopener">Leer el estudio ↗</a>`:''}</div>
    ${o?`<dl>${f('Autoría',r.a)}${f('País',r.paises.join(', '))}${f('Tipo de violencia',r.tipos?r.tipos.join(', '):'')}${f('Modalidad',r.tipos?r.mod.join(', '):'')}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
-$('q').oninput=e=>{S.q=e.target.value;if(S.q.trim()){S.kind='';S.val='';S.mod=''}S.shown=20;show()};
+$('q').oninput=e=>{tab('E');S.q=e.target.value;if(S.q.trim()){S.kind='';S.val='';S.mod=''}S.shown=20;show()};
 $('sort').onchange=e=>{S.sort=e.target.value;show()};
 $('back').onclick=()=>{Object.assign(S,{kind:'',val:'',mod:'',q:'',amb:'',open:null});$('q').value='';show();scrollTo({top:0})};
 document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{S.amb=b.dataset.amb;S.shown=20;show()});
 $('more').onclick=()=>{S.shown+=20;show()};
-fetch('data/estudios.json').then(r=>r.json()).then(d=>{R=d.rows;home();show()}).catch(()=>{$('shelvesV').innerHTML='<div class="empty">No se pudieron cargar los estudios. Recarga la página.</div>'});
+/* ---------- ¿Qué funciona? (tipos de solución por eje de la Ley 30364) ---------- */
+let SOL=null,F={eje:'',ef:'',peru:false,sol:null};
+const EFC={'Efectivo':'ef-a','Prometedor':'ef-b','Evidencias mixtas':'ef-c','Sin efecto':'ef-d','En evaluación':'ef-e'};
+const EFD={'Efectivo':'Varios estudios rigurosos con efectos positivos consistentes.','Prometedor':'Al menos un estudio con efectos positivos; falta confirmarlo con más evaluaciones.','Evidencias mixtas':'Algunos estudios encuentran efectos positivos y otros no.','Sin efecto':'Los estudios no encuentran efectos.','En evaluación':'Evaluaciones en curso o sin resultados publicados.'};
+const EFE={'Positivo':'ef-b','Mixto':'ef-c','Sin efecto':'ef-d','Sin resultados aún':'ef-e'};
+function tab(w){const f=w==='F';$('tabF').hidden=!f;$('tabE').hidden=f;$('tF').setAttribute('aria-selected',f);$('tE').setAttribute('aria-selected',!f)}
+$('tF').onclick=()=>{tab('F');F.sol=null;solRender()};$('tE').onclick=()=>tab('E');
+const byN=n=>R.find(r=>r.n===n);
+const peruOk=s=>s.casos.some(c=>(byN(c.n)||{}).amb==='Nacional');
+function solRender(){
+  if(!SOL)return;
+  if(F.sol){$('solHome').hidden=true;$('solDet').hidden=false;return solDetail(SOL.soluciones.find(x=>x.id===F.sol))}
+  $('solHome').hidden=false;$('solDet').hidden=true;
+  const vis=SOL.soluciones.filter(x=>(!F.peru||peruOk(x)));
+  $('ejes').innerHTML=`<button type="button" class="eje${F.eje?'':' on'}" data-e=""><b>Todos los ejes</b><span>${vis.length} soluciones</span></button>`+SOL.ejes.map(e=>{const L=vis.filter(x=>x.eje===e.id),nc=L.reduce((a,x)=>a+x.casos.length,0);
+    return `<button type="button" class="eje${F.eje===e.id?' on':''}${L.length?'':' vacio'}" data-e="${e.id}"><b>${e.n}</b><span>${L.length?`${L.length} ${L.length===1?'solución':'soluciones'} · ${nc} ${nc===1?'caso':'casos'}`:'Aún no hay evaluaciones'}</span><em>${e.base}</em></button>`}).join('');
+  document.querySelectorAll('.eje').forEach(b=>b.onclick=()=>{F.eje=b.dataset.e;solRender()});
+  $('efSeg').innerHTML=[''].concat(SOL.efectividad).map(v=>`<button type="button" data-v="${v}" aria-pressed="${F.ef===v}">${v||'Toda la evidencia'}</button>`).join('');
+  document.querySelectorAll('#efSeg button').forEach(b=>b.onclick=()=>{F.ef=b.dataset.v;solRender()});
+  const L=vis.filter(x=>(!F.eje||x.eje===F.eje)&&(!F.ef||x.ef===F.ef));
+  const eje=SOL.ejes.find(e=>e.id===F.eje);
+  $('sols').innerHTML=(eje?`<p class="eje-desc">${eje.d}</p>`:'')+(L.length?L.map(x=>{const pe=x.casos.filter(c=>(byN(c.n)||{}).amb==='Nacional').length;
+    return `<button type="button" class="sol" data-s="${x.id}"><span class="efp ${EFC[x.ef]}">${x.ef}</span><b>${x.n}</b><span class="sd">${x.d}</span>
+     <span class="sm">${x.casos.length} ${x.casos.length===1?'caso evaluado':'casos evaluados'}${pe?` · ${pe} en el Perú`:''}</span><span class="go">Ver la evidencia →</span></button>`}).join(''):`<div class="empty">${eje&&!SOL.soluciones.some(x=>x.eje===eje.id)?'Todavía no hay evaluaciones de soluciones para este eje en el banco. Es una brecha de evidencia.':'No hay soluciones con esos filtros.'}</div>`);
+  document.querySelectorAll('.sol').forEach(b=>b.onclick=()=>{F.sol=b.dataset.s;solRender();scrollTo({top:$('tabF').offsetTop-90})});
+  $('eflegend').innerHTML='<p class="sub">Cómo leer la efectividad</p>'+SOL.efectividad.map(v=>`<div><span class="efp ${EFC[v]}">${v}</span> ${EFD[v]}</div>`).join('');
+}
+$('soloPeru').onchange=e=>{F.peru=e.target.checked;solRender()};
+function solDetail(x){const eje=SOL.ejes.find(e=>e.id===x.eje);
+  $('solDet').innerHTML=`<button type="button" class="back" id="solBack">← Todas las soluciones</button>
+   <div class="soldet"><p class="kick">${eje.n}</p><h2>${x.n}</h2><span class="efp ${EFC[x.ef]}">${x.ef}</span>
+   <div class="two"><div><p class="sub">Qué es</p><p>${x.d}</p></div><div><p class="sub">Qué dice la evidencia</p><p>${x.ev}</p></div></div>
+   ${x.tipos.length?`<p class="tv">Tipos de violencia que aborda: ${x.tipos.map(t=>`<span class="tag">${t}</span>`).join(' ')}</p>`:''}
+   <p class="sub" style="margin-top:22px">Casos evaluados (${x.casos.length})</p></div>
+   <div class="cards">${x.casos.map(c=>{const r=byN(c.n);return r?card(r).replace('<div class="tags">',`<div class="tags"><span class="tag efp ${EFE[c.efecto]}">Efecto: ${c.efecto.toLowerCase()}</span>`):''}).join('')}</div>`;
+  $('solBack').onclick=()=>{F.sol=null;solRender()};
+  document.querySelectorAll('#solDet [data-open]').forEach(b=>b.onclick=()=>{const n=+b.dataset.open;S.open=S.open===n?null:n;solDetail(x)});
+}
+Promise.all([fetch('data/estudios.json').then(r=>r.json()),fetch('data/soluciones.json').then(r=>r.json())]).then(([d,s])=>{R=d.rows;SOL=s;home();show();solRender()}).catch(()=>{$('sols').innerHTML='<div class="empty">No se pudieron cargar los datos. Recarga la página.</div>'});
 </script>
 </body>
 </html>

@@ -37,7 +37,7 @@ El artículo 43 de la **Ley N.° 30364** encarga al Observatorio Nacional desarr
 
 | | Sección | Qué contiene | Base legal |
 |---|---|---|---|
-| 🔵 | **[Evidencia científica](https://mapa-evidencias-mimp.vercel.app/evidencia.html)** | 133 estudios nacionales e internacionales, con ficha y enlace al estudio original | Ley 30364, art. 43: elaborar informes, estudios y propuestas |
+| 🔵 | **[Evidencia científica](https://mapa-evidencias-mimp.vercel.app/evidencia.html)** | «¿Qué funciona?»: 11 soluciones evaluadas por eje de la Ley 30364 (prevención, atención, protección y sanción, reeducación) con su efectividad; y los 133 estudios con ficha y enlace | Ley 30364, art. 43: elaborar informes, estudios y propuestas |
 | 🟢 | **[Indicadores principales](https://mapa-evidencias-mimp.vercel.app/tablero.html)** | Tablero de Power BI con las cifras clave | Ley 30364, art. 43: monitorear, recolectar, producir y sistematizar datos |
 | 🔴 | **[Fuentes externas](https://mapa-evidencias-mimp.vercel.app/fuentes.html)** | Enlaces a ENDES, ENARES, Warmi Ñan, Ministerio Público, Poder Judicial y MIMP | R.M. N.° 027-2025-MIMP: articular la información del Sistema Nacional |
 
@@ -176,6 +176,7 @@ Para agregar un estudio nuevo:
     ├── matriz.csv          Matriz original exportada
     ├── build_data.py       Paso 1: limpia la matriz
     ├── export_estudios.py  Paso 2: tipos, modalidades y ámbito
+    ├── soluciones.py       Catálogo «¿Qué funciona?» → data/soluciones.json (por validar)
     ├── build_banco.py      Paso 3: genera las páginas
     ├── data.json           Datos intermedios
     └── template.html       Plantilla del mapa de brechas (versión anterior)
