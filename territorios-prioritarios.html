@@ -233,7 +233,7 @@ function ficha(p,auto){if(!p){$('ficha').innerHTML='<p>Elige una provincia en el
    <p class="sub">Casos por tipo de violencia · ${p.prov} (2025)</p><div class="mini">${mini}</div>
    <p class="method">Tentativas de feminicidio (2025): ${p.dep}, ${tentLabel(tentativeRange(R.provincias.filter(x=>x.dep===p.dep)))}; Perú, ${tentLabel(tentativeRange(R.provincias))}. Los valores inferiores a 5 se mantienen reservados, por lo que los totales son rangos y no cifras exactas.</p>
    <p class="method">Los tipos de violencia pueden coexistir en un mismo caso; por ello, su suma puede superar el total de casos.</p>
-   <p class="sub">Casos por trimestre, 2025</p><div class="cols">${columns(tri,base(S.tipo))}</div>
+   <p class="sub">Casos por trimestre · ${S.tipo==='total'?'Todos los tipos':'Violencia '+T[S.tipo].n.toLowerCase()} · ${p.prov} (2025)</p><div class="cols">${columns(tri,base(S.tipo))}</div>
    ${ch!==null?`<p class="trend">${ch===0?'Los casos se mantuvieron igual':`Los casos <b>${ch>0?'aumentaron':'disminuyeron'} ${Math.abs(ch)}%</b>`} entre enero–marzo y octubre–diciembre de 2025.</p>`:''}
    ${p.n<50?'<p class="note">Pocos casos registrados: puede reflejar menor acceso a un CEM más que menos violencia.</p>':''}`;
   document.querySelectorAll('.mini button').forEach(b=>b.onclick=()=>setTipo(b.dataset.t));
