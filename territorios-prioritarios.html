@@ -142,7 +142,7 @@ footer b{color:#fff}
   </div>
 
   <div class="card">
-    <div class="head"><h2>¿Dónde se registra mayor tasa de atención?</h2></div>
+    <div class="head"><h2>Provincias con mayor tasa de casos atendidos</h2></div>
     <p class="rank-sub" id="rankSub"></p>
     <div class="zooms" id="rank"></div>
   </div>
@@ -224,7 +224,7 @@ function draw(){
 
   $('legend').innerHTML=LV.map(l=>`<span><i style="background:${col(S.tipo,l)}"></i>${l}</span>`).join('');
   const L=list().slice(0,10);
-  $('rankSub').textContent=`Provincias de ${S.dep||'todo el Perú'} con mayor tasa de casos atendidos por 100 mil habitantes, ${periodLabel()}, ${S.tipo==='total'?'todos los tipos':'violencia '+T[S.tipo].n.toLowerCase()}. La tasa refleja atención registrada, no riesgo ni prevalencia. Selecciona una provincia para ver su ficha.`;
+  $('rankSub').textContent='Ranking provincial según casos atendidos por cada 100 mil habitantes. Selecciona una provincia para explorar sus indicadores. La tasa refleja atención registrada, no riesgo de violencia.';
   $('rank').innerHTML=L.map((p,i)=>`<button type="button" class="zoom${p.c===S.sel?' on':''}" data-c="${p.c}" style="--c:${base(S.tipo)}"><span class="rk">${i+1}</span>${miniMap(p)}<b>${p.prov}</b><span class="d">${p.dep}</span><span class="v">${fmt(Math.round(rate(p)))} casos atendidos por 100 mil hab.</span></button>`).join('');
   document.querySelectorAll('#rank .zoom').forEach(b=>b.onclick=()=>{pick(b.dataset.c);document.querySelector('.grid').scrollIntoView({block:'start',behavior:RM?'auto':'smooth'})});
   ficha(S.sel?P[S.sel]:list()[0],!S.sel);
