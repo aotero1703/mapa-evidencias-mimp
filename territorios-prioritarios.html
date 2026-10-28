@@ -129,7 +129,7 @@ footer b{color:#fff}
 </section>
 
 <main class="wrap">
-  <div class="period-filter"><label for="quarter"><b>Periodo de análisis</b></label><select id="quarter" aria-label="Trimestre de 2025"><option value="all">Enero–diciembre 2025</option><option value="0">Trimestre 1</option><option value="1">Trimestre 2</option><option value="2">Trimestre 3</option><option value="3">Trimestre 4</option></select><span>Los indicadores y el ranking se actualizan con el periodo elegido.</span></div><div class="types" id="types" role="group" aria-label="Tipo de violencia"></div><section class="type-bars card" aria-labelledby="barsTitle"><div class="head"><h2 id="barsTitle">Casos por tipo de violencia</h2></div><p class="context" id="barsScope"></p><div id="typeBars"></div></section>
+  <div class="period-filter"><label for="quarter"><b>Periodo de análisis</b></label><select id="quarter" aria-label="Trimestre de 2025"><option value="all">Enero–diciembre 2025</option><option value="0">Trimestre 1</option><option value="1">Trimestre 2</option><option value="2">Trimestre 3</option><option value="3">Trimestre 4</option></select><span>Los indicadores y el ranking se actualizan con el periodo elegido.</span></div><div class="types" id="types" role="group" aria-label="Tipo de violencia"></div>
 
   <div class="grid">
     <div class="card">
@@ -218,7 +218,6 @@ const list=()=>R.provincias.filter(p=>(!S.dep||p.dep===S.dep)&&rate(p)!==null&&r
 function draw(){
   updateThresholds();
   renderTypes();
-  renderBars();
   paths.attr('fill',f=>{const p=P[f.properties.c];if(!p)return 'var(--nodata)';return col(S.tipo,priority(p))})
    .attr('opacity',f=>{const p=P[f.properties.c];return S.dep&&p&&p.dep!==S.dep?.18:1}).classed('sel',f=>f.properties.c===S.sel);
   $('mapTitle').textContent=S.tipo==='total'?'Casos atendidos · Total':`Casos atendidos · Violencia ${T[S.tipo].n.toLowerCase()}`;
