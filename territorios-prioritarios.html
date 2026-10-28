@@ -141,7 +141,7 @@ footer b{color:#fff}
   </div>
 
   <div class="card">
-    <div class="head"><h2>¿Dónde intervenir primero?</h2></div>
+    <div class="head"><h2>¿Dónde se registra mayor tasa de atención?</h2></div>
     <p class="rank-sub" id="rankSub"></p>
     <div class="zooms" id="rank"></div>
   </div>
@@ -206,7 +206,7 @@ function zoomTo(feats,pad){
   $('reset').hidden=k===1;
 }
 function tip(e,f){const p=P[f.properties.c],t=$('tip');
- t.innerHTML=p?`<b>${p.prov}</b> · ${p.dep}<br>Prioridad <b style="color:${col(S.tipo,priority(p))}">${priority(p).toLowerCase()}</b><br>${fmt(count(p,S.tipo))} casos registrados en 2025`:'<b>Sin datos</b>';
+ t.innerHTML=p?`<b>${p.prov}</b> · ${p.dep}<br>Tasa relativa <b style="color:${col(S.tipo,priority(p))}">${priority(p).toLowerCase()}</b><br>${fmt(count(p,S.tipo))} casos · ${periodLabel()}`:'<b>Sin datos</b>';
  t.hidden=false;t.style.left=Math.min(e.clientX+14,innerWidth-t.offsetWidth-8)+'px';t.style.top=Math.min(e.clientY+14,innerHeight-t.offsetHeight-8)+'px'}
 const list=()=>R.provincias.filter(p=>!S.dep||p.dep===S.dep).sort((a,b)=>rate(b)-rate(a));
 function draw(){
@@ -238,10 +238,10 @@ function ficha(p,auto){if(!p){$('ficha').innerHTML='<p>Elige una provincia en el
    <span class="pill" style="background:${col(S.tipo,lv)};color:${LV.indexOf(lv)>=2?'#171c33':'#fff'}">Tasa de atención ${lv.toLowerCase()}</span>
    <div class="stats"><div class="stat"><b>${fmt(nT)}</b><span>${S.tipo==='total'?'casos registrados (todos los tipos)':'casos de violencia '+T[S.tipo].n.toLowerCase()} · ${periodLabel()}</span></div>
    <div class="stat"><b>${fmt(Math.round(rate(p)))}</b><span>casos atendidos por 100 mil hab. · ${periodLabel()}</span></div>
-   <div class="stat"><b>${p.psev}%</b><span>de casos con riesgo severo</span></div>
-   <div class="stat"><b>${fmt(p.tent)}</b><span>tentativas de feminicidio en ${p.prov} (2025)</span></div></div>
+   <div class="stat"><b>${p.psev}%</b><span>de casos con riesgo severo · total 2025 (no filtrado por trimestre)</span></div>
+   <div class="stat"><b>${fmt(p.tent)}</b><span>tentativas de feminicidio en ${p.prov} · total 2025 (no filtrado por trimestre)</span></div></div>
    <p class="sub">Casos por tipo de violencia · ${p.prov} · ${periodLabel()}</p><div class="mini">${mini}</div>
-   <p class="method">Tentativas de feminicidio (2025): ${p.dep}, ${tentLabel(tentativeRange(R.provincias.filter(x=>x.dep===p.dep)))}; Perú, 270. Total nacional oficial: 270 tentativas. Los rangos departamentales provienen de cifras provinciales reservadas y no deben interpretarse como totales oficiales.</p>
+   <p class="method">Tentativas de feminicidio (total anual 2025): ${p.dep}, ${tentLabel(tentativeRange(R.provincias.filter(x=>x.dep===p.dep)))}; Perú, 270. Total nacional oficial: 270 tentativas. Los rangos departamentales provienen de cifras provinciales reservadas y no deben interpretarse como totales oficiales.</p>
    <p class="method">Cada caso se cuenta una vez según su tipo principal (TIPO_VIO). Las modalidades específicas pueden coexistir.</p>
    <p class="sub">Evolución trimestral · ${S.tipo==='total'?'Todos los tipos':'Violencia '+T[S.tipo].n.toLowerCase()} · ${p.prov} (2025)</p><div class="cols">${columns(tri,base(S.tipo))}</div><p class="context">Total anual: ${typeof annualCount(p,S.tipo)==='number'?fmt(annualCount(p,S.tipo)):'menos de 5'} casos. ${tri.some(x=>typeof x!=='number')?'Los valores trimestrales inferiores a 5 se ocultan por confidencialidad.':tri.reduce((a,b)=>a+b,0)===annualCount(p,S.tipo)?'Los cuatro trimestres coinciden con el total anual.':'Revisar consistencia de la serie.'}</p>
    ${S.q==='all'&&ch!==null?`<p class="trend">${ch===0?'Los casos se mantuvieron igual':`Los casos <b>${ch>0?'aumentaron':'disminuyeron'} ${Math.abs(ch)}%</b>`} entre enero–marzo y octubre–diciembre de 2025.</p>`:''}
