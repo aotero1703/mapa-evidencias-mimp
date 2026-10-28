@@ -5,6 +5,7 @@
 .type-bars{margin:14px 0 20px;padding:18px 20px}.type-bars .head{margin-bottom:6px}.type-bars .context{margin:0 0 14px}.hbar{display:grid;grid-template-columns:minmax(110px,180px) minmax(80px,1fr) minmax(60px,110px);gap:12px;align-items:center;margin:10px 0;font-size:.88rem}.hbar .track{height:14px;background:#eef1f5;border-radius:9px;overflow:hidden}.hbar .fill{height:100%;border-radius:9px}.hbar .amount{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}.hbar .name{font-weight:600}@media(max-width:600px){.hbar{grid-template-columns:94px minmax(70px,1fr) 74px;gap:7px;font-size:.75rem}}
 .back-home{margin:0 0 16px}.back-home a{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--blue-900);font-size:.88rem;font-weight:700;text-decoration:none}.back-home a:hover{background:var(--bg)}.back-home a:focus-visible{outline:3px solid var(--sky-400)}
 .legend-title{font-size:.84rem;font-weight:700;color:var(--ink);margin:12px 0 7px}.legend-title span{font-size:.76rem;font-weight:400;color:var(--ink-soft)}
+.demog-filters{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 16px}.demog-filters[hidden]{display:none}.demog-filters label{display:flex;flex-direction:column;gap:5px;font-size:.82rem;font-weight:700;color:var(--ink)}.demog-filters select{padding:9px 12px;border:1px solid var(--line);border-radius:9px;background:white;min-width:190px}
 </style></head><body>
 <title>Territorios Prioritarios · Observatorio Nacional</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -135,7 +136,7 @@ footer b{color:#fff}
 
 <main class="wrap">
   <div class="back-home"><a href="index.html" aria-label="Volver al menú principal">← Volver al menú principal</a></div>
-  <div class="period-filter"><label for="quarter"><b>Periodo de análisis</b></label><select id="quarter" aria-label="Trimestre de 2025"><option value="all">Enero–diciembre 2025</option><option value="0">Trimestre 1</option><option value="1">Trimestre 2</option><option value="2">Trimestre 3</option><option value="3">Trimestre 4</option></select><span>Los indicadores y el ranking se actualizan con el periodo elegido.</span></div><div class="types" id="types" role="group" aria-label="Tipo de violencia"></div>
+  <div class="period-filter"><label for="quarter"><b>Periodo de análisis</b></label><select id="quarter" aria-label="Trimestre de 2025"><option value="all">Enero–diciembre 2025</option><option value="0">Trimestre 1</option><option value="1">Trimestre 2</option><option value="2">Trimestre 3</option><option value="3">Trimestre 4</option></select><span>Los indicadores y el ranking se actualizan con el periodo elegido.</span></div><div class="demog-filters" id="demogFilters" hidden><label>Sexo <select id="sexFilter"><option value="all">Todos los sexos</option><option value="0">Mujer</option><option value="1">Hombre</option></select></label><label>Grupo etario <select id="ageFilter"><option value="all">Todas las edades</option><option value="0">0–11 años</option><option value="1">12–17 años</option><option value="2">18–29 años</option><option value="3">30–59 años</option><option value="4">60 años a más</option></select></label></div><div class="types" id="types" role="group" aria-label="Tipo de violencia"></div>
 
   <div class="grid">
     <div class="card">
@@ -174,13 +175,17 @@ const T={
  psicologica:{n:'Psicológica',k:'Psicológica',ramp:['#fbeecf','#efc977','#d19718','#8a5d04'],cnt:R.meta.nac['Psicológica']},
  sexual:{n:'Sexual',k:'Sexual',ramp:['#ece4f6','#c0a8e1','#7c54b9','#41216f'],cnt:R.meta.nac['Sexual']},
  economica:{n:'Económica o patrimonial',k:'Económica o patrimonial',ramp:['#f4e4da','#dcab90','#a95b36','#5f2a14'],cnt:R.meta.eco}};
-const S={tipo:'total',dep:'',sel:null,q:'all'};
+const S={tipo:'total',dep:'',sel:null,q:'all',sex:'all',age:'all'};
+let DEMOG=null;
+const typeIndex={economica:0,psicologica:1,fisica:2,sexual:3};
+const selectedDemog=()=>S.sex!=='all'||S.age!=='all';
+const demogCount=(p,t)=>{const code=String(p.c).padStart(4,'0');let n=0;for(const [key,val] of DEMOG){const [c,q,sex,age,typ]=key.split('|');if(c!==code||(S.q!=='all'&&q!==S.q)||(S.sex!=='all'&&sex!==S.sex)||(S.age!=='all'&&age!==S.age)||(t!=='total'&&Number(typ)!==typeIndex[t]))continue;n+=val}return n<5&&n>0?'<5':n};
 const $=id=>document.getElementById(id), fmt=n=>typeof n==='number'?n.toLocaleString('es-PE'):(n==='<5'?'Menos de 5':n);
 const col=(t,l)=>l==='Sin casos'?'#e7edf2':l==='Dato reservado'?'#e7edf2':T[t].ramp[3-LV.indexOf(l)], base=t=>T[t].ramp[2], tint=t=>T[t].ramp[0];
 const OFFICIAL_2025={fisica:62617,psicologica:74004,sexual:32180,economica:735,tent:270};
 const annualCount=(p,t)=>t==='total'?p.n:p.tipos[T[t].k];
 const quarterly=(p,t)=>t==='total'?p.trim:p.trimt[t];
-const count=(p,t)=>S.q==='all'?annualCount(p,t):quarterly(p,t)[Number(S.q)];
+const count=(p,t)=>DEMOG&&selectedDemog()?demogCount(p,t):S.q==='all'?annualCount(p,t):quarterly(p,t)[Number(S.q)];
 const periodLabel=()=>S.q==='all'?'enero–diciembre de 2025':['enero–marzo de 2025','abril–junio de 2025','julio–septiembre de 2025','octubre–diciembre de 2025'][Number(S.q)];
 const countValue=v=>typeof v==='number'?v:0;
 const rate=p=>{const n=count(p,S.tipo);return typeof n==='number'&&p.pob>0?n/p.pob*100000:null};
@@ -191,7 +196,7 @@ const officialNote='Fuente: registro de casos 2025 y reportes Warmi Ñan. Clasif
 const sumCases=(rows,k)=>{let n=0,hidden=0;for(const p of rows){const v=count(p,k);if(typeof v==='number')n+=v;else if(v==='<5')hidden++}return hidden?`${fmt(n)}–${fmt(n+4*hidden)}`:fmt(n)};
 const scope=()=>S.sel&&P[S.sel]?[P[S.sel]]:R.provincias.filter(p=>!S.dep||p.dep===S.dep);
 const scopeName=()=>S.sel&&P[S.sel]?P[S.sel].prov:S.dep||'Perú';
-const scopeTotal=(rows,k)=>{if(!S.dep&&!S.sel&&S.q==='all')return {lo:k==='total'?R.meta.casos:OFFICIAL_2025[k],hi:k==='total'?R.meta.casos:OFFICIAL_2025[k]};let lo=0,hi=0;for(const p of rows){const v=count(p,k);if(typeof v==='number'){lo+=v;hi+=v}else if(v==='<5'){hi+=4}}return {lo,hi}};
+const scopeTotal=(rows,k)=>{if(!selectedDemog()&&!S.dep&&!S.sel&&S.q==='all')return {lo:k==='total'?R.meta.casos:OFFICIAL_2025[k],hi:k==='total'?R.meta.casos:OFFICIAL_2025[k]};let lo=0,hi=0;for(const p of rows){const v=count(p,k);if(typeof v==='number'){lo+=v;hi+=v}else if(v==='<5'){hi+=4}}return {lo,hi}};
 const displayTotal=r=>r.lo===r.hi?fmt(r.lo):r.lo===0&&r.hi<=4?'Menos de 5':fmt(r.lo)+'–'+fmt(r.hi);
 function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${displayTotal(scopeTotal(rows,k))} casos · ${scopeName()} · ${S.q==='all'?'2025':`Trimestre ${Number(S.q)+1}`}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
 function renderBars(){const rows=scope(),keys=['fisica','psicologica','sexual','economica'],vals=keys.map(k=>({k,r:scopeTotal(rows,k)})),max=Math.max(1,...vals.map(v=>v.r.hi));$('barsScope').textContent=`${scopeName()} · ${periodLabel()} · casos clasificados por tipo principal`;$('typeBars').innerHTML=vals.map(({k,r})=>`<div class="hbar"><span class="name">${T[k].n}</span><div class="track"><div class="fill" style="width:${Math.max(0,r.lo/max*100)}%;background:${base(k)}"></div></div><span class="amount">${displayTotal(r)}</span></div>`).join('')}
@@ -259,6 +264,7 @@ $('quarter').onchange=e=>{S.q=e.target.value;draw()};
 $('dep').onchange=e=>{S.dep=e.target.value;S.sel=null;draw();zoomTo(S.dep?GEO.features.filter(f=>P[f.properties.c]&&P[f.properties.c].dep===S.dep):null,.08)};
 $('reset').onclick=()=>{S.dep='';$('dep').value='';S.sel=null;draw();zoomTo(null)};
 draw();
+fetch('datos-sexo-edad-2025.csv').then(r=>{if(!r.ok)throw Error('No existe el archivo agregado');return r.text()}).then(csv=>{const map=new Map();for(const line of csv.trim().split(/\r?\n/).slice(1)){const [c,q,sex,age,type,n]=line.split(',');if(!n)continue;const key=[String(c).padStart(4,'0'),q,sex,age,type].join('|');map.set(key,(map.get(key)||0)+Number(n))}if(map.size<1000)throw Error('Archivo agregado incompleto');DEMOG=map;$('demogFilters').hidden=false;$('sexFilter').onchange=e=>{S.sex=e.target.value;draw()};$('ageFilter').onchange=e=>{S.age=e.target.value;draw()};draw()}).catch(e=>console.warn('Filtros demográficos pendientes de datos:',e.message));
 </script>
 
 </body></html>
