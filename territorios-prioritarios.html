@@ -227,7 +227,7 @@ function draw(){
   $('rankSub').textContent='Ranking provincial según casos atendidos por cada 100 mil habitantes. Selecciona una provincia para explorar sus indicadores. La tasa refleja atención registrada, no riesgo de violencia.';
   $('rank').innerHTML=L.map((p,i)=>`<button type="button" class="zoom${p.c===S.sel?' on':''}" data-c="${p.c}" style="--c:${base(S.tipo)}"><span class="rk">${i+1}</span>${miniMap(p)}<b>${p.prov}</b><span class="d">${p.dep}</span><span class="v">${fmt(Math.round(rate(p)))} casos atendidos por 100 mil hab.</span></button>`).join('');
   document.querySelectorAll('#rank .zoom').forEach(b=>b.onclick=()=>{pick(b.dataset.c);document.querySelector('.grid').scrollIntoView({block:'start',behavior:RM?'auto':'smooth'})});
-  ficha(S.sel?P[S.sel]:list()[0],!S.sel);
+  ficha(S.sel?P[S.sel]:null,false);
 }
 function miniMap(p){
   const dep=GEO.features.filter(f=>P[f.properties.c]&&P[f.properties.c].dep===p.dep),me=GEO.features.find(f=>f.properties.c===p.c);
@@ -237,7 +237,7 @@ function miniMap(p){
 function columns(v,color){const w=300,h=120,bw=46,gap=(w-4*bw)/5,mx=Math.max(...v.filter(x=>typeof x==='number'),1);
   return `<svg viewBox="0 0 ${w} ${h+34}" role="img" aria-label="Casos por trimestre: ${v.join(', ')}">`+v.map((x,i)=>{const bh=typeof x==='number'?Math.max(x===0?0:3,x/mx*(h-22)):0,xx=gap+i*(bw+gap),active=S.q!=='all'&&Number(S.q)===i;
    return `<rect class="${active?'active-quarter':''}" x="${xx}" y="${h-bh}" width="${bw}" height="${bh}" rx="5" fill="${color}" opacity="${S.q==='all'||active?1:.32}"/><text x="${xx+bw/2}" y="${h-bh-6}" text-anchor="middle" font-size="12" font-weight="700" fill="#171c33">${fmt(x)}</text><text x="${xx+bw/2}" y="${h+18}" text-anchor="middle" font-size="11" fill="#4a5068">${['Trimestre 1','Trimestre 2','Trimestre 3','Trimestre 4'][i]}</text>`}).join('')+`<line x1="0" x2="${w}" y1="${h}" y2="${h}" stroke="#e3e6ee"/></svg>`}
-function ficha(p,auto){if(!p){$('ficha').innerHTML='<p>Elige una provincia en el mapa.</p>';return}
+function ficha(p,auto){if(!p){$('ficha').innerHTML='<p class="sub">Detalle provincial</p><h3>Explora una provincia</h3><p>Selecciona una provincia en el mapa o en el ranking inferior para consultar sus indicadores.</p>';return}
   const lv=priority(p),nT=count(p,S.tipo);
   $('ficha').innerHTML=`<p class="sub">${auto?'Provincia con mayor tasa de casos atendidos':'Provincia seleccionada'}</p><h3>${p.prov}</h3><div class="dep">Provincia: ${p.prov} · Departamento: ${p.dep} · ${fmt(p.pob)} habitantes</div>
    <span class="pill" style="background:${col(S.tipo,lv)};color:${LV.indexOf(lv)>=2?'#171c33':'#fff'}">${lv==='Sin casos'||lv==='Dato reservado'?lv:'Nivel de atención: '+lv.toLowerCase()}</span>
