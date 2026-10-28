@@ -134,7 +134,7 @@ footer b{color:#fff}
     <div class="card">
       <div class="head"><h2 id="mapTitle"></h2>
         <span><button type="button" class="reset" id="reset" hidden>Ver todo el Perú</button> <select id="dep" aria-label="Departamento"><option value="">Todo el Perú</option></select></span></div>
-      <div class="legend" id="legend"></div><p class="context" id="mapContext">Los colores muestran categorías de prioridad estimada, no el número absoluto de denuncias.</p>
+      <div class="legend" id="legend"></div>
       <svg id="map" role="img" aria-label="Mapa de provincias del Perú coloreado por nivel de prioridad"></svg>
     </div>
     <div class="card ficha" id="ficha" aria-live="polite"></div>
@@ -216,7 +216,7 @@ function draw(){
   paths.attr('fill',f=>{const p=P[f.properties.c];if(!p)return 'var(--nodata)';return col(S.tipo,priority(p))})
    .attr('opacity',f=>{const p=P[f.properties.c];return S.dep&&p&&p.dep!==S.dep?.18:1}).classed('sel',f=>f.properties.c===S.sel);
   $('mapTitle').textContent=S.tipo==='total'?'Casos atendidos · Total':`Casos atendidos · Violencia ${T[S.tipo].n.toLowerCase()}`;
-  $('mapContext').textContent=`Periodo: ${periodLabel()}. Ámbito: ${scopeName()}. Colores: niveles relativos de la tasa de atención por 100 mil habitantes, calculados por cuartiles de tasas positivas conocidas. No son niveles de riesgo. Las provincias con cero casos o sin tasa exacta se muestran en gris neutro, fuera de las cuatro categorías. El riesgo severo se presenta por separado en la ficha y no determina los colores del mapa.`;
+
   $('legend').innerHTML=LV.map(l=>`<span><i style="background:${col(S.tipo,l)}"></i>${l}</span>`).join('');
   const L=list().slice(0,10);
   $('rankSub').textContent=`Provincias de ${S.dep||'todo el Perú'} con mayor tasa de casos atendidos por 100 mil habitantes, ${periodLabel()}, ${S.tipo==='total'?'todos los tipos':'violencia '+T[S.tipo].n.toLowerCase()}. La tasa refleja atención registrada, no riesgo ni prevalencia. Selecciona una provincia para ver su ficha.`;
