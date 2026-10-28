@@ -3,6 +3,7 @@
 .context{font-size:.83rem;color:var(--ink-soft);margin:8px 0 0}.method{font-size:.82rem;color:var(--ink-soft);background:#f2f5fa;border-radius:10px;padding:10px 12px;margin-top:10px}
 .period-filter{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 18px;padding:14px 16px;border:1px solid #dce4ee;border-radius:14px;background:#f6f9fc}.period-filter select{border:1px solid #c6d2df;border-radius:9px;padding:9px 12px;background:#fff;color:#172244}.period-filter span{font-size:.82rem;color:#59657b}.cols .active-quarter{stroke:#172244;stroke-width:2.5}
 .type-bars{margin:14px 0 20px;padding:18px 20px}.type-bars .head{margin-bottom:6px}.type-bars .context{margin:0 0 14px}.hbar{display:grid;grid-template-columns:minmax(110px,180px) minmax(80px,1fr) minmax(60px,110px);gap:12px;align-items:center;margin:10px 0;font-size:.88rem}.hbar .track{height:14px;background:#eef1f5;border-radius:9px;overflow:hidden}.hbar .fill{height:100%;border-radius:9px}.hbar .amount{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}.hbar .name{font-weight:600}@media(max-width:600px){.hbar{grid-template-columns:94px minmax(70px,1fr) 74px;gap:7px;font-size:.75rem}}
+.back-home{margin:0 0 16px}.back-home a{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--blue-900);font-size:.88rem;font-weight:700;text-decoration:none}.back-home a:hover{background:var(--bg)}.back-home a:focus-visible{outline:3px solid var(--sky-400)}
 </style></head><body>
 <title>Territorios Prioritarios · Observatorio Nacional</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -132,6 +133,7 @@ footer b{color:#fff}
 </section>
 
 <main class="wrap">
+  <div class="back-home"><a href="index.html" aria-label="Volver al menú principal">← Volver al menú principal</a></div>
   <div class="period-filter"><label for="quarter"><b>Periodo de análisis</b></label><select id="quarter" aria-label="Trimestre de 2025"><option value="all">Enero–diciembre 2025</option><option value="0">Trimestre 1</option><option value="1">Trimestre 2</option><option value="2">Trimestre 3</option><option value="3">Trimestre 4</option></select><span>Los indicadores y el ranking se actualizan con el periodo elegido.</span></div><div class="types" id="types" role="group" aria-label="Tipo de violencia"></div>
 
   <div class="grid">
