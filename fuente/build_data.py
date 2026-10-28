@@ -1,5 +1,9 @@
-import csv, json, re, io
-src=open('/mnt/user-data/uploads/Matriz_de_evidencias_nacionales_e_internacionales_MIMP_200225',encoding='utf-8').read().split('\n',1)[1]
+# Paso 1: lee la matriz (CSV exportado de Google Sheets o Excel) y genera fuente/data.json limpio.
+# Uso: python3 fuente/build_data.py [ruta/al/archivo.csv]   (por defecto: fuente/matriz.csv)
+import csv, json, re, io, sys
+_p=sys.argv[1] if len(sys.argv)>1 else 'fuente/matriz.csv'
+src=open(_p,encoding='utf-8-sig').read()
+if src.startswith('## Sheet name'): src=src.split('\n',1)[1]
 rows=list(csv.DictReader(io.StringIO(src)))
 def clean(s):
     s=(s or '').replace('\r','')
@@ -55,6 +59,6 @@ for r in rows:
 TEMR={'Género': 'Igualdad de oportunidades', 'Violencia de género': 'Violencia contra las mujeres e integrantes del grupo familiar'}
 DIMR={'Brechas de género': 'Brechas entre mujeres y hombres', 'Violencia de pareja': 'Violencia en relación de pareja', 'Trata y explotación': 'Trata y explotación sexual', 'Ciberviolencia': 'Acoso y violencia en espacios virtuales', 'Alcohol como factor de riesgo': 'Prevalencia y factores de riesgo', 'Prevalencia y factores generales': 'Prevalencia y factores de riesgo', 'Marcos conceptuales y justicia': 'Acceso a la justicia y marcos conceptuales', 'Servicios de atención': 'Servicios de prevención y atención'}
 for x in out: x['tem']=TEMR.get(x['tem'],x['tem']); x['dim']=DIMR.get(x['dim'],x['dim'])
-json.dump(dict(rows=out,groups=GROUP,subs=SUB),open('data.json','w'),ensure_ascii=False)
+json.dump(dict(rows=out,groups=GROUP,subs=SUB),open('fuente/data.json','w',encoding='utf-8'),ensure_ascii=False)
 import collections
 print(collections.Counter(x['o'] for x in out), sum(1 for x in out if x['tipo']), len(json.dumps(out,ensure_ascii=False)))

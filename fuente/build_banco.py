@@ -1,4 +1,4 @@
-# Genera las páginas del Banco de Evidencias (portada, tablero y fuentes) con la misma cabecera y pie.
+# Paso 3: genera las páginas del Banco de Evidencias (portada, tablero y fuentes) con la misma cabecera y pie.
 # Uso: python3 fuente/build_banco.py   (desde la raíz del repositorio)
 POWERBI="https://app.powerbi.com/view?r=eyJrIjoiZTdiNmUwZGItN2QzOS00OTY0LWExYWMtZWE1MzlhMTg1MjFmIiwidCI6IjY4MTljNDYzLTVkZWItNDA3MC1hY2I2LTlmZGQzY2FhZTk4NCJ9"
 SITE="https://mapa-evidencias-mimp.vercel.app/"

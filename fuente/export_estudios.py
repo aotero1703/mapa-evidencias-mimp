@@ -1,4 +1,4 @@
-# Exporta data/estudios.json para la página de evidencia científica (sin duplicados).
+# Paso 2: exporta data/estudios.json para la página de evidencia científica (sin duplicados).
 # Ámbito: solo Nacional o Internacional. Dimensiones de Igualdad de oportunidades agrupadas.
 import json
 GRUPO={'Brecha salarial':'Empleo','Salud sexual y reproductiva':'Salud','Salud física':'Salud','Salud mental':'Salud',
