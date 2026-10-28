@@ -46,6 +46,9 @@ main.wrap{padding-block:22px 40px;display:flex;flex-direction:column;gap:20px}
 .type b{display:block;font-family:var(--f-head);font-weight:600;font-size:.98rem;color:var(--blue-900);line-height:1.2}
 .type span{display:block;font-size:.8rem;color:var(--ink-soft);font-variant-numeric:tabular-nums}
 .grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:18px;align-items:start}
+.grid:not(.has-selection){grid-template-columns:minmax(0,1fr)}
+.grid:not(.has-selection) #ficha{display:none}
+.grid:not(.has-selection) #map{max-height:720px}
 @media (max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;min-width:0}
 .head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 16px;align-items:center;margin-bottom:8px}
@@ -227,6 +230,7 @@ function draw(){
   $('rankSub').textContent='Ranking provincial según casos atendidos por cada 100 mil habitantes. Selecciona una provincia para explorar sus indicadores. La tasa refleja atención registrada, no riesgo de violencia.';
   $('rank').innerHTML=L.map((p,i)=>`<button type="button" class="zoom${p.c===S.sel?' on':''}" data-c="${p.c}" style="--c:${base(S.tipo)}"><span class="rk">${i+1}</span>${miniMap(p)}<b>${p.prov}</b><span class="d">${p.dep}</span><span class="v">${fmt(Math.round(rate(p)))} casos atendidos por 100 mil hab.</span></button>`).join('');
   document.querySelectorAll('#rank .zoom').forEach(b=>b.onclick=()=>{pick(b.dataset.c);document.querySelector('.grid').scrollIntoView({block:'start',behavior:RM?'auto':'smooth'})});
+  document.querySelector('.grid').classList.toggle('has-selection',Boolean(S.sel&&P[S.sel]));
   ficha(S.sel?P[S.sel]:null,false);
 }
 function miniMap(p){
