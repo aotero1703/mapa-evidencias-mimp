@@ -169,11 +169,12 @@ const S={tipo:'total',dep:'',sel:null};
 const $=id=>document.getElementById(id), fmt=n=>typeof n==='number'?n.toLocaleString('es-PE'):(n==='<5'?'Menos de 5':n);
 const col=(t,l)=>T[t].ramp[3-LV.indexOf(l)], base=t=>T[t].ramp[2], tint=t=>T[t].ramp[0];
 const count=(p,t)=>t==='total'?p.n:p.tipos[T[t].k];
+const sumCases=(rows,k)=>{let n=0,hidden=0;for(const p of rows){const v=count(p,k);if(typeof v==='number')n+=v;else if(v==='<5')hidden++}return hidden?`${fmt(n)} o más · ${hidden} valores reservados`:fmt(n)};
 const scope=()=>S.sel&&P[S.sel]?[P[S.sel]]:R.provincias.filter(p=>!S.dep||p.dep===S.dep);
-const scopeName=()=>S.sel&&P[S.sel]?`Provincia de ${P[S.sel].prov} · ${P[S.sel].dep}`:S.dep?`Departamento de ${S.dep}`:'Perú';
-function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${fmt(rows.reduce((a,p)=>a+count(p,k),0))} casos · ${scopeName()}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
-function tentativeRange(rows){let lo=0,hi=0;for(const p of rows){if(typeof p.tent==='number'){lo+=p.tent;hi+=p.tent}else if(p.tent==='<5'){lo+=1;hi+=4}}return {lo,hi}}
-function tentLabel(r){return r.lo===r.hi?fmt(r.lo):`Entre ${fmt(r.lo)} y ${fmt(r.hi)}`}
+const scopeName=()=>S.sel&&P[S.sel]?P[S.sel].prov:S.dep||'Perú';
+function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${sumCases(rows,k)} casos · ${scopeName()}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
+function tentativeRange(rows){let lo=0,hi=0;for(const p of rows){if(typeof p.tent==='number'){lo+=p.tent;hi+=p.tent}else if(p.tent==='<5'){hi+=4}}return {lo,hi}}
+function tentLabel(r){return r.lo===r.hi?fmt(r.lo):`entre ${fmt(r.lo)} y ${fmt(r.hi)}`}
 // El selector se actualiza según el territorio seleccionado.
 renderTypes();
 function setTipo(v){S.tipo=v;draw()}
@@ -223,14 +224,15 @@ function ficha(p,auto){if(!p){$('ficha').innerHTML='<p>Elige una provincia en el
   const lv=p.nivel[S.tipo],tri=S.tipo==='total'?p.trim:p.trimt[S.tipo],nT=count(p,S.tipo);
   const ch=tri[0]?Math.round((tri[3]-tri[0])/tri[0]*100):null;
   const mini=['total','fisica','psicologica','sexual','economica'].map(k=>{const v=count(p,k);return `<button type="button" data-t="${k}" aria-pressed="${S.tipo===k}" style="--c:${base(k)};--t:${tint(k)}"><b>${fmt(v)}</b><span>${T[k].n.replace(' o patrimonial','')}</span></button>`}).join('');
-  $('ficha').innerHTML=`<p class="sub">${auto?'Provincia destacada por el indicador estimado':'Provincia seleccionada'} · ${S.dep||'Ámbito nacional'}</p><h3>${p.prov}</h3><div class="dep">${p.dep} · ${fmt(p.pob)} habitantes</div>
+  $('ficha').innerHTML=`<p class="sub">${auto?'Provincia con mayor indicador estimado':'Provincia seleccionada'} · ${p.dep}</p><h3>${p.prov}</h3><div class="dep">${p.dep} · ${fmt(p.pob)} habitantes</div>
    <span class="pill" style="background:${col(S.tipo,lv)};color:${LV.indexOf(lv)>=2?'#171c33':'#fff'}">Prioridad ${lv.toLowerCase()}</span>
    <div class="stats"><div class="stat"><b>${fmt(nT)}</b><span>${S.tipo==='total'?'casos registrados (todos los tipos)':'casos de violencia '+T[S.tipo].n.toLowerCase()} en 2025</span></div>
    <div class="stat"><b>${fmt(Math.round(p.pred[S.tipo]))}</b><span>casos esperados por 100 mil hab. (2026)</span></div>
    <div class="stat"><b>${p.psev}%</b><span>de casos con riesgo severo</span></div>
    <div class="stat"><b>${fmt(p.tent)}</b><span>tentativas de feminicidio en ${p.prov} (2025)</span></div></div>
-   <p class="method">Comparación territorial: ${p.dep} registra ${tentLabel(tentativeRange(R.provincias.filter(x=>x.dep===p.dep)))} tentativas; a nivel nacional, ${tentLabel(tentativeRange(R.provincias))}. Los valores «menos de 5» se publican como intervalos para proteger la reserva estadística; no se calculan porcentajes exactos a partir de ellos.</p>
-   <p class="sub">Casos por tipo de violencia</p><div class="mini">${mini}</div>
+   <p class="sub">Casos por tipo de violencia · ${p.prov} (2025)</p><div class="mini">${mini}</div>
+   <p class="method">Tentativas de feminicidio (2025): ${p.dep}, ${tentLabel(tentativeRange(R.provincias.filter(x=>x.dep===p.dep)))}; Perú, ${tentLabel(tentativeRange(R.provincias))}. Los valores inferiores a 5 se mantienen reservados, por lo que los totales son rangos y no cifras exactas.</p>
+   <p class="method">Los tipos de violencia pueden coexistir en un mismo caso; por ello, su suma puede superar el total de casos.</p>
    <p class="sub">Casos por trimestre, 2025</p><div class="cols">${columns(tri,base(S.tipo))}</div>
    ${ch!==null?`<p class="trend">${ch===0?'Los casos se mantuvieron igual':`Los casos <b>${ch>0?'aumentaron':'disminuyeron'} ${Math.abs(ch)}%</b>`} entre enero–marzo y octubre–diciembre de 2025.</p>`:''}
    ${p.n<50?'<p class="note">Pocos casos registrados: puede reflejar menor acceso a un CEM más que menos violencia.</p>':''}`;
