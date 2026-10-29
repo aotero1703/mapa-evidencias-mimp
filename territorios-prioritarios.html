@@ -1,7 +1,7 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 @media(max-width:700px){.types{grid-template-columns:repeat(2,minmax(0,1fr))}.mini{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .context{font-size:.83rem;color:var(--ink-soft);margin:8px 0 0}.method{font-size:.82rem;color:var(--ink-soft);background:#f2f5fa;border-radius:10px;padding:10px 12px;margin-top:10px}
-.period-filter{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 18px;padding:14px 16px;border:1px solid #dce4ee;border-radius:14px;background:#f6f9fc}.period-filter select{border:1px solid #c6d2df;border-radius:9px;padding:9px 12px;background:#fff;color:#172244}.period-filter span{font-size:.82rem;color:#59657b}.cols .active-quarter{stroke:#172244;stroke-width:2.5}
+.period-filter{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:0 0 18px;padding:14px 16px;border:1px solid #dce4ee;border-radius:14px;background:#f6f9fc}.period-filter b{font-size:1rem;color:#172244}.period-filter select{font-size:1rem;font-weight:700;min-width:210px;border:2px solid #2b3a7a;border-radius:10px;padding:10px 14px;background:#fff;color:#172244}.period-filter span{font-size:.82rem;color:#59657b;flex:1 1 220px}.period-filter label[for=dep]{margin-left:8px}@media(max-width:600px){.period-filter label[for=dep]{margin-left:0}}.cols .active-quarter{stroke:#172244;stroke-width:2.5}
 .type-bars{margin:14px 0 20px;padding:18px 20px}.type-bars .head{margin-bottom:6px}.type-bars .context{margin:0 0 14px}.hbar{display:grid;grid-template-columns:minmax(110px,180px) minmax(80px,1fr) minmax(60px,110px);gap:12px;align-items:center;margin:10px 0;font-size:.88rem}.hbar .track{height:14px;background:#eef1f5;border-radius:9px;overflow:hidden}.hbar .fill{height:100%;border-radius:9px}.hbar .amount{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}.hbar .name{font-weight:600}@media(max-width:600px){.hbar{grid-template-columns:94px minmax(70px,1fr) 74px;gap:7px;font-size:.75rem}}
 .back-home{margin:0 0 16px}.back-home a{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--blue-900);font-size:.88rem;font-weight:700;text-decoration:none}.back-home a:hover{background:var(--bg)}.back-home a:focus-visible{outline:3px solid var(--sky-400)}
 .legend-title{font-size:.84rem;font-weight:700;color:var(--ink);margin:12px 0 7px}.legend-title span{font-size:.76rem;font-weight:400;color:var(--ink-soft)}
@@ -137,13 +137,13 @@ footer b{color:#fff}
 
 <main class="wrap">
   <div class="back-home"><a href="index.html" aria-label="Volver al menú principal">← Volver al menú principal</a></div>
-  <div class="period-filter"><label for="quarter"><b>Periodo de análisis</b></label><select id="quarter" aria-label="Trimestre de 2025"><option value="all">Enero–diciembre 2025</option><option value="0">Trimestre 1</option><option value="1">Trimestre 2</option><option value="2">Trimestre 3</option><option value="3">Trimestre 4</option></select><span>Los indicadores y el ranking se actualizan con el periodo elegido.</span></div><div class="types" id="types" role="group" aria-label="Tipo de violencia"></div>
+  <div class="period-filter"><label for="quarter"><b>Periodo</b></label><select id="quarter" aria-label="Periodo"><option value="all">Anual 2025</option><option value="0">Trimestre 1</option><option value="1">Trimestre 2</option><option value="2">Trimestre 3</option><option value="3">Trimestre 4</option></select><label for="dep"><b>Departamento</b></label><select id="dep" aria-label="Departamento"><option value="">Todo el Perú</option></select><span>El periodo y el departamento cambian todas las cifras, el mapa y el ranking.</span></div><div class="types" id="types" role="group" aria-label="Tipo de violencia"></div>
   <section class="demog-charts" aria-label="Desagregación por sexo y grupo etario"><div class="card demog-card"><h2>Casos por sexo</h2><p class="demog-context" id="sexContext"></p><div id="sexBars" class="demog-bars"></div></div><div class="card demog-card"><h2>Casos por grupo etario</h2><p class="demog-context" id="ageContext"></p><div id="ageBars" class="demog-bars"></div></div></section>
 
   <div class="grid">
     <div class="card">
       <div class="head"><h2 id="mapTitle"></h2>
-        <span><button type="button" class="reset" id="reset" hidden>Ver todo el Perú</button> <select id="dep" aria-label="Departamento"><option value="">Todo el Perú</option></select></span></div>
+        <span><button type="button" class="reset" id="reset" hidden>Ver todo el Perú</button></span></div>
       <div class="legend-title">Nivel de prioridad territorial <span>(según tasa de casos atendidos)</span></div>
       <div class="legend" id="legend"></div>
       <svg id="map" role="img" aria-label="Mapa de provincias del Perú coloreado por nivel de prioridad"></svg>
@@ -188,7 +188,7 @@ const OFFICIAL_2025={fisica:62617,psicologica:74004,sexual:32180,economica:735,t
 const annualCount=(p,t)=>t==='total'?p.n:p.tipos[T[t].k];
 const quarterly=(p,t)=>t==='total'?p.trim:p.trimt[t];
 const count=(p,t)=>DEMOG&&selectedDemog()?demogCount(p,t):S.q==='all'?annualCount(p,t):quarterly(p,t)[Number(S.q)];
-const periodLabel=()=>S.q==='all'?'enero–diciembre de 2025':['enero–marzo de 2025','abril–junio de 2025','julio–septiembre de 2025','octubre–diciembre de 2025'][Number(S.q)];
+const periodLabel=()=>S.q==='all'?'anual 2025':['enero–marzo de 2025','abril–junio de 2025','julio–septiembre de 2025','octubre–diciembre de 2025'][Number(S.q)];
 const countValue=v=>typeof v==='number'?v:0;
 const rate=p=>{const n=count(p,S.tipo);return typeof n==='number'&&p.pob>0?n/p.pob*100000:null};
 let thresholds=[];
@@ -200,7 +200,7 @@ const scope=()=>S.sel&&P[S.sel]?[P[S.sel]]:R.provincias.filter(p=>!S.dep||p.dep=
 const scopeName=()=>S.sel&&P[S.sel]?P[S.sel].prov:S.dep||'Perú';
 const scopeTotal=(rows,k)=>{if(!selectedDemog()&&!S.dep&&!S.sel&&S.q==='all')return {lo:k==='total'?R.meta.casos:OFFICIAL_2025[k],hi:k==='total'?R.meta.casos:OFFICIAL_2025[k]};let lo=0,hi=0;for(const p of rows){const v=count(p,k);if(typeof v==='number'){lo+=v;hi+=v}else if(v==='<5'){hi+=4}}return {lo,hi}};
 const displayTotal=r=>r.lo===r.hi?fmt(r.lo):r.lo===0&&r.hi<=4?'Menos de 5':fmt(r.lo)+'–'+fmt(r.hi);
-function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${displayTotal(scopeTotal(rows,k))} casos · ${scopeName()} · ${S.q==='all'?'2025':`Trimestre ${Number(S.q)+1}`}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
+function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${displayTotal(scopeTotal(rows,k))} casos · ${scopeName()} · ${S.q==='all'?'Anual 2025':`Trimestre ${Number(S.q)+1}`}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
 function renderBars(){const rows=scope(),keys=['fisica','psicologica','sexual','economica'],vals=keys.map(k=>({k,r:scopeTotal(rows,k)})),max=Math.max(1,...vals.map(v=>v.r.hi));$('barsScope').textContent=`${scopeName()} · ${periodLabel()} · casos clasificados por tipo principal`;$('typeBars').innerHTML=vals.map(({k,r})=>`<div class="hbar"><span class="name">${T[k].n}</span><div class="track"><div class="fill" style="width:${Math.max(0,r.lo/max*100)}%;background:${base(k)}"></div></div><span class="amount">${displayTotal(r)}</span></div>`).join('')}
 
 function tentativeRange(rows){let lo=0,hi=0;for(const p of rows){if(typeof p.tent==='number'){lo+=p.tent;hi+=p.tent}else if(p.tent==='<5'){hi+=4}}return {lo,hi}}
