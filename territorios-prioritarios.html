@@ -198,8 +198,8 @@ const officialNote='Fuente: registro de casos 2025 y reportes Warmi Ñan. Clasif
 const sumCases=(rows,k)=>{let n=0,hidden=0;for(const p of rows){const v=count(p,k);if(typeof v==='number')n+=v;else if(v==='<5')hidden++}return hidden?`${fmt(n)}–${fmt(n+4*hidden)}`:fmt(n)};
 const scope=()=>S.sel&&P[S.sel]?[P[S.sel]]:R.provincias.filter(p=>!S.dep||p.dep===S.dep);
 const scopeName=()=>S.sel&&P[S.sel]?P[S.sel].prov:S.dep||'Perú';
-const scopeTotal=(rows,k)=>{if(!selectedDemog()&&!S.dep&&!S.sel&&S.q==='all')return {lo:k==='total'?R.meta.casos:OFFICIAL_2025[k],hi:k==='total'?R.meta.casos:OFFICIAL_2025[k]};let lo=0,hi=0;for(const p of rows){const v=count(p,k);if(typeof v==='number'){lo+=v;hi+=v}else if(v==='<5'){hi+=4}}return {lo,hi}};
-const displayTotal=r=>r.lo===r.hi?fmt(r.lo):r.lo===0&&r.hi<=4?'Menos de 5':fmt(r.lo)+'–'+fmt(r.hi);
+const scopeTotal=(rows,k)=>{if(!selectedDemog()&&!S.dep&&!S.sel&&S.q==='all')return {lo:k==='total'?R.meta.casos:OFFICIAL_2025[k],hi:k==='total'?R.meta.casos:OFFICIAL_2025[k]};if(DEMOG){const ok=new Set(rows.map(p=>String(p.c).padStart(4,'0')));let n=0;for(const [key,v] of DEMOG){const [c,q,sex,age,typ]=key.split('|');if(!ok.has(c)||(S.q!=='all'&&q!==S.q)||(S.sex!=='all'&&sex!==S.sex)||(S.age!=='all'&&age!==S.age)||(k!=='total'&&Number(typ)!==typeIndex[k]))continue;n+=v}return {lo:n,hi:n}}let lo=0,hi=0;for(const p of rows){const v=count(p,k);if(typeof v==='number'){lo+=v;hi+=v}else if(v==='<5'){hi+=4}}return {lo,hi}};
+const displayTotal=r=>r.lo===r.hi?(r.lo>0&&r.lo<5?'Menos de 5':fmt(r.lo)):r.lo===0&&r.hi<=4?'Menos de 5':fmt(r.lo)+'–'+fmt(r.hi);
 function renderTypes(){const rows=scope();$('types').innerHTML=Object.entries(T).map(([k,t])=>`<button type="button" class="type" data-v="${k}" aria-pressed="${k===S.tipo}" style="--c:${t.ramp[2]};--t:${t.ramp[0]}"><span class="band"></span><span class="tx"><b>${t.n}</b><span>${displayTotal(scopeTotal(rows,k))} casos · ${scopeName()} · ${S.q==='all'?'Anual 2025':`Trimestre ${Number(S.q)+1}`}</span></span></button>`).join('');document.querySelectorAll('.type').forEach(b=>b.onclick=()=>setTipo(b.dataset.v))}
 function renderBars(){const rows=scope(),keys=['fisica','psicologica','sexual','economica'],vals=keys.map(k=>({k,r:scopeTotal(rows,k)})),max=Math.max(1,...vals.map(v=>v.r.hi));$('barsScope').textContent=`${scopeName()} · ${periodLabel()} · casos clasificados por tipo principal`;$('typeBars').innerHTML=vals.map(({k,r})=>`<div class="hbar"><span class="name">${T[k].n}</span><div class="track"><div class="fill" style="width:${Math.max(0,r.lo/max*100)}%;background:${base(k)}"></div></div><span class="amount">${displayTotal(r)}</span></div>`).join('')}
 
@@ -236,7 +236,7 @@ function renderDemogCharts(){
   const valid=new Set(scope().map(p=>String(p.c).padStart(4,'0')));
   const sexes=[0,0],ages=[0,0,0,0,0];
   for(const [key,n] of DEMOG){const [c,q,sex,age,typ]=key.split('|');if(!valid.has(c)||(S.q!=='all'&&q!==S.q)||(S.tipo!=='total'&&Number(typ)!==typeIndex[S.tipo]))continue;sexes[Number(sex)]+=n;ages[Number(age)]+=n}
-  const make=(id,labels,vals)=>{const max=Math.max(1,...vals);$(id).innerHTML=labels.map((label,i)=>{const n=vals[i];return '<div class="demog-bar"><span>'+label+'</span><div class="track"><div class="fill" style="width:'+(n/max*100).toFixed(1)+'%;--bar-color:'+T[S.tipo].ramp[2]+'"></div></div><strong>'+(n>0&&n<5?'&lt;5':fmt(n))+'</strong></div>'}).join('')};
+  const make=(id,labels,vals)=>{const max=Math.max(1,...vals);$(id).innerHTML=labels.map((label,i)=>{const n=vals[i];return '<div class="demog-bar"><span>'+label+'</span><div class="track"><div class="fill" style="width:'+(n/max*100).toFixed(1)+'%;--bar-color:'+T[S.tipo].ramp[2]+'"></div></div><strong>'+(n>0&&n<5?'Menos de 5':fmt(n))+'</strong></div>'}).join('')};
   make('sexBars',['Mujer','Hombre'],sexes);
   make('ageBars',['0–11 años','12–17 años','18–29 años','30–59 años','60 años a más'],ages);
 }
