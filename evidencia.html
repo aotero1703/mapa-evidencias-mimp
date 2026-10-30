@@ -140,7 +140,7 @@ function show(){
 function card(r){const o=S.open===r.n,au=r.a?r.a.split(';')[0].trim()+(r.a.includes(';')?' et al.':'') :'';
   const pais=r.amb==='Nacional'?'Perú':((r.paises||[]).length>2?'Varios países':(r.paises||[]).join(', ')||'');
   const tags=(r.temas||[]).map(t=>`<span class="tag dimtag">${esc(t)}</span>`).join('');
-  const tipos=(r.tipos||[]).filter(t=>t!=='Estudios generales sobre violencia').map(t=>t.replace('Violencia ','')):[];
+  const tipos=(r.tipos||[]).filter(t=>t!=='Estudios generales sobre violencia').map(t=>t.replace('Violencia ',''));
   const f=(t,v)=>v?`<dt>${t}</dt><dd>${esc(v)}</dd>`:'';
   return `<article class="paper"><div class="tags">${tags}<span class="tag ${r.amb==='Nacional'?'pe':'int'}">${r.amb} · ${esc(pais)}</span></div>
    <h3>${esc(r.t)}</h3><div class="by">${[au,r.y].filter(Boolean).map(esc).join(' · ')}${tipos.length?` · Violencia ${tipos.join(', ')}`:''}</div>
