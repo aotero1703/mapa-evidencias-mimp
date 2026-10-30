@@ -3,6 +3,7 @@
 import json
 import sys,os; sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
 from nuevos import NUEVOS,EXCLUIR
+from resumenes import RES as RESUMEN
 GRUPO={'Brecha salarial':'Empleo','Salud sexual y reproductiva':'Salud','Salud física':'Salud','Salud mental':'Salud',
  'Liderazgo':'Participación y liderazgo','Participación política':'Participación y liderazgo','Institucional/Organizacional':'Participación y liderazgo',
  'Interseccionalidad':'Enfoques transversales','Ciclo de vida':'Enfoques transversales'}
@@ -52,6 +53,8 @@ for r in d['rows']:
 out+=NUEVOS
 # Solo estudios sobre violencia comprendida en la Ley N.° 30364 (con tipo de violencia).
 out=[x for x in out if x.get('tipos')]
+for x in out:
+    if x['n'] in RESUMEN: x['resumen']=RESUMEN[x['n']]
 # Temas alineados con el art. 1 de la Ley N.° 30364 (y arts. 42 y 45 para causas y consecuencias).
 TMAP={'Causas y factores asociados':'Causas y consecuencias de la violencia','Consecuencias de la violencia':'Causas y consecuencias de la violencia',
  'Prevención de la violencia':'Prevención de la violencia','Atención y recuperación':'Atención y recuperación de las víctimas',
