@@ -14,7 +14,7 @@ SOL=[
   ev='En el Perú, JUNTOS redujo entre 25% y 30% la violencia física de pareja contra las mujeres usuarias. Una revisión de 22 estudios en países de ingresos bajos y medios confirma el resultado: en 11 de 14 evaluaciones cuantitativas las transferencias redujeron la violencia de pareja.',
   casos=[(93,'Positivo'),(210,'Positivo')]),
  dict(id='hombres',eje='prevencion',n='Trabajo con hombres para transformar masculinidades',ef='Prometedor',tipos=['Física','Psicológica','Sexual'],
-  d='Grupos de reflexión con hombres para cuestionar las ideas que justifican la violencia y promover relaciones igualitarias.',
+  d='Grupos de reflexión con hombres de la comunidad para cuestionar las ideas que justifican la violencia y promover relaciones igualitarias, como la estrategia Hombres por la Igualdad del MIMP.',
   ev='En dos ensayos aleatorios (República Democrática del Congo y Costa de Marfil) los hombres mejoraron sus actitudes y redujeron su intención de ejercer violencia. La violencia reportada por las mujeres bajó, pero sin significancia estadística.',
   casos=[(121,'Positivo'),(124,'Mixto')]),
  dict(id='celular',eje='prevencion',n='Mensajes por celular y WhatsApp',ef='Evidencias mixtas',tipos=['Sexual','Psicológica'],

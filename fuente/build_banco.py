@@ -103,7 +103,7 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
       <div class="body">
         <h2>Estudios e investigaciones</h2>
         <p>Investigaciones para comprender la violencia y programas evaluados para saber qué ayuda a enfrentarla, en el marco de la Ley N.° 30364.</p>
-        <div class="facts"><span>15 programas evaluados</span><span>111 estudios</span></div>
+        <div class="facts"><span>15 programas evaluados</span><span>112 estudios</span></div>
         <div class="basis"><b>Art. 43:</b> el Observatorio elabora informes, estudios y propuestas.</div>
         <span class="go">Buscar estudios <i>→</i></span>
       </div>
