@@ -30,7 +30,7 @@ def head(title,desc,path=""):
 <body>
 '''
 def header(cur):
-    items=[('evidencia.html','Evidencia científica','ev'),('tablero.html','Indicadores','in'),('fuentes.html','Fuentes externas','fx'),('territorios-prioritarios.html','Territorios Prioritarios','tp')]
+    items=[('evidencia.html','Evidencia científica','ev'),('tablero.html','Indicadores','in'),('fuentes.html','Fuentes externas','fx'),('servicios.html','Servicios','sv'),('territorios-prioritarios.html','Territorios Prioritarios','tp')]
     nav=''.join(f'<a href="{h}"{" aria-current=\"page\"" if k==cur else ""}>{t}</a>' for h,t,k in items)
     return f'''<header class="site-header">
   <div class="wrap header-inner">
@@ -79,6 +79,9 @@ ART_FX='''<svg class="art" viewBox="0 0 200 200" aria-hidden="true"><g fill="non
 <g fill="none" stroke="#fff" stroke-width="3" opacity=".85"><ellipse cx="104" cy="50" rx="34" ry="11"/><path d="M70 50v58c0 6 15 11 34 11s34-5 34-11V50"/><path d="M70 79c0 6 15 11 34 11s34-5 34-11" opacity=".6"/></g>
 <g stroke="#f2a93b" stroke-width="4" stroke-linecap="round" fill="none"><path d="M138 118l22 22"/><path d="M146 140h14v-14"/></g></svg>'''
 
+ART_SV='''<svg class="art" viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2"><circle cx="120" cy="80" r="70"/><circle cx="120" cy="80" r="46"/></g>
+<path d="M70 120 C 95 120, 95 80, 120 80 S 145 40, 170 40" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 12"/>
+<circle cx="70" cy="120" r="10" fill="#fff"/><circle cx="120" cy="80" r="10" fill="#fff" fill-opacity=".85"/><circle cx="170" cy="40" r="12" fill="#f2a93b"/></svg>'''
 INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica, indicadores y fuentes de datos oficiales sobre la violencia contra las mujeres y los integrantes del grupo familiar. Observatorio Nacional, MIMP (Ley N.° 30364).')+header('')+f'''
 <main>
 <section class="hero" id="hero">
@@ -126,6 +129,16 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
         <div class="facts"><span>6 fuentes</span><span>Encuestas y registros</span></div>
         <div class="basis"><b>R.M. N.° 027-2025-MIMP:</b> articular la información de las entidades del Sistema Nacional.</div>
         <span class="go">Ver las fuentes <i>→</i></span>
+      </div>
+    </a>
+    <a class="door sv" href="servicios.html">
+      <div class="top">{ART_SV}<span class="kicker">Servicios</span></div>
+      <div class="body">
+        <h2>Servicios del MIMP frente a la violencia</h2>
+        <p>Qué servicios ofrece el Estado para prevenir, atender, proteger, reeducar y reparar, para quién son y qué sabemos de sus resultados.</p>
+        <div class="facts"><span>Ruta de atención</span><span>Catálogo 2026</span></div>
+        <div class="basis"><b>Ley N.° 30364, art. 45:</b> responsabilidades del MIMP en prevención, atención y tratamiento.</div>
+        <span class="go">Conocer los servicios <i>→</i></span>
       </div>
     </a>
     <a class="door tp" href="territorios-prioritarios.html">
@@ -367,6 +380,81 @@ Promise.all([fetch('data/estudios.json').then(r=>r.json()),fetch('data/solucione
 </html>
 '''
 
-for name,html in (('evidencia.html',EVID),('index.html',INDEX),('tablero.html',TABLERO),('fuentes.html',FUENTES)):
+# ---------- Servicios del MIMP frente a la violencia (Catálogo de Servicios 2026) ----------
+CATALOGO='https://cdn.www.gob.pe/uploads/document/file/9387740/7693547-catalogo-de-servicios-del-sector-mujer-y-poblaciones-vulnerables.pdf'
+EV={'impacto':('Evaluado: buenos resultados','ok'),'parcial':('Estudios sin evaluación de impacto','mid'),'ninguna':('Sin evaluación publicada','none')}
+ETAPAS=[
+ ('prevenir','Antes','Prevenir la violencia','Trabajo en la comunidad y en los colegios para cambiar las ideas que toleran la violencia y fortalecer la autonomía de las mujeres.',[
+   ('Hombres por la Igualdad','Prevención · Ley, art. 27','Redes de hombres que cuestionan el machismo y promueven relaciones de pareja sin violencia y paternidades responsables, en espacios de reflexión como «Entre Patas».','Hombres de 16 años a más, líderes comunitarios y población masculina en general.','Distritos priorizados','parcial','Estudio cualitativo sobre la participación de los varones (PUCP, 2024).'),
+   ('Mujeres Acompañando Mujeres','Prevención · Ley, art. 27','Mujeres de la comunidad, capacitadas, acompañan y visitan a mujeres que vivieron violencia de pareja para fortalecer su autonomía y su proyecto de vida.','Mujeres de 18 años a más que vivieron violencia de pareja.','Distritos priorizados','ninguna',''),
+   ('Mujeres Empoderadas y Autónomas','Prevención · Ley, art. 27','Talleres de empoderamiento personal, vocacional y financiero para que adolescentes y jóvenes ganen autonomía económica y reduzcan conductas de riesgo.','Mujeres de 14 a 24 años en situación de pobreza o cerca de ella.','Distritos priorizados','ninguna',''),
+   ('Prevención en la comunidad educativa','Prevención · Ley, art. 27','Contenidos y herramientas pedagógicas para prevenir la violencia en colegios e institutos, en coordinación con el Ministerio de Educación.','Estudiantes, madres, padres, docentes y público en general.','Distritos priorizados','ninguna','')]),
+ ('ayuda','Cuando ocurre','Pedir ayuda y orientación','Canales gratuitos para pedir información, orientación o apoyo emocional en cualquier momento.',[
+   ('Línea 100','Atención · Ley, arts. 27 al 29','Atención telefónica gratuita: información, orientación, consejería y soporte emocional. Deriva los casos al CEM, al SAU o al SAR según el riesgo.','Personas afectadas por violencia o que conocen un caso.','Nacional','parcial','Evaluación del cuidado de sus operadoras y análisis de llamadas; no hay evaluación de su efecto en las víctimas.'),
+   ('Chat 100','Atención · Ley, arts. 27 al 29','Orientación y consejería virtual en tiempo real, también por WhatsApp, disponible las 24 horas.','Adolescentes, jóvenes y personas adultas.','Nacional','ninguna','')]),
+ ('atencion','Atención y protección','Recibir atención y protección','Servicios especializados y gratuitos que atienden a las víctimas, las protegen y las acompañan en el acceso a la justicia.',[
+   ('Centro Emergencia Mujer y Familia (CEM)','Atención · Ley, arts. 27 al 29','Atención integral, legal, psicológica y social, para la protección, la recuperación y el acceso a la justicia de las víctimas. También hace prevención.','Mujeres e integrantes del grupo familiar afectados por violencia, y cualquier persona afectada por violencia sexual.','Nacional','impacto','Su apertura reduce la violencia de género en cerca de 10% (Sviatschi y Trako, 2024).'),
+   ('Servicio de Atención Urgente (SAU)','Atención · Ley, arts. 27 al 29','Atención inmediata en el lugar donde está la víctima o donde ocurrieron los hechos, cuando el riesgo es moderado o severo.','Personas afectadas por violencia en riesgo moderado o severo.','Regiones priorizadas','ninguna',''),
+   ('Servicio de Atención Rural (SAR)','Atención · Ley, arts. 27 al 29','Atención integral con pertinencia cultural en zonas rurales, junto con las autoridades comunales y los servicios locales.','Personas afectadas por violencia en zonas rurales.','Regiones priorizadas','ninguna',''),
+   ('Atención en las PIAS','Atención · Ley, arts. 27 al 29','Prevención, orientación y atención inicial a bordo de las Plataformas Itinerantes de Acción Social, en zonas de difícil acceso.','Mujeres e integrantes del grupo familiar de zonas rurales dispersas.','Ámbito de las PIAS','ninguna',''),
+   ('Hogar de Refugio Temporal (HRT)','Protección · Ley, art. 29','Acogida temporal, voluntaria y segura, con alimentación y atención multidisciplinaria, para mujeres en riesgo de feminicidio y sus hijas e hijos.','Mujeres víctimas en riesgo de feminicidio, con sus hijas e hijos.','Regiones priorizadas','ninguna','')]),
+ ('despues','Después','Reeducar y reparar','Servicios para que el agresor deje de ejercer violencia y para reparar el daño a las víctimas.',[
+   ('Centro de Atención Institucional (CAI)','Reeducación · Ley, arts. 30 al 32','Tratamiento reeducativo para que el hombre deje de ejercer violencia contra su pareja o expareja, con la protección de la víctima como fin.','Hombres de 18 años a más con orden judicial (medida de protección o sentencia).','Regiones priorizadas','parcial','Estudio cualitativo (PUCP, 2020); no hay evaluación de impacto.'),
+   ('Asistencia económica a víctimas indirectas de feminicidio','Reparación · Ley, arts. 1 y 33','S/ 600 cada dos meses para hijas e hijos que perdieron a su madre por feminicidio, hasta los 18 años o hasta terminar estudios superiores (D.U. N.° 005-2020).','Niñas, niños y adolescentes huérfanos por feminicidio; hijas e hijos que estudian; personas con discapacidad que dependían de la víctima.','Nacional','ninguna','')]),
+]
+def _svc(n,eje,d,para,cob,ev,evt):
+    lab,cls=EV[ev]
+    return f'''<article class="svc"><div class="svc-top"><span class="svc-eje">{eje}</span></div><h4>{n}</h4><p>{d}</p>
+      <dl><dt>Para quién</dt><dd>{para}</dd><dt>Dónde</dt><dd>{cob}</dd></dl>
+      <div class="svc-ev {cls}"><b>{lab}</b>{f'<span>{evt}</span>' if evt else ''}</div></article>'''
+ruta=''.join(f'''<section class="etapa e-{k}" aria-labelledby="et-{k}"><div class="etapa-head"><span class="etapa-n">{i+1}</span><div><span class="etapa-k">{kk}</span><h3 id="et-{k}">{t}</h3><p>{d}</p></div></div>
+  <div class="svc-grid">{''.join(_svc(*x) for x in L)}</div></section>''' for i,(k,kk,t,d,L) in enumerate(ETAPAS))
+SERV=head('Servicios del MIMP frente a la violencia · Banco de Evidencias','Qué servicios ofrece el MIMP frente a la violencia contra las mujeres y los integrantes del grupo familiar, para quién son y qué evidencia y datos hay sobre cada uno.','servicios.html')+header('sv')+f'''
+<main>
+<section class="page-hero sv">
+  <div class="wrap">
+    <a class="crumb" href="./">← Banco de Evidencias</a>
+    <h1>Servicios del MIMP frente a la violencia</h1>
+    <p>Qué servicios ofrece el Estado a través del Ministerio de la Mujer, para quién son, cómo se organizan y qué sabemos de sus resultados.</p>
+  </div>
+</section>
+
+<section class="section sv-levels">
+  <div class="wrap">
+    <div class="sv-intro"><h2>Cómo se organizan los servicios</h2><p>El Catálogo de Servicios del sector agrupa lo que hace el MIMP en tres niveles. Los servicios frente a la violencia están, sobre todo, en el primero: los que atienden directamente a las personas.</p></div>
+    <div class="sv-lvls">
+      <div class="sv-lvl l1"><span class="lv-n">Nivel 1</span><h3>Servicios prestacionales</h3><p>Llegan directamente a las personas.</p>
+        <ul class="sv-types"><li><b>Prevención</b>Evitar la violencia y la revictimización</li><li><b>Protección</b>Resguardo y alojamiento seguro</li><li><b>Atención y orientación</b>Atención integral, orientación y reeducación</li><li><b>Asistencia económica</b>Transferencias ante la violencia o la orfandad</li><li><b>Promoción</b>Derechos, igualdad y no discriminación</li></ul></div>
+      <div class="sv-lvl l2"><span class="lv-n">Nivel 2</span><h3>Servicios no prestacionales</h3><p>Acreditaciones y autorizaciones, como la acreditación de los Hogares de Refugio Temporal.</p></div>
+      <div class="sv-lvl l3"><span class="lv-n">Nivel 3</span><h3>Servicios administrativos</h3><p>Capacitación, opiniones especializadas, supervisión y sanción.</p></div>
+    </div>
+    <div class="who"><span>Los brindan</span><b>Programa Warmi Ñan</b><b>MIMP, sede central</b><b>INABIF</b><b>CONADIS</b><b>Programa Gratitud</b></div>
+  </div>
+</section>
+
+<section class="section sv-route">
+  <div class="wrap">
+    <div class="sv-intro"><h2>La ruta de los servicios frente a la violencia</h2><p>Los servicios del Programa Warmi Ñan acompañan cada momento: antes de que la violencia ocurra, cuando alguien pide ayuda, durante la atención y protección, y después.</p></div>
+    <ol class="steps" aria-label="Momentos de la ruta"><li>Prevenir</li><li>Pedir ayuda</li><li>Atención y protección</li><li>Reeducar y reparar</li></ol>
+    {ruta}
+    <div class="legend-ev"><span class="svc-ev ok"><b>Evaluado: buenos resultados</b></span><span class="svc-ev mid"><b>Estudios sin evaluación de impacto</b></span><span class="svc-ev none"><b>Sin evaluación publicada</b></span><a href="evidencia.html">Ver la evidencia científica →</a></div>
+  </div>
+</section>
+
+<section class="section sv-data">
+  <div class="wrap">
+    <div class="sv-intro"><h2>Qué datos hay sobre la violencia y los servicios</h2><p>Además de las evaluaciones, dos tipos de fuentes permiten seguir el problema y el uso de los servicios.</p></div>
+    <div class="data-grid">
+      <a class="dcard" href="https://portalestadistico.warminan.gob.pe/banco-de-datos/" target="_blank" rel="noopener"><span class="dk">Registros de los servicios</span><h3>Portal Estadístico de Warmi Ñan</h3><p>Casos atendidos en los Centros Emergencia Mujer y Familia y en los demás servicios del programa. Dicen cuántas personas llegan a los servicios, no cuánta violencia hay.</p><span class="go">Ir al banco de datos ↗</span></a>
+      <a class="dcard" href="https://proyectos.inei.gob.pe/endes/" target="_blank" rel="noopener"><span class="dk">Encuesta del INEI</span><h3>ENDES</h3><p>Cuántas mujeres viven violencia de pareja, en todo el país y por región, y si buscaron ayuda en alguna institución. Sirve para ver quiénes no llegan a los servicios.</p><span class="go">Ir a la ENDES ↗</span></a>
+      <a class="dcard" href="fuentes.html"><span class="dk">Encuesta del INEI</span><h3>ENARES 2024</h3><p>Cuánto tolera la sociedad la violencia contra las mujeres, niñas, niños y adolescentes. Sirve para seguir lo que buscan cambiar los servicios de prevención.</p><span class="go">Ver en fuentes externas →</span></a>
+    </div>
+    <p class="sv-src">Fuente: <a href="{CATALOGO}" target="_blank" rel="noopener">Catálogo de Servicios del Sector Mujer y Poblaciones Vulnerables 2026</a>. La evidencia de cada servicio corresponde a los estudios del Banco de Evidencias.</p>
+  </div>
+</section>
+</main>
+'''+FOOTER+'</body>\n</html>\n'
+
+for name,html in (('evidencia.html',EVID),('index.html',INDEX),('tablero.html',TABLERO),('fuentes.html',FUENTES),('servicios.html',SERV)):
     open(name,'w',encoding='utf-8').write(html)
 print('ok')
