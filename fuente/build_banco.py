@@ -228,19 +228,19 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
   <div class="wrap">
     <a class="crumb" href="./">← Banco de Evidencias</a>
     <h1>Evidencia científica</h1>
-    <p>¿Qué funciona para prevenir y atender la violencia contra las mujeres y los integrantes del grupo familiar? Revisa las intervenciones evaluadas, ordenadas por los ejes de la Ley N.° 30364, o explora todos los estudios por tipo de violencia.</p>
+    <p>Lo que se ha investigado sobre la violencia contra las mujeres y los integrantes del grupo familiar, organizado según la Ley N.° 30364.</p>
     <div class="hsearch"><input type="search" id="q" placeholder="Buscar en todo el banco: Cuna Más, Línea 100, alcohol, adolescentes…" aria-label="Buscar en todo el banco"></div>
   </div>
 </section>
 <section class="section">
   <div class="wrap">
     <div class="tabs" role="tablist" aria-label="Secciones de la evidencia">
-      <button type="button" role="tab" id="tF" aria-selected="true" aria-controls="tabF">¿Qué funciona?</button>
-      <button type="button" role="tab" id="tE" aria-selected="false" aria-controls="tabE">Todos los estudios</button>
+      <button type="button" role="tab" id="tF" aria-selected="true" aria-controls="tabF"><span class="tk">¿Qué funciona?</span><b>Intervenciones evaluadas</b><span class="td">Programas que se pusieron a prueba y qué resultados tuvieron, por eje de la Ley: prevención, atención, protección y reeducación.</span></button>
+      <button type="button" role="tab" id="tE" aria-selected="false" aria-controls="tabE"><span class="tk">¿Qué se sabe?</span><b>Biblioteca de estudios</b><span class="td">Todas las investigaciones del banco, por tipo y modalidad de violencia, además de igualdad de oportunidades y cuidados.</span></button>
     </div>
     <div id="tabF" role="tabpanel" aria-labelledby="tF">
       <div id="solHome">
-        <p class="intro-f">Elige un eje de la Ley N.° 30364 para ver qué intervenciones se han evaluado y qué resultados tuvieron.</p>
+        <h3 class="ejes-h">Ejes de intervención de la Ley N.° 30364</h3>
         <div class="ejes" id="ejes"></div>
       </div>
       <div id="ejeDet" hidden></div>
@@ -346,8 +346,8 @@ function solRender(){
   if(F.sol){$('ejeDet').hidden=true;return solDetail(SOL.soluciones.find(x=>x.id===F.sol))}
   if(F.eje)return ejeDetail(SOL.ejes.find(e=>e.id===F.eje));
   $('ejes').innerHTML=SOL.ejes.map(e=>{const L=SOL.soluciones.filter(x=>x.eje===e.id);
-    return L.length?`<button type="button" class="eje" data-e="${e.id}"><span class="q">${ICO[e.id]}</span><b>${e.n}</b><span class="d">${e.d}</span><span class="n">${L.length} ${L.length===1?'intervención evaluada':'intervenciones evaluadas'}</span><span class="go">Ver qué funciona →</span></button>`
-      :`<div class="eje vacio"><span class="q">${ICO[e.id]}</span><b>${e.n}</b><span class="d">${e.d}</span><span class="n">Todavía no hay estudios que evalúen intervenciones de este eje.</span></div>`}).join('');
+    return L.length?`<button type="button" class="eje" data-e="${e.id}"><b>${e.n}</b><span class="d">${e.d}</span><span class="n">${L.length} ${L.length===1?'intervención evaluada':'intervenciones evaluadas'}</span><span class="go">Ver qué funciona →</span></button>`
+      :`<div class="eje vacio"><b>${e.n}</b><span class="d">${e.d}</span><span class="n">Todavía no hay estudios que evalúen intervenciones de este eje.</span></div>`}).join('');
   document.querySelectorAll('button.eje').forEach(b=>b.onclick=()=>{F.eje=b.dataset.e;solRender();scrollTo({top:$('tabF').offsetTop-90})});
 }
 function ejeDetail(e){const L=SOL.soluciones.filter(x=>x.eje===e.id);
