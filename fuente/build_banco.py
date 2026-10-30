@@ -240,7 +240,7 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
     </div>
     <div id="tabF" role="tabpanel" aria-labelledby="tF" hidden>
       <div id="solHome">
-        <h3 class="ejes-h">Según los títulos II y III de la Ley N.° 30364</h3>
+        <h3 class="ejes-h">Según la Ley N.° 30364</h3>
         <div class="ejes" id="ejes"></div>
       </div>
       <div id="ejeDet" hidden></div>
@@ -278,7 +278,7 @@ const GEN='Varias o sin modalidad específica';
 let R=[],S={tema:'',tipo:'',pob:'',mod:'',amb:'',q:'',sort:'y',open:null,shown:20};
 const pl=(n,a,b)=>n+' '+(n===1?a:b);
 function gist(r){const t=(r.res||r.prop||'').replace(/\s+/g,' ').trim();const m=t.match(/^.{40,280}?[.;](\s|$)/);return m?m[0].trim():(t.length>260?t.slice(0,260).trim()+'…':t)}
-const TEMAS=[['Causas y factores asociados','Desigualdades entre mujeres y hombres, normas sociales, relaciones de poder y factores de riesgo.','Ley N.° 30364, art. 3 (enfoques de género e integralidad) y art. 45, inc. 1.f'],['Consecuencias de la violencia','Efectos de la violencia en la salud, la educación, el empleo y el bienestar.','Ley N.° 30364, art. 42 (el registro consigna causas y consecuencias)'],['Prevención de la violencia','Educación, sensibilización, cambio de normas sociales y programas preventivos.','Ley N.° 30364, art. 1 y título III, capítulo I'],['Atención y recuperación','Servicios de atención, salud física y mental, acompañamiento y recuperación.','Ley N.° 30364, arts. 1 y 10, y título III, capítulo I'],['Protección y acceso a la justicia','Denuncias, medidas de protección, barreras de acceso y respuesta judicial.','Ley N.° 30364, arts. 1 y 10, y título II'],['Sanción y reeducación','Respuesta penal, sanciones y programas de reeducación de personas agresoras.','Ley N.° 30364, art. 1 y arts. 30 al 32'],['Reparación y restitución de derechos','Reparación del daño, recuperación de derechos y medidas de apoyo.','Ley N.° 30364, arts. 1, 2 (inc. 5) y 33']];
+const TEMAS=[['Causas y factores asociados','Desigualdades entre mujeres y hombres, normas sociales, relaciones de poder y factores de riesgo.','Ley N.° 30364, art. 3 (enfoques de género e integralidad) y art. 45, inc. 1.f'],['Consecuencias de la violencia','Efectos de la violencia en la salud, la educación, el empleo y el bienestar.','Ley N.° 30364, art. 42 (el registro consigna causas y consecuencias)'],['Prevención de la violencia','Educación, sensibilización, cambio de normas sociales y programas preventivos.','Ley N.° 30364, arts. 1 y 27'],['Atención y recuperación','Servicios de atención, salud física y mental, acompañamiento y recuperación.','Ley N.° 30364, arts. 1, 10 y 27 al 29'],['Protección y acceso a la justicia','Denuncias, medidas de protección, barreras de acceso y respuesta judicial.','Ley N.° 30364, arts. 1, 10 y 13 al 26'],['Sanción y reeducación','Respuesta penal, sanciones y programas de reeducación de personas agresoras.','Ley N.° 30364, art. 1 y arts. 30 al 32'],['Reparación y restitución de derechos','Reparación del daño, recuperación de derechos y medidas de apoyo.','Ley N.° 30364, arts. 1, 2 (inc. 5) y 33']];
 const NOTIPO='No trata un tipo de violencia en particular';
 const POBS=['Mujeres','Niñas, niños y adolescentes','Jóvenes','Hombres','Personas adultas mayores','Pueblos indígenas','Operadores y servidores públicos','Población en general'];
 const tipoOf=r=>r.tipos?r.tipos:[NOTIPO];

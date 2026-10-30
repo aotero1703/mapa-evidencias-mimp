@@ -4,10 +4,10 @@
 # Efecto de cada caso: Positivo · Mixto · Sin efecto · Sin resultados aún
 import json
 EJES=[
- ('prevencion','Prevención','Acciones para evitar que la violencia ocurra: cambiar normas y estereotipos, trabajar con varones para prevenir conductas violentas y fortalecer la autonomía de las mujeres.','Título III, capítulo I (art. 27)'),
- ('atencion','Atención y recuperación','Servicios que atienden a las víctimas y las ayudan a recuperarse, como los Centros Emergencia Mujer y Familia y los hogares de refugio temporal, y el cuidado de quienes las atienden.','Título III, capítulo I (arts. 27 al 29)'),
- ('proteccion','Protección y sanción','Denuncia, proceso especial y medidas de protección para las víctimas, a cargo de la policía, la fiscalía y el Poder Judicial.','Título II (arts. 13 al 26)'),
- ('reeducacion','Reeducación de personas agresoras','Tratamiento para que las personas agresoras detengan todo tipo de violencia, tanto en prisión como en libertad.','Título III, capítulo II (arts. 30 al 32)'),]
+ ('prevencion','Prevención','Acciones para evitar que la violencia ocurra: cambiar normas y estereotipos, trabajar con varones para prevenir conductas violentas y fortalecer la autonomía de las mujeres.','Ley N.° 30364, art. 27'),
+ ('atencion','Atención y recuperación','Servicios que atienden a las víctimas y las ayudan a recuperarse, como los Centros Emergencia Mujer y Familia y los hogares de refugio temporal, y el cuidado de quienes las atienden.','Ley N.° 30364, arts. 27 al 29'),
+ ('proteccion','Protección y sanción','Denuncia, proceso especial y medidas de protección para las víctimas, a cargo de la policía, la fiscalía y el Poder Judicial.','Ley N.° 30364, arts. 13 al 26'),
+ ('reeducacion','Reeducación de personas agresoras','Tratamiento para que las personas agresoras detengan todo tipo de violencia, tanto en prisión como en libertad.','Ley N.° 30364, arts. 30 al 32'),]
 SOL=[
  dict(id='transferencias',eje='prevencion',n='Transferencias monetarias condicionadas',ef='Efectivo',tipos=['Física'],
   d='Entrega periódica de dinero a hogares en pobreza a cambio de cumplir compromisos de salud y educación, como el programa JUNTOS.',
