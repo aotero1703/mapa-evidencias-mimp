@@ -135,9 +135,9 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
       <div class="top">{ART_SV}<span class="kicker">Servicios</span></div>
       <div class="body">
         <h2>Servicios del MIMP</h2>
-        <p>Todos los servicios del Ministerio, en tres niveles, explicados en palabras sencillas: qué hace cada uno y para quién es.</p>
+        <p>Servicios vinculados con la Ley N.° 30364 y acceso complementario al catálogo general del sector MIMP.</p>
         <div class="facts"><span>Tres niveles</span><span>Catálogo 2026</span></div>
-        <div class="basis"><b>Ley N.° 30364, art. 45:</b> responsabilidades del MIMP en prevención, atención y tratamiento.</div>
+        <div class="basis"><b>Ley N.° 30364:</b> identifica los servicios pertinentes para la prevención y respuesta frente a la violencia.</div>
         <span class="go">Conocer los servicios <i>→</i></span>
       </div>
     </a>
@@ -145,7 +145,7 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
       <div class="top"><svg class="art" viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke="rgba(255,255,255,.24)" stroke-width="2"><circle cx="120" cy="80" r="70"/><circle cx="120" cy="80" r="46"/></g><path d="M70 54l30-15 28 13 29-13v82l-29 13-28-13-30 15z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><path d="M100 39v82m28-69v82" fill="none" stroke="#fff" stroke-width="2" opacity=".65"/><path d="M118 67c-13 0-21 9-21 21 0 16 21 35 21 35s21-19 21-35c0-12-8-21-21-21z" fill="#f2a93b"/><circle cx="118" cy="88" r="7" fill="#fff"/></svg><span class="kicker">Análisis territorial</span></div>
       <div class="body">
         <h2>Territorios Prioritarios</h2>
-        <p>Explora mapas e indicadores territoriales para identificar zonas que requieren mayor atención y orientar las intervenciones frente a la violencia.</p>
+        <p>Explora los casos atendidos por los servicios especializados y sus diferencias territoriales. Estos registros no miden la prevalencia de violencia.</p>
         <div class="facts"><span>Mapa interactivo</span><span>Priorización territorial</span></div>
         <div class="basis"><b>Art. 43:</b> generar información para orientar decisiones y políticas públicas basadas en evidencia.</div>
         <span class="go">Explorar territorios <i>→</i></span>
@@ -156,8 +156,8 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
 
 <section class="section">
   <div class="wrap">
-    <h2>Marco normativo</h2>
-    <p class="section-lede">El banco forma parte del sistema de información que la ley encarga al Observatorio, para que las decisiones de política pública se basen en evidencia.</p>
+    <h2>Marco normativo y alcance</h2><p class="section-lede">La Ley N.° 30364 orienta qué evidencia se incorpora, cómo se clasifica y para qué decisiones puede resultar útil. Los recursos generales del sector se presentan como información complementaria.</p>
+    <p class="section-lede">El banco forma parte del sistema de información que la ley encarga al Observatorio, para facilitar el acceso a evidencia pertinente para la prevención y respuesta frente a la violencia.</p>
     <div class="norms">
       <a class="norm" href="https://www.gob.pe/74905-ley-n-30364-ley-para-prevenir-sancionar-y-erradicar-la-violencia-contra-las-mujeres-y-los-integrantes-del-grupo-familiar" target="_blank" rel="noopener"><b>Ley N.° 30364</b><p>Ley para prevenir, sancionar y erradicar la violencia contra las mujeres y los integrantes del grupo familiar. Su artículo 43 crea el Observatorio Nacional.</p><span class="nlink">Leer la ley ↗</span></a>
       <a class="norm" href="https://cdn.www.gob.pe/uploads/document/file/7588151/6439639-anexo-rm-n-027-2025-mimp.pdf?v=1738852952" target="_blank" rel="noopener"><b>R.M. N.° 027-2025-MIMP</b><p>Lineamientos para el funcionamiento del Observatorio: gestionar información y conocimiento y facilitar la toma de decisiones basadas en evidencia.</p><span class="nlink">Ver los lineamientos (PDF) ↗</span></a>
@@ -223,7 +223,7 @@ FUENTES=head('Fuentes externas · Banco de Evidencias','Acceso directo a las fue
 <section class="page-hero fx">
   <div class="wrap">
     <a class="crumb" href="./">← Banco de Evidencias</a>
-    <h1>Fuentes externas de datos</h1>
+    <h1>Fuentes externas de datos</h1><p>Fuentes para estudiar la violencia comprendida en la Ley N.° 30364. Cada institución conserva la responsabilidad sobre sus datos; los registros administrativos no equivalen a prevalencia.</p>
     <p>Las encuestas y registros oficiales de las entidades del Sistema Nacional. Cada enlace te lleva al sitio de la entidad que produce los datos.</p>
   </div>
 </section>
@@ -249,18 +249,18 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
   <div class="wrap">
     <div class="tabs" role="tablist" aria-label="Secciones de la evidencia">
       <button type="button" role="tab" id="tE" aria-selected="true" aria-controls="tabE"><b>Comprender la violencia</b><span class="td">Investigaciones sobre por qué ocurre la violencia, cómo afecta a las personas y cómo responde el Estado.</span></button>
-      <button type="button" role="tab" id="tF" aria-selected="false" aria-controls="tabF"><b>¿Qué ayuda a enfrentar la violencia?</b><span class="td">Programas y servicios que fueron evaluados para saber si reducen la violencia, y qué resultados tuvieron.</span></button>
+      <button type="button" role="tab" id="tF" aria-selected="false" aria-controls="tabF"><b>¿Qué ayuda a enfrentar la violencia?</b><span class="td">Intervenciones evaluadas y resultados reportados. Una evaluación no implica que el programa sea efectivo.</span></button>
     </div>
     <div id="tabF" role="tabpanel" aria-labelledby="tF" hidden>
       <div id="solHome">
-        <h3 class="ejes-h">Según la Ley N.° 30364</h3>
+        <h3 class="ejes-h">Respuestas frente a la violencia</h3><p class="fdesc">Ejes de consulta propuestos a partir de la Ley N.° 30364; no son una clasificación oficial de estudios. Los resultados se presentan según el alcance y las limitaciones de cada evaluación.</p>
         <div class="ejes" id="ejes"></div>
       </div>
       <div id="ejeDet" hidden></div>
       <div id="solDet" hidden></div>
     </div>
     <div id="tabE" role="tabpanel" aria-labelledby="tE">
-      <div class="filt">
+      <p class="fdesc">Los filtros permiten consultar estudios relacionados con la Ley N.° 30364. Los temas son categorías de investigación propuestas, no denominaciones legales oficiales.</p><div class="filt">
         <label>Tema de investigación<select id="fTema"></select></label>
         <label>Tipo de violencia<select id="fTipo"></select></label>
         <label>Población<select id="fPob"></select></label>
@@ -353,14 +353,14 @@ function solRender(){
   if(F.sol){$('ejeDet').hidden=true;return solDetail(SOL.soluciones.find(x=>x.id===F.sol))}
   if(F.eje)return ejeDetail(SOL.ejes.find(e=>e.id===F.eje));
   $('ejes').innerHTML=SOL.ejes.map(e=>{const L=SOL.soluciones.filter(x=>x.eje===e.id);
-    return L.length?`<button type="button" class="eje" data-e="${e.id}"><span class="q">${e.base}</span><b>${e.n}</b><span class="d">${e.d}</span><span class="n">${L.length} ${L.length===1?'programa evaluado':'programas evaluados'}</span><span class="go">Ver qué funciona →</span></button>`
+    return L.length?`<button type="button" class="eje" data-e="${e.id}"><span class="q">${e.base}</span><b>${e.n}</b><span class="d">${e.d}</span><span class="n">${L.length} ${L.length===1?'programa evaluado':'programas evaluados'}</span><span class="go">Ver evaluaciones →</span></button>`
       :`<div class="eje vacio"><span class="q">${e.base}</span><b>${e.n}</b><span class="d">${e.d}</span><span class="n">Todavía no hay programas evaluados en este tema.</span></div>`}).join('');
   document.querySelectorAll('button.eje').forEach(b=>b.onclick=()=>{F.eje=b.dataset.e;solRender();scrollTo({top:$('tabF').offsetTop-90})});
 }
 function ejeDetail(e){const L=SOL.soluciones.filter(x=>x.eje===e.id);
   $('ejeDet').innerHTML=`<button type="button" class="back" id="ejeBack">← Todos los ejes</button>
    <div class="eje-head"><p class="kick">${e.base}</p><h2>${e.n}</h2><p>${e.d}</p></div>
-   <div class="sols">${L.map(x=>{const t=RES[x.ef];return `<button type="button" class="sol" data-s="${x.id}"><b>${x.n}</b><span class="efp ${t[1]}">${t[0]}</span><span class="ev">${x.ev}</span><span class="go">Ver ${x.casos.length===1?'el estudio':'los '+nS(x.casos.length)} →</span></button>`}).join('')}</div>`;
+   <div class="sols">${L.map(x=>{const t=RES[x.ef];return `<button type="button" class="sol" data-s="${x.id}"><b>${x.n}</b><span class="ev">${x.ev}</span><span class="go">Ver ${x.casos.length===1?'el estudio':'los '+nS(x.casos.length)} →</span></button>`}).join('')}</div>`;
   $('ejeBack').onclick=()=>{F.eje='';solRender()};
   document.querySelectorAll('.sol').forEach(b=>b.onclick=()=>{F.sol=b.dataset.s;solRender();scrollTo({top:$('tabF').offsetTop-90})});
 }
@@ -388,7 +388,7 @@ PROGS=['Warmi Ñan','INABIF','MIMP','Gratitud','CONADIS','Varios programas']
 PROGN={'Warmi Ñan':'Programa Warmi Ñan','INABIF':'INABIF','MIMP':'MIMP, sede central','Gratitud':'Programa Gratitud','CONADIS':'CONADIS','Varios programas':'Varios programas'}
 def _card(n,t,name,d,para,prog,v):
     return f'''<article class="svc t-{t}" data-prog="{prog}" data-v="{v}"><div class="svc-top"><span class="svc-prog">{PROGN[prog]}</span>{'<span class="svc-vio">Frente a la violencia</span>' if v else ''}</div><h4>{name}</h4><p>{d}</p><div class="svc-para"><b>Población objetivo</b><span>{para}</span></div></article>'''
-resumen=''.join(f'''<a class="sv-lvl l{k}" href="#nivel-{k}"><span class="lv-n">Nivel {k}</span><h3>{t}</h3><p>{d}</p><ul class="sv-types">{''.join(f'<li class="t-{tk}"><b>{tn}</b></li>' for tk,tn,_ in T)}</ul></a>''' for k,t,d,T in NIVELES)
+resumen=''.join(f'''<div class="sv-lvl l{k}"><span class="lv-n">Nivel {k}</span><h3>{t}</h3><p>{d}</p><ul class="sv-types">{''.join(f'<li class="t-{tk}"><button type="button" data-t="{tk}" aria-pressed="false"><b>{tn}</b><span>Ver servicios →</span></button></li>' for tk,tn,_ in T)}</ul></div>''' for k,t,d,T in NIVELES)
 cuerpo=''
 for k,t,d,T in NIVELES:
     tipos=''
@@ -403,20 +403,20 @@ SERV=head('Servicios del MIMP · Banco de Evidencias','Todos los servicios del M
   <div class="wrap">
     <a class="crumb" href="./">← Banco de Evidencias</a>
     <h1>Servicios del MIMP</h1>
-    <p>Todo lo que ofrece el Ministerio de la Mujer y Poblaciones Vulnerables, explicado en palabras sencillas: qué hace cada servicio y a qué población está dirigido.</p>
+    <p>Consulta primero los servicios relacionados con la prevención y respuesta frente a la violencia en el marco de la Ley N.° 30364. También puedes explorar el catálogo general del sector MIMP, que incluye servicios de otros ámbitos.</p>
   </div>
 </section>
 <section class="section sv-levels">
   <div class="wrap">
-    <div class="sv-intro"><h2>Tres niveles de servicios</h2><p>El MIMP organiza sus servicios en tres niveles, según a quién llegan. Elige uno para ir directo.</p></div>
+    <div class="sv-intro"><h2>Tres niveles de servicios</h2><p>El MIMP organiza sus servicios en tres niveles, según a quién llegan. Elige un tipo de servicio para ver cuáles son.</p></div>
     <div class="sv-lvls">{resumen}</div>
   </div>
 </section>
-<section class="section sv-all">
+<section class="section sv-all" id="svAll" hidden>
   <div class="wrap">
-    <div class="sv-filter" role="group" aria-label="Filtrar servicios">
-      <span>Quién lo brinda:</span><button type="button" data-p="" aria-pressed="true">Todos</button>{chips}
-      <label class="chk"><input type="checkbox" id="soloV"> Solo servicios frente a la violencia</label>
+    <p class="sv-src"><b>Alcance:</b> por defecto se muestran los servicios identificados como vinculados con la violencia. Desmarca el filtro para consultar el catálogo general del MIMP. Esta identificación temática es orientativa y no sustituye la clasificación institucional.</p><div class="sv-filter" role="group" aria-label="Filtrar servicios">
+      <button type="button" class="sv-close" id="svClose">← Elegir otro tipo</button><span>Quién lo brinda:</span><button type="button" data-p="" aria-pressed="true">Todos</button>{chips}
+      <label class="chk"><input type="checkbox" id="soloV" checked> Solo servicios vinculados con la Ley N.° 30364</label>
     </div>
     {cuerpo}
     <p class="sv-empty" id="svEmpty" hidden>No hay servicios con ese filtro.</p>
@@ -435,11 +435,13 @@ SERV=head('Servicios del MIMP · Banco de Evidencias','Todos los servicios del M
 </section>
 </main>
 '''+FOOTER+r'''<script>
-(function(){let P='';const btns=document.querySelectorAll('.sv-filter button'),v=document.getElementById('soloV');
-function apply(){let any=0;document.querySelectorAll('.svc').forEach(c=>{const ok=(!P||c.dataset.prog===P)&&(!v.checked||c.dataset.v==='1');c.hidden=!ok;if(ok)any++});
- document.querySelectorAll('.sv-tipo').forEach(t=>t.hidden=!t.querySelector('.svc:not([hidden])'));
- document.querySelectorAll('.sv-nivel').forEach(n=>n.hidden=!n.querySelector('.sv-tipo:not([hidden])'));
+(function(){let P='',T='';const btns=document.querySelectorAll('.sv-filter button[data-p]'),v=document.getElementById('soloV'),all=document.getElementById('svAll'),tb=document.querySelectorAll('.sv-types button');
+function apply(){let any=0;document.querySelectorAll('.svc').forEach(c=>{const ok=c.closest('.sv-tipo').id==='tipo-'+T&&(!P||c.dataset.prog===P)&&(!v.checked||c.dataset.v==='1');c.hidden=!ok;if(ok)any++});
+ document.querySelectorAll('.sv-tipo').forEach(t=>t.hidden=t.id!=='tipo-'+T);
+ document.querySelectorAll('.sv-nivel').forEach(n=>n.hidden=!n.querySelector('#tipo-'+T));
  document.getElementById('svEmpty').hidden=!!any;}
+tb.forEach(b=>b.onclick=()=>{T=b.dataset.t;P='';btns.forEach(x=>x.setAttribute('aria-pressed',x.dataset.p===''));tb.forEach(x=>x.setAttribute('aria-pressed',x===b));all.hidden=false;apply();all.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})});
+document.getElementById('svClose').onclick=()=>{all.hidden=true;tb.forEach(x=>x.setAttribute('aria-pressed','false'));document.querySelector('.sv-levels').scrollIntoView({block:'start'})};
 btns.forEach(b=>b.onclick=()=>{P=b.dataset.p;btns.forEach(x=>x.setAttribute('aria-pressed',x===b));apply()});v.onchange=apply;})();
 </script>
 </body>

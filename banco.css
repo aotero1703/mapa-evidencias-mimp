@@ -417,3 +417,19 @@ a.sv-lvl{text-decoration:none;color:inherit;transition:transform .15s,border-col
 .svc-vio{background:#fdecea;color:#b0261f}
 .sv-nivel-h .etapa-n{background:linear-gradient(135deg,var(--vio-600),#2a96ad)}
 .svc-vio{background:#241645;color:#fff}
+/* Servicios: selección progresiva */
+.sv-types li[class^="t-"]{padding:0;background:none;border:0}
+.sv-types button{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;background:var(--tt);border-left:4px solid var(--tc);transition:transform .12s,box-shadow .12s}
+.sv-types button b{color:var(--tc);font-size:.92rem}
+.sv-types button span{font-size:.76rem;font-weight:800;color:var(--tc);opacity:.75}
+.sv-types button:hover{transform:translateX(3px)}
+.sv-types button:focus-visible{outline:3px solid var(--sky-400)}
+.sv-types button[aria-pressed=true]{background:var(--tc)}
+.sv-types button[aria-pressed=true] b,.sv-types button[aria-pressed=true] span{color:#fff;opacity:1}
+.sv-close{background:none!important;border:0!important;color:var(--vio-700)!important;font-weight:800!important;padding:6px 4px!important;margin-right:8px}
+.sv-all{padding-top:8px}
+.sv-all[hidden]{display:none}
+.sv-tipo{padding-left:0}
+.sv-filter{position:static}
+.sv-all .sv-nivel-h{display:none}
+.sv-all .sv-nivel{margin-bottom:12px}
