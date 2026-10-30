@@ -44,10 +44,10 @@
 <section class="section">
   <div class="wrap">
     <div class="tabs" role="tablist" aria-label="Secciones de la evidencia">
-      <button type="button" role="tab" id="tF" aria-selected="true" aria-controls="tabF"><b>¿Qué funciona?</b><span class="td">Programas y servicios que fueron evaluados para saber si reducen la violencia, y qué resultados tuvieron.</span></button>
-      <button type="button" role="tab" id="tE" aria-selected="false" aria-controls="tabE"><b>Todos los estudios</b><span class="td">Todas las investigaciones del banco, evalúen o no un programa, ordenadas por tipo de violencia.</span></button>
+      <button type="button" role="tab" id="tE" aria-selected="true" aria-controls="tabE"><b>Comprender la violencia</b><span class="td">Investigaciones sobre por qué ocurre la violencia, cómo afecta a las personas y cómo responde el Estado.</span></button>
+      <button type="button" role="tab" id="tF" aria-selected="false" aria-controls="tabF"><b>¿Qué ayuda a enfrentar la violencia?</b><span class="td">Programas y servicios que fueron evaluados para saber si reducen la violencia, y qué resultados tuvieron.</span></button>
     </div>
-    <div id="tabF" role="tabpanel" aria-labelledby="tF">
+    <div id="tabF" role="tabpanel" aria-labelledby="tF" hidden>
       <div id="solHome">
         <h3 class="ejes-h">Según los títulos II y III de la Ley N.° 30364</h3>
         <div class="ejes" id="ejes"></div>
@@ -55,29 +55,23 @@
       <div id="ejeDet" hidden></div>
       <div id="solDet" hidden></div>
     </div>
-    <div id="tabE" role="tabpanel" aria-labelledby="tE" hidden>
-    <div id="home">
-      <div class="shelf-head"><div><h2>Violencia contra las mujeres y los integrantes del grupo familiar</h2><p class="shelf-sub">Por tipo de violencia, según el artículo 8 de la Ley N.° 30364. Un estudio puede abordar más de un tipo.</p></div><p id="vCount"></p></div>
-      <div class="shelves" id="shelvesV"></div>
-      <div class="shelf-head second"><div><h2>Factores de prevención</h2><p class="shelf-sub">Estudios sobre igualdad de oportunidades y sistema de cuidados: autonomía económica, educación, salud y corresponsabilidad en los cuidados.</p></div><p id="pCount"></p></div>
-      <div id="shelvesP"></div>
-      <p class="dl-note">¿Necesitas toda la base? <a href="matriz/Matriz_evidencias_MIMP_revisada.xlsx" download>Descarga la matriz completa en Excel</a>.</p>
-    </div>
-    <div id="results" hidden>
-      <button type="button" class="back" id="back">← Volver al banco</button>
-      <h2 id="rTitle"></h2>
-      <p class="rdesc" id="rDesc" hidden></p>
-      <div class="mods" id="mods" role="group" aria-label="Modalidad de violencia"></div>
-      <div class="toolbar">
-        <div class="seg" role="group" aria-label="Ámbito">
-          <button type="button" data-amb="" aria-pressed="true">Todos</button><button type="button" data-amb="Nacional" aria-pressed="false">Nacional</button><button type="button" data-amb="Internacional" aria-pressed="false">Internacional</button>
-        </div>
-        <select id="sort" aria-label="Ordenar"><option value="y">Más recientes primero</option><option value="t">Por título (A–Z)</option></select>
+    <div id="tabE" role="tabpanel" aria-labelledby="tE">
+      <div class="filt">
+        <label>Tema de investigación<select id="fTema"></select></label>
+        <label>Tipo de violencia<select id="fTipo"></select></label>
+        <label>Población<select id="fPob"></select></label>
+        <label>Ámbito<select id="fAmb"><option value="">Nacional e internacional</option><option value="Nacional">Nacional</option><option value="Internacional">Internacional</option></select></label>
+      </div>
+      <p class="fdesc" id="fDesc" hidden></p>
+      <div class="mods" id="mods" role="group" aria-label="Modalidad de violencia" hidden></div>
+      <div class="toolbar rbar">
         <p class="count" id="count"></p>
+        <button type="button" class="clear" id="clear" hidden>Limpiar filtros</button>
+        <select id="sort" aria-label="Ordenar"><option value="y">Más recientes primero</option><option value="t">Por título (A–Z)</option></select>
       </div>
       <div class="cards" id="cards"></div>
       <button type="button" class="more" id="more" hidden>Ver más estudios</button>
-    </div>
+      <p class="dl-note">¿Necesitas toda la base? <a href="matriz/Matriz_evidencias_MIMP_revisada.xlsx" download>Descarga la matriz completa en Excel</a>.</p>
     </div>
   </div>
 </section>
@@ -110,55 +104,55 @@ const TDESC={'Violencia física':'Daño a la integridad corporal o a la salud, i
 const DDESC={'Cuidados domésticos':'Las tareas del hogar y la atención a la familia: cocinar, limpiar, cuidar a hijas e hijos. Las hacen las propias familias sin pago o trabajadoras del hogar remuneradas.','Cuidados domiciliarios':'La atención que una persona cuidadora brinda en la vivienda a quien depende de otras personas: personas adultas mayores, con discapacidad o con una enfermedad.','Cuidados institucionales':'Servicios de cuidado fuera del hogar, como cunas, guarderías, centros de día o residencias.','Cuidados comunitarios':'Cuidado que organiza la propia comunidad, como ollas comunes, comedores populares y redes vecinales.','Empleo':'Acceso de las mujeres al trabajo y a ingresos propios, y la brecha salarial.','Educación':'Acceso, permanencia y estereotipos en la escuela y la universidad.','Salud':'Salud física, mental, sexual y reproductiva de las mujeres.','Brechas entre mujeres y hombres':'Diferencias entre mujeres y hombres medidas en varios ámbitos a la vez.','Acceso a tecnología':'Uso de internet, celulares y habilidades digitales.','Participación y liderazgo':'Presencia de mujeres en cargos de decisión, la política y las organizaciones.','Enfoques transversales':'Estudios que miran las diferencias por edad, etnia u otras condiciones.'};
 const GROUPS=[['Igualdad de oportunidades','Condiciones que fortalecen la autonomía de las mujeres y reducen el riesgo de violencia.'],['Sistema de cuidados','Quién cuida, dónde y en qué condiciones. Cuando el cuidado recae solo en las mujeres, limita su autonomía económica.']];
 const GEN='Varias o sin modalidad específica';
-let R=[],S={kind:'',val:'',mod:'',amb:'',q:'',sort:'y',open:null,shown:20};
+let R=[],S={tema:'',tipo:'',pob:'',mod:'',amb:'',q:'',sort:'y',open:null,shown:20};
 const pl=(n,a,b)=>n+' '+(n===1?a:b);
 function gist(r){const t=(r.res||r.prop||'').replace(/\s+/g,' ').trim();const m=t.match(/^.{40,280}?[.;](\s|$)/);return m?m[0].trim():(t.length>260?t.slice(0,260).trim()+'…':t)}
-function shelf(kind,val,L,desc){const n=L.filter(r=>r.amb==='Nacional').length;
-  if(!L.length)return `<div class="shelf empty-shelf" aria-disabled="true"><span class="num">0</span><span class="name">${esc(val)}</span><span class="meta">${esc(desc||'')}</span><span class="go muted">Aún no hay estudios en el banco</span></div>`;
-  return `<button type="button" class="shelf" data-k="${kind}" data-v="${esc(val)}"><span class="num">${L.length}</span><span class="name">${esc(val)}</span>
-   ${desc?`<span class="desc">${esc(desc)}</span>`:''}<span class="meta">${pl(n,'nacional','nacionales')} · ${pl(L.length-n,'internacional','internacionales')}</span><span class="go">Ver estudios →</span></button>`}
-function home(){
-  const V=R.filter(r=>r.tipos),P=R.filter(r=>!r.tipos);
-  $('vCount').textContent=pl(V.length,'estudio','estudios');$('pCount').textContent=pl(P.length,'estudio','estudios');
-  $('shelvesV').innerHTML=TIPOS.map(t=>shelf('tipo',t,V.filter(r=>r.tipos.includes(t)),TDESC[t])).join('');
-  const g={};P.forEach(r=>(g[r.dim]??=[]).push(r));
-  $('shelvesP').innerHTML=GROUPS.map(([tem,txt])=>{const ds=Object.keys(g).filter(d=>g[d][0].tem===tem).sort((a,b)=>g[b].length-g[a].length||a.localeCompare(b,'es'));
-    return ds.length?`<div class="pgroup"><h3>${tem}</h3><p>${txt}</p><div class="shelves small">${ds.map(d=>shelf('dim',d,g[d],DDESC[d])).join('')}</div></div>`:''}).join('');
-  document.querySelectorAll('button.shelf').forEach(b=>b.onclick=()=>{S.kind=b.dataset.k;S.val=b.dataset.v;S.mod='';S.amb='';S.shown=20;S.open=null;show();$('results').scrollIntoView({block:'start'})});
-}
-function inShelf(r){return S.kind==='tipo'?(r.tipos||[]).includes(S.val):S.kind==='dim'?(!r.tipos&&r.dim===S.val):true}
+const TEMAS=[['Causas y factores asociados','Desigualdades entre mujeres y hombres, normas sociales, relaciones de poder y factores de riesgo.'],['Consecuencias de la violencia','Efectos de la violencia en la salud, la educación, el empleo y el bienestar.'],['Prevención de la violencia','Educación, sensibilización, cambio de normas sociales y programas preventivos.'],['Atención y recuperación','Servicios de atención, salud física y mental, acompañamiento y recuperación.'],['Protección y acceso a la justicia','Denuncias, medidas de protección, barreras de acceso y respuesta judicial.'],['Sanción y reeducación','Respuesta penal, sanciones y programas de reeducación de personas agresoras.'],['Reparación y restitución de derechos','Reparación del daño, recuperación de derechos y medidas de apoyo.']];
+const NOTIPO='No trata un tipo de violencia en particular';
+const POBS=['Mujeres','Niñas, niños y adolescentes','Jóvenes','Hombres','Personas adultas mayores','Pueblos indígenas','Operadores y servidores públicos','Población en general'];
+const tipoOf=r=>r.tipos?r.tipos:[NOTIPO];
+function match(r,skip){const q=S.q.trim().toLowerCase();
+  return (skip==='tema'||!S.tema||r.temas.includes(S.tema))&&(skip==='tipo'||!S.tipo||tipoOf(r).includes(S.tipo))&&(skip==='pob'||!S.pob||r.pob_g.includes(S.pob))&&(skip==='amb'||!S.amb||r.amb===S.amb)
+   &&(skip==='mod'||!S.mod||(r.mod||[]).includes(S.mod))&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,r.paises.join(' '),(r.mod||[]).join(' '),r.temas.join(' ')].join(' ').toLowerCase().includes(q))}
+function opts(id,all,vals,cur,key){const n=v=>R.filter(r=>match(r,key)&&(key==='tema'?r.temas.includes(v):key==='tipo'?tipoOf(r).includes(v):r.pob_g.includes(v))).length;
+  $(id).innerHTML=`<option value="">${all}</option>`+vals.map(v=>{const c=n(v);return `<option value="${esc(v)}"${v===cur?' selected':''}${c||v===cur?'':' disabled'}>${esc(v)} (${c})</option>`}).join('')}
+function home(){}
 function show(){
-  const q=S.q.trim().toLowerCase(),res=!!(S.kind||q);$('home').hidden=res;$('results').hidden=!res;if(!res)return;
-  document.querySelectorAll('.seg button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.amb===S.amb));
-  const base=R.filter(r=>inShelf(r)&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,r.paises.join(' '),(r.mod||[]).join(' ')].join(' ').toLowerCase().includes(q)));
-  if(S.kind==='tipo'){const c={};base.forEach(r=>r.mod.forEach(m=>c[m]=(c[m]||0)+1));
+  opts('fTema','Todos los temas',TEMAS.map(t=>t[0]),S.tema,'tema');
+  opts('fTipo','Todos los tipos',TIPOS.concat([NOTIPO]),S.tipo,'tipo');
+  opts('fPob','Todas las poblaciones',POBS,S.pob,'pob');$('fAmb').value=S.amb;
+  const d=[];if(S.tema)d.push(`<b>${esc(S.tema)}:</b> ${TEMAS.find(t=>t[0]===S.tema)[1]}`);if(S.tipo&&TDESC[S.tipo])d.push(`<b>${esc(S.tipo)} (art. 8 de la Ley):</b> ${TDESC[S.tipo]}`);
+  $('fDesc').innerHTML=d.join('<br>');$('fDesc').hidden=!d.length;
+  if(S.tipo&&S.tipo!==NOTIPO&&S.tipo!=='Estudios generales sobre violencia'){const base=R.filter(r=>match(r,'mod')),c={};base.forEach(r=>(r.mod||[]).forEach(m=>c[m]=(c[m]||0)+1));
     const ms=Object.keys(c).sort((a,b)=>(a===GEN)-(b===GEN)||c[b]-c[a]);
-    $('mods').innerHTML='<span class="mods-l">Modalidad (Reglamento, art. 8):</span>'+[`<button type="button" class="dim" data-m="" aria-pressed="${!S.mod}">Todas <em>${base.length}</em></button>`].concat(ms.map(m=>`<button type="button" class="dim" data-m="${esc(m)}" aria-pressed="${S.mod===m}">${esc(m)} <em>${c[m]}</em></button>`)).join('');
+    $('mods').innerHTML='<span class="mods-l">Modalidad (Reglamento):</span>'+[`<button type="button" class="dim" data-m="" aria-pressed="${!S.mod}">Todas <em>${base.length}</em></button>`].concat(ms.map(m=>`<button type="button" class="dim" data-m="${esc(m)}" aria-pressed="${S.mod===m}">${esc(m)} <em>${c[m]}</em></button>`)).join('');
     $('mods').hidden=false;document.querySelectorAll('#mods .dim').forEach(b=>b.onclick=()=>{S.mod=b.dataset.m;S.shown=20;show()});
-  }else $('mods').hidden=true;
-  let L=base.filter(r=>(!S.mod||(r.mod||[]).includes(S.mod))&&(!S.amb||r.amb===S.amb));
+  }else{$('mods').hidden=true;S.mod=''}
+  const L=R.filter(r=>match(r));
   L.sort(S.sort==='t'?(a,b)=>a.t.localeCompare(b.t,'es'):(a,b)=>(+b.y||0)-(+a.y||0));
-  $('rTitle').textContent=S.kind?S.val:`Resultados para «${S.q.trim()}»`;
-  $('rDesc').textContent=S.kind==='tipo'?(TDESC[S.val]||''):S.kind==='dim'?(DDESC[S.val]||''):'';$('rDesc').hidden=!$('rDesc').textContent;
-  $('count').textContent=pl(L.length,'estudio','estudios');
-  $('cards').innerHTML=L.length?L.slice(0,S.shown).map(card).join(''):'<div class="empty">No hay estudios con esos filtros. Prueba con otra palabra u otra modalidad.</div>';
-  $('more').hidden=L.length<=S.shown;$('more').textContent=`Ver más estudios (${L.length-S.shown} restantes)`;
+  const any=S.tema||S.tipo||S.pob||S.amb||S.q.trim();
+  $('count').textContent=any?pl(L.length,'investigación encontrada','investigaciones encontradas'):`Todas las investigaciones (${L.length})`;$('clear').hidden=!any;
+  $('cards').innerHTML=L.length?L.slice(0,S.shown).map(card).join(''):'<div class="empty">No hay investigaciones con esos filtros. Prueba quitando alguno.</div>';
+  $('more').hidden=L.length<=S.shown;$('more').textContent=`Ver más investigaciones (${L.length-S.shown} restantes)`;
   document.querySelectorAll('.paper [data-open]').forEach(b=>b.onclick=()=>{const n=+b.dataset.open;S.open=S.open===n?null:n;show()});
 }
 function card(r){const o=S.open===r.n,au=r.a?r.a.split(';')[0].trim()+(r.a.includes(';')?' et al.':''):'Autor no registrado';
   const pais=r.amb==='Nacional'?'Perú':(r.paises.length>2?'Varios países':r.paises.join(', ')||'Varios países');
-  const tags=r.tipos?(r.mod.filter(m=>m!==GEN).map(m=>`<span class="tag dimtag">${esc(m)}</span>`).join('')):`<span class="tag dimtag">${esc(r.dim)}</span>`;
+  const tags=r.temas.map(t=>`<span class="tag dimtag">${esc(t)}</span>`).join('');
   const tipos=r.tipos?r.tipos.filter(t=>t!=='Estudios generales sobre violencia').map(t=>t.replace('Violencia ','')):[];
   const f=(t,v)=>v?`<dt>${t}</dt><dd>${esc(v)}</dd>`:'';
   return `<article class="paper"><div class="tags">${tags}<span class="tag ${r.amb==='Nacional'?'pe':'int'}">${r.amb} · ${esc(pais)}</span></div>
    <h3>${esc(r.t)}</h3><div class="by">${esc(au)} · ${esc(r.y||'s. f.')}${tipos.length?` · Violencia ${tipos.join(', ')}`:''}</div>
    <p class="gist">${esc(gist(r))}</p>
    <div class="row"><button type="button" data-open="${r.n}" aria-expanded="${o}">${o?'Cerrar ficha':'Ver ficha completa'}</button>${r.link?`<a href="${esc(r.link)}" target="_blank" rel="noopener">Leer el estudio ↗</a>`:''}</div>
-   ${o?`<dl>${f('Autoría',r.a)}${f('País',r.paises.join(', '))}${f('Tipo de violencia',r.tipos?r.tipos.join(', '):'')}${f('Modalidad',r.tipos?r.mod.join(', '):'')}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
-$('q').oninput=e=>{tab('E');S.q=e.target.value;if(S.q.trim()){S.kind='';S.val='';S.mod=''}S.shown=20;show()};
+   ${o?`<dl>${f('Autoría',r.a)}${f('País',r.paises.join(', '))}${f('Tema',r.temas.join(', '))}${f('Tipo de violencia',r.tipos?r.tipos.join(', '):'')}${f('Modalidad',r.tipos?r.mod.join(', '):'')}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
+$('q').oninput=e=>{tab('E');S.q=e.target.value;S.shown=20;show()};
 $('sort').onchange=e=>{S.sort=e.target.value;show()};
-$('back').onclick=()=>{Object.assign(S,{kind:'',val:'',mod:'',q:'',amb:'',open:null});$('q').value='';show();scrollTo({top:0})};
-document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{S.amb=b.dataset.amb;S.shown=20;show()});
+$('fTema').onchange=e=>{S.tema=e.target.value;S.shown=20;show()};
+$('fTipo').onchange=e=>{S.tipo=e.target.value;S.mod='';S.shown=20;show()};
+$('fPob').onchange=e=>{S.pob=e.target.value;S.shown=20;show()};
+$('fAmb').onchange=e=>{S.amb=e.target.value;S.shown=20;show()};
+$('clear').onclick=()=>{Object.assign(S,{tema:'',tipo:'',pob:'',amb:'',mod:'',q:'',open:null,shown:20});$('q').value='';show()};
 $('more').onclick=()=>{S.shown+=20;show()};
 /* ---------- ¿Qué funciona? (tipos de solución por eje de la Ley 30364) ---------- */
 let SOL=null,F={eje:'',sol:null};
