@@ -111,7 +111,7 @@ const TEMAS=[['Causas y consecuencias de la violencia','Factores que explican la
 const NOTIPO='No trata un tipo de violencia en particular';
 const POBS=['Mujeres','Integrantes del grupo familiar','Niñas, niños y adolescentes','Personas adultas mayores','Personas con discapacidad','Varones y personas agresoras','Operadores del sistema'];
 const PDESC={'Mujeres':'Durante todo su ciclo de vida: niña, adolescente, joven, adulta y adulta mayor (art. 7).','Integrantes del grupo familiar':'Cónyuges, convivientes, padres, hijos y demás parientes que señala el art. 7.','Niñas, niños y adolescentes':'En especial situación de vulnerabilidad (art. 1).','Personas adultas mayores':'En especial situación de vulnerabilidad (art. 1).','Personas con discapacidad':'En especial situación de vulnerabilidad (art. 1).','Varones y personas agresoras':'Programas para varones y reeducación de personas agresoras (arts. 27 y 30 al 32).','Operadores del sistema':'Policía, Ministerio Público, Poder Judicial y servicios de atención (arts. 2, 18 y 45).'};
-const tipoOf=r=>r.tipos||[];
+const tipoOf=r=>(r.tipos||[]).filter(t=>t!=='Estudios sobre varios tipos de violencia');
 function match(r,skip){const q=S.q.trim().toLowerCase();
   return (skip==='tema'||!S.tema||(r.temas||[]).includes(S.tema))&&(skip==='tipo'||!S.tipo||tipoOf(r).includes(S.tipo))&&(skip==='pob'||!S.pob||(r.pob_g||[]).includes(S.pob))&&(skip==='amb'||!S.amb||r.amb===S.amb)
    &&(skip==='mod'||!S.mod||(r.mod||[]).includes(S.mod))&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,(r.paises||[]).join(' '),(r.mod||[]).join(' '),(r.temas||[]).join(' ')].join(' ').toLowerCase().includes(q))}
@@ -140,13 +140,13 @@ function show(){
 function card(r){const o=S.open===r.n,au=r.a?r.a.split(';')[0].trim()+(r.a.includes(';')?' et al.':'') :'';
   const pais=r.amb==='Nacional'?'Perú':((r.paises||[]).length>2?'Varios países':(r.paises||[]).join(', ')||'Varios países');
   const tags=(r.temas||[]).map(t=>`<span class="tag dimtag">${esc(t)}</span>`).join('');
-  const tipos=(r.tipos||[]).filter(t=>t!=='Estudios generales sobre violencia').map(t=>t.replace('Violencia ',''));
+  const tipos=(r.tipos||[]).filter(t=>t!=='Estudios sobre varios tipos de violencia').map(t=>t.replace('Violencia ',''));
   const f=(t,v)=>v?`<dt>${t}</dt><dd>${esc(v)}</dd>`:'';
   return `<article class="paper"><div class="tags">${tags}<span class="tag ${r.amb==='Nacional'?'pe':'int'}">${r.amb} · ${esc(pais)}</span></div>
    <h3>${esc(r.t)}</h3><div class="by">${[au,r.y].filter(Boolean).map(esc).join(' · ')}${tipos.length?` · Violencia ${tipos.join(', ')}`:''}</div>
-   ${gist(r)?`<p class="gist">${esc(gist(r))}</p>`:''}
+   ${gist(r)?`${gist(r)?`<p class="gist">${esc(gist(r))}</p>`:''}`:''}
    <div class="row"><button type="button" data-open="${r.n}" aria-expanded="${o}">${o?'Cerrar ficha':'Ver ficha completa'}</button>${r.link?`<a href="${esc(r.link)}" target="_blank" rel="noopener">Leer el estudio ↗</a>`:''}</div>
-   ${o?`<dl>${f('Autoría',r.a)}${f('País',r.paises.join(', '))}${f('Tema',r.temas.join(', '))}${f('Tipo de violencia',(r.tipos||[]).filter(t=>t!=='Estudios generales sobre violencia').join(', '))}${f('Modalidad',(r.mod||[]).filter(m=>m!==GEN).join(', '))}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
+   ${o?`<dl>${f('Autoría',r.a)}${f('País',(r.paises||[]).join(', '))}${f('Tema',(r.temas||[]).join(', '))}${f('Tipo de violencia',(r.tipos||[]).filter(t=>t!=='Estudios sobre varios tipos de violencia').join(', '))}${f('Modalidad',(r.mod||[]).filter(m=>m!==GEN).join(', '))}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
 $('q').oninput=e=>{tab('E');S.q=e.target.value;S.shown=20;show()};
 $('sort').onchange=e=>{S.sort=e.target.value;show()};
 $('fTema').onchange=e=>{S.tema=e.target.value;S.shown=20;show()};
