@@ -433,3 +433,27 @@ a.sv-lvl{text-decoration:none;color:inherit;transition:transform .15s,border-col
 .sv-filter{position:static}
 .sv-all .sv-nivel-h{display:none}
 .sv-all .sv-nivel{margin-bottom:12px}
+/* Servicios: paleta institucional sobria */
+.t-a,.t-b,.t-c,.t-d,.t-e,.t-f,.t-g,.t-h,.t-i{--tc:#1f2a5c;--tt:#ffffff}
+.page-hero.sv{background:linear-gradient(170deg,var(--blue-900),var(--blue-700))}
+.sv-lvl,.sv-lvl.l2,.sv-lvl.l3{border-top:4px solid #1f2a5c}
+.lv-emo{display:block;font-size:1.6rem;line-height:1;margin-bottom:8px}
+.lv-n{color:#5a6275}
+.sv-types button{background:#fff;border:1px solid var(--line);border-left:1px solid var(--line);justify-content:flex-start}
+.sv-types button i{font-style:normal;font-size:1.15rem;width:1.6em;text-align:center}
+.sv-types button b{color:#1f2a5c;flex:1}
+.sv-types button span{color:#5a6275}
+.sv-types button:hover{border-color:#1f2a5c;transform:none}
+.sv-types button[aria-pressed=true]{background:#1f2a5c;border-color:#1f2a5c}
+.sv-tipo-h{background:#fff;border:1px solid var(--line);border-left:4px solid #1f2a5c;border-radius:10px}
+.sv-emo{font-size:1.4rem;line-height:1.2}
+.sv-tipo .sv-tipo-h h4{color:#1f2a5c}
+.svc[class*=" t-"]{border-top:1px solid var(--line)}
+.svc[class*=" t-"] .svc-para b{color:#5a6275}
+.svc[class*=" t-"] .svc-para{border-top:1px dashed var(--line)}
+.svc-vio{background:#fff;color:#b0261f;border:1px solid #f0b8b4}
+.svc-prog{background:#f6f7fa}
+.sv-filter button[aria-pressed=true]{background:#1f2a5c;border-color:#1f2a5c}
+.sv-close{color:#1f2a5c!important}
+.sv-nivel-h .etapa-n{background:#1f2a5c}
+.dk,.dcard .go{color:#1f2a5c}.dcard:hover{border-color:#1f2a5c}
