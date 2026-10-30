@@ -1,6 +1,8 @@
 # Paso 2: exporta data/estudios.json para la página de evidencia científica (sin duplicados).
 # Ámbito: solo Nacional o Internacional. Dimensiones de Igualdad de oportunidades agrupadas.
 import json
+import sys,os; sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
+from nuevos import NUEVOS,EXCLUIR
 GRUPO={'Brecha salarial':'Empleo','Salud sexual y reproductiva':'Salud','Salud física':'Salud','Salud mental':'Salud',
  'Liderazgo':'Participación y liderazgo','Participación política':'Participación y liderazgo','Institucional/Organizacional':'Participación y liderazgo',
  'Interseccionalidad':'Enfoques transversales','Ciclo de vida':'Enfoques transversales'}
@@ -37,7 +39,7 @@ POB={1:'N',2:'N',3:'M',4:'N',5:'M',6:'M',7:'M',8:'G',9:'N',10:'M',11:'M',12:'NJ'
  100:'J',101:'O',102:'N',103:'J',104:'G',105:'N',106:'G',107:'N',108:'G',109:'G',110:'G',111:'H',112:'G',113:'G',114:'J',115:'G',116:'G',117:'J',118:'MJ',119:'M',120:'G',121:'H',122:'N',123:'M',124:'HM',125:'N',126:'M',127:'M',128:'M',129:'G',130:'M',131:'M',132:'G',133:'H',134:'HM',135:'G',136:'O'}
 out=[]
 for r in d['rows']:
-    if r['dup']: continue
+    if r['dup'] or r['n'] in EXCLUIR: continue
     x={k:r[k] for k in keep}
     x['dim']=GRUPO.get(r['dim'],r['dim'])
     x['amb']='Nacional' if r['o'] in ('peru','multi') else 'Internacional'   # sin país = estudios multipaís internacionales
@@ -47,6 +49,7 @@ for r in d['rows']:
     x['temas']=[TEMN[k] for k in TEMA[r['n']].split()]
     x['pob_g']=[POBN[c] for c in POB[r['n']]]
     out.append(x)
+out+=NUEVOS
 json.dump({'rows':out},open('data/estudios.json','w',encoding='utf-8'),ensure_ascii=False,separators=(',',':'))
 from collections import Counter
 print(Counter(t for x in out for t in x.get('tipos',[]))); print(Counter(m for x in out for m in x.get('mod',[])))

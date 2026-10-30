@@ -9,7 +9,7 @@
 Evidencia científica, indicadores y fuentes de datos oficiales sobre la violencia contra las mujeres y los integrantes del grupo familiar, en el marco de la Ley N.° 30364.
 
 [![Ver el sitio](https://img.shields.io/badge/Ver_el_sitio-mapa--evidencias--mimp.vercel.app-2f3e8f?style=for-the-badge)](https://mapa-evidencias-mimp.vercel.app/)
-[![Estudios](https://img.shields.io/badge/estudios-133-2a96ad?style=for-the-badge)](https://mapa-evidencias-mimp.vercel.app/evidencia.html)
+[![Estudios](https://img.shields.io/badge/estudios-124-2a96ad?style=for-the-badge)](https://mapa-evidencias-mimp.vercel.app/evidencia.html)
 [![Marco](https://img.shields.io/badge/marco-Ley_N.°_30364-e5463c?style=for-the-badge)](https://www.gob.pe/74905-ley-n-30364-ley-para-prevenir-sancionar-y-erradicar-la-violencia-contra-las-mujeres-y-los-integrantes-del-grupo-familiar)
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Faotero1703%2Fmapa-evidencias-mimp&project-name=banco-de-evidencias)
@@ -37,7 +37,7 @@ El artículo 43 de la **Ley N.° 30364** encarga al Observatorio Nacional desarr
 
 | | Sección | Qué contiene | Base legal |
 |---|---|---|---|
-| 🔵 | **[Evidencia científica](https://mapa-evidencias-mimp.vercel.app/evidencia.html)** | «¿Qué funciona?»: 11 soluciones evaluadas por eje de la Ley 30364 (prevención, atención, protección y sanción, reeducación) con su efectividad; y los 133 estudios con ficha y enlace | Ley 30364, art. 43: elaborar informes, estudios y propuestas |
+| 🔵 | **[Evidencia científica](https://mapa-evidencias-mimp.vercel.app/evidencia.html)** | «¿Qué ayuda a enfrentar la violencia?»: 15 programas evaluados por eje de la Ley 30364 (prevención, atención, protección y sanción, reeducación) con su efectividad; y los 124 estudios con ficha y enlace | Ley 30364, art. 43: elaborar informes, estudios y propuestas |
 | 🟢 | **[Indicadores principales](https://mapa-evidencias-mimp.vercel.app/tablero.html)** | Tablero de Power BI con las cifras clave | Ley 30364, art. 43: monitorear, recolectar, producir y sistematizar datos |
 | 🔴 | **[Fuentes externas](https://mapa-evidencias-mimp.vercel.app/fuentes.html)** | Enlaces a ENDES, ENARES, Warmi Ñan, Ministerio Público, Poder Judicial y MIMP | R.M. N.° 027-2025-MIMP: articular la información del Sistema Nacional |
 
@@ -52,7 +52,7 @@ flowchart LR
     P["🏠 Portada<br/>index.html"] --> E["🔵 Evidencia científica<br/>evidencia.html"]
     P --> T["🟢 Indicadores<br/>tablero.html"]
     P --> F["🔴 Fuentes externas<br/>fuentes.html"]
-    E --> D[("data/estudios.json<br/>133 estudios")]
+    E --> D[("data/estudios.json<br/>124 estudios")]
     T --> PB(["Power BI publicado"])
     F --> X(["Sitios de INEI, PJ,<br/>MP, Warmi Ñan, MIMP"])
 ```
