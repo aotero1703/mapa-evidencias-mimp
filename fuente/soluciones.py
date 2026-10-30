@@ -12,7 +12,7 @@ EJES=[
 SOL=[
  dict(id='transferencias',eje='prevencion',n='Transferencias monetarias condicionadas',ef='Prometedor',tipos=['Física'],
   d='Entrega periódica de dinero a hogares en pobreza a cambio de cumplir compromisos de salud y educación, como el programa JUNTOS.',
-  ev='En el Perú, JUNTOS redujo entre 25% y 30% la violencia física de pareja contra las mujeres usuarias. Es un solo estudio, por eso se considera prometedor.',
+  ev='En el Perú, JUNTOS redujo entre 25% y 30% la violencia física de pareja contra las mujeres usuarias. Es un solo estudio; falta confirmarlo con más evaluaciones.',
   casos=[(93,'Positivo')]),
  dict(id='hombres',eje='prevencion',n='Trabajo con hombres para transformar masculinidades',ef='Prometedor',tipos=['Física','Psicológica','Sexual'],
   d='Grupos de reflexión con hombres para cuestionar las ideas que justifican la violencia y promover relaciones igualitarias.',

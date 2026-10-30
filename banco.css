@@ -257,7 +257,7 @@ a.norm:hover{transform:translateY(-3px);border-color:var(--blue-300)}
 .eflegend .efp{margin-right:6px}
 .sub{font-size:.76rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 6px}
 .soldet{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:14px}
-.soldet .kick{margin:0 0 4px;font-size:.8rem;font-weight:800;color:var(--sky-700);text-transform:uppercase;letter-spacing:.06em}
+.soldet .kick,.eje-head .kick{margin:0 0 4px;font-size:.8rem;font-weight:800;color:var(--sky-700);text-transform:uppercase;letter-spacing:.06em}
 .soldet h2{font-size:1.5rem;margin-bottom:8px}
 .soldet .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:16px}
 @media (max-width:760px){.soldet .two{grid-template-columns:minmax(0,1fr)}}
@@ -272,3 +272,23 @@ a.norm:hover{transform:translateY(-3px);border-color:var(--blue-300)}
 .door.tp .top{background:#39715f}
 .door.tp .facts span{background:#e8f4ee;color:#27604d}
 .door.tp .go{color:#27604d}
+
+/* ¿Qué funciona? v2: tarjetas grandes por eje */
+.intro-f{font-size:1.05rem;color:var(--ink-soft);margin:6px 0 18px;max-width:62ch}
+.ejes{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:700px){.ejes{grid-template-columns:1fr}}
+.eje{gap:8px;padding:24px 26px;border-width:1px;border-radius:18px;box-shadow:var(--sh-1,0 1px 2px rgba(20,30,70,.06));transition:transform .15s,border-color .15s}
+button.eje:hover{transform:translateY(-3px);border-color:var(--blue-600)}
+.eje .q{font-size:.8rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--sky-700)}
+.eje b{font-size:1.45rem}
+.eje .d{font-size:.98rem;color:var(--ink-soft);line-height:1.5}
+.eje .n{font-size:.95rem;font-weight:700;color:var(--ink);margin-top:6px}
+.eje .go{font-size:.95rem;font-weight:800;color:var(--blue-700)}
+.eje.vacio{cursor:default;background:#fafbfd;border-style:dashed}
+.eje.vacio .n{font-weight:600;color:var(--ink-soft)}
+.eje-head{margin:14px 0 20px}.eje-head h2{margin:2px 0 6px}.eje-head p:last-child{color:var(--ink-soft);max-width:62ch;margin:0}
+.sol{gap:10px;padding:22px 24px}
+.sol b{font-size:1.2rem}
+.sol .ev{font-size:.95rem;color:var(--ink);line-height:1.5}
+.efp{font-size:.82rem}
+@media (prefers-reduced-motion:reduce){.eje{transition:none}button.eje:hover{transform:none}}
