@@ -402,3 +402,18 @@ a.sv-lvl{text-decoration:none;color:inherit;transition:transform .15s,border-col
 .svc-para b{color:var(--ink-soft);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}.svc-para span{color:var(--ink)}
 .sv-empty{color:var(--ink-soft)}
 .svc[hidden],.sv-tipo[hidden],.sv-nivel[hidden]{display:none}
+/* Servicios: color por tipo */
+.t-a{--tc:#2a96ad;--tt:#e4f3f6}.t-b{--tc:#2f3e8f;--tt:#eceff9}.t-c{--tc:#cf2f27;--tt:#fdecea}.t-d{--tc:#c27c0e;--tt:#fff4e0}.t-e{--tc:#39715f;--tt:#e8f4ee}
+.t-f{--tc:#6a4c9c;--tt:#f1edf9}.t-g{--tc:#a5410a;--tt:#fbe9dd}.t-h{--tc:#1d7489;--tt:#e1f1f4}.t-i{--tc:#4a5068;--tt:#eceef3}
+.sv-types li[class^="t-"]{background:var(--tt);border-left:4px solid var(--tc)}
+.sv-types li[class^="t-"] b{color:var(--tc)}
+.sv-tipo-h{display:flex;gap:12px;align-items:flex-start;border-left:0;padding:14px 16px;background:var(--tt);border-radius:14px}
+.sv-dot{flex:none;width:14px;height:14px;border-radius:4px;background:var(--tc);margin-top:6px}
+.sv-tipo .sv-tipo-h h4{color:var(--tc)}
+.svc[class*=" t-"]{border-top:5px solid var(--tc)}
+.svc[class*=" t-"] h4{color:var(--blue-900)}
+.svc[class*=" t-"] .svc-para b{color:var(--tc)}
+.svc[class*=" t-"] .svc-para{border-top-color:var(--tt);border-top-style:solid;border-top-width:2px}
+.svc-vio{background:#fdecea;color:#b0261f}
+.sv-nivel-h .etapa-n{background:linear-gradient(135deg,var(--vio-600),#2a96ad)}
+.svc-vio{background:#241645;color:#fff}
