@@ -372,3 +372,8 @@ button.eje:hover{transform:translateY(-3px);border-color:var(--blue-600)}
 .dcard h3{margin:0;font-size:1.15rem}.dcard p{margin:0;font-size:.92rem;color:var(--ink-soft)}
 .dcard .go{margin-top:auto;font-weight:800;color:var(--vio-700);font-size:.9rem}
 .sv-src{margin:22px 0 0;font-size:.85rem;color:var(--ink-soft)}
+/* portada: segunda fila centrada */
+.doors .wrap{display:flex;flex-wrap:wrap;justify-content:center}
+.doors .door{flex:0 1 calc((100% - 36px)/3);min-width:0}
+@media (max-width:1050px){.doors .door{flex-basis:calc((100% - 18px)/2)}}
+@media (max-width:600px){.doors .door{flex-basis:100%}}
