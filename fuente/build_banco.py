@@ -383,20 +383,33 @@ Promise.all([fetch('data/estudios.json').then(r=>r.json()),fetch('data/solucione
 # ---------- Servicios del MIMP (Catálogo de Servicios 2026), en lenguaje sencillo ----------
 import sys as _s,os as _o; _s.path.insert(0,_o.path.dirname(_o.path.abspath(__file__)))
 from servicios_data import NIVELES,S as SERVS
-EMO={'a':'🌱','b':'🏠','c':'🤝','d':'💵','e':'📣','f':'✅','g':'🎓','h':'📊','i':'🔍'}
-EMON={'1':'👥','2':'📋','3':'🏛️'}
+_P={'a':'<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',
+ 'b':'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
+ 'c':'<path d="M4 5h16v11H9l-5 4z"/><path d="M12 13.5c-2.2-1.4-3.2-2.4-3.2-3.6 0-.9.7-1.6 1.6-1.6.7 0 1.2.4 1.6 1 .4-.6.9-1 1.6-1 .9 0 1.6.7 1.6 1.6 0 1.2-1 2.2-3.2 3.6z"/>',
+ 'd':'<circle cx="12" cy="12" r="8.5"/><path d="M12 6.5v11"/><path d="M15 9.3c-.3-1-1.4-1.6-3-1.6-1.7 0-3 .8-3 2.1s1.1 1.8 3 2.2 3 1 3 2.3-1.3 2.1-3 2.1-2.8-.7-3.1-1.7"/>',
+ 'e':'<path d="M3 10v4h3l8 5V5L6 10z"/><path d="M18 9a4.5 4.5 0 0 1 0 6"/>',
+ 'f':'<circle cx="12" cy="12" r="8.5"/><path d="M8.3 12.2l2.6 2.6 4.8-5.3"/>',
+ 'g':'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3.5 2.3 8.5 2.3 12 0v-5"/><path d="M22 9v5"/>',
+ 'h':'<path d="M4 20h16"/><path d="M7 16v-5"/><path d="M12 16V6"/><path d="M17 16V9"/>',
+ 'i':'<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.4-4.4"/>',
+ '1':'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.7-6 6-6s6 2.6 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.2c2.6.2 4.5 2.4 4.5 5.3"/>',
+ '2':'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9z"/><path d="M9 13l2 2 4-4.5"/>',
+ '3':'<path d="M3 10l9-6 9 6"/><path d="M5 10v8M10 10v8M14 10v8M19 10v8"/><path d="M3 20h18"/>'}
+def ICO(k): return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_P[k]}</svg>'
+EMO={k:ICO(k) for k in 'abcdefghi'}
+EMON={k:ICO(k) for k in '123'}
 CATALOGO='https://cdn.www.gob.pe/uploads/document/file/9387740/7693547-catalogo-de-servicios-del-sector-mujer-y-poblaciones-vulnerables.pdf'
 PROGS=['Warmi Ñan','INABIF','MIMP','Gratitud','CONADIS','Varios programas']
 PROGN={'Warmi Ñan':'Programa Warmi Ñan','INABIF':'INABIF','MIMP':'MIMP, sede central','Gratitud':'Programa Gratitud','CONADIS':'CONADIS','Varios programas':'Varios programas'}
 def _card(n,t,name,d,para,prog,v):
     return f'''<article class="svc t-{t}" data-prog="{prog}" data-v="{v}"><div class="svc-top"><span class="svc-prog">{PROGN[prog]}</span>{'<span class="svc-vio">Frente a la violencia</span>' if v else ''}</div><h4>{name}</h4><p>{d}</p><div class="svc-para"><b>Población objetivo</b><span>{para}</span></div></article>'''
-resumen=''.join(f'''<div class="sv-lvl l{k}"><span class="lv-emo" aria-hidden="true">{EMON[k]}</span><span class="lv-n">Nivel {k}</span><h3>{t}</h3><p>{d}</p><ul class="sv-types">{''.join(f'<li class="t-{tk}"><button type="button" data-t="{tk}" aria-pressed="false"><i aria-hidden="true">{EMO[tk]}</i><b>{tn}</b><span>Ver servicios →</span></button></li>' for tk,tn,_ in T)}</ul></div>''' for k,t,d,T in NIVELES)
+resumen=''.join(f'''<div class="sv-lvl l{k}"><span class="lv-emo">{EMON[k]}</span><span class="lv-n">Nivel {k}</span><h3>{t}</h3><p>{d}</p><ul class="sv-types">{''.join(f'<li class="t-{tk}"><button type="button" data-t="{tk}" aria-pressed="false"><i class="ico">{EMO[tk]}</i><b>{tn}</b><span>Ver servicios →</span></button></li>' for tk,tn,_ in T)}</ul></div>''' for k,t,d,T in NIVELES)
 cuerpo=''
 for k,t,d,T in NIVELES:
     tipos=''
     for tk,tn,td in T:
         L=[x for x in SERVS if x[1]==tk]
-        tipos+=f'''<div class="sv-tipo t-{tk}" id="tipo-{tk}"><div class="sv-tipo-h"><span class="sv-emo" aria-hidden="true">{EMO[tk]}</span><div><h4>{tn}</h4><p>{td}</p></div></div><div class="svc-grid">{''.join(_card(*x) for x in L)}</div></div>'''
+        tipos+=f'''<div class="sv-tipo t-{tk}" id="tipo-{tk}"><div class="sv-tipo-h"><span class="sv-emo">{EMO[tk]}</span><div><h4>{tn}</h4><p>{td}</p></div></div><div class="svc-grid">{''.join(_card(*x) for x in L)}</div></div>'''
     cuerpo+=f'''<section class="sv-nivel" id="nivel-{k}"><div class="sv-nivel-h"><span class="etapa-n">{k}</span><div><span class="etapa-k">Nivel {k}</span><h3>{t}</h3><p>{d}</p></div></div>{tipos}</section>'''
 chips=''.join(f'<button type="button" data-p="{p}" aria-pressed="false">{PROGN[p]}</button>' for p in PROGS)
 SERV=head('Servicios del MIMP · Banco de Evidencias','Todos los servicios del Ministerio de la Mujer y Poblaciones Vulnerables, organizados por nivel y tipo, explicados en palabras sencillas.','servicios.html')+header('sv')+f'''
