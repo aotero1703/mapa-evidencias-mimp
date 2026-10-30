@@ -4,10 +4,10 @@
 # Efecto de cada caso: Positivo · Mixto · Sin efecto · Sin resultados aún
 import json
 EJES=[
- ('prevencion','Prevención','Acciones para evitar que la violencia ocurra: cambiar normas y estereotipos, fortalecer la autonomía de las mujeres y reducir factores de riesgo.','Ley N.° 30364, Título III'),
- ('atencion','Atención y recuperación','Servicios que reciben, orientan y acompañan a las víctimas, y el cuidado de quienes las atienden.','Ley N.° 30364, Título III'),
- ('proteccion','Protección y sanción','Medidas de protección, procesos de tutela y respuesta del sistema de justicia.','Ley N.° 30364, Título II'),
- ('reeducacion','Reeducación de personas agresoras','Programas para que las personas agresoras dejen de ejercer violencia.','Ley N.° 30364, Título III'),
+ ('prevencion','Prevención','Acciones para evitar que la violencia ocurra: cambiar normas y estereotipos, fortalecer la autonomía de las mujeres y reducir factores de riesgo.','Título III, capítulo I'),
+ ('atencion','Atención y recuperación','Servicios que reciben, orientan y acompañan a las víctimas, y el cuidado de quienes las atienden.','Título III, capítulo I'),
+ ('proteccion','Protección y sanción','Medidas de protección y proceso especial ante la violencia, a cargo de la policía, la fiscalía y el Poder Judicial.','Título II: procesos de tutela'),
+ ('reeducacion','Reeducación de personas agresoras','Programas para que las personas agresoras dejen de ejercer violencia.','Título III, capítulo II'),
 ]
 SOL=[
  dict(id='transferencias',eje='prevencion',n='Transferencias monetarias condicionadas',ef='Prometedor',tipos=['Física'],

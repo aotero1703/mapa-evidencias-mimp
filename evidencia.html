@@ -44,12 +44,12 @@
 <section class="section">
   <div class="wrap">
     <div class="tabs" role="tablist" aria-label="Secciones de la evidencia">
-      <button type="button" role="tab" id="tF" aria-selected="true" aria-controls="tabF"><span class="tk">¿Qué funciona?</span><b>Intervenciones evaluadas</b><span class="td">Programas que se pusieron a prueba y qué resultados tuvieron, por eje de la Ley: prevención, atención, protección y reeducación.</span></button>
-      <button type="button" role="tab" id="tE" aria-selected="false" aria-controls="tabE"><span class="tk">¿Qué se sabe?</span><b>Biblioteca de estudios</b><span class="td">Todas las investigaciones del banco, por tipo y modalidad de violencia, además de igualdad de oportunidades y cuidados.</span></button>
+      <button type="button" role="tab" id="tF" aria-selected="true" aria-controls="tabF"><b>¿Qué funciona?</b><span class="td">Programas y servicios que fueron evaluados para saber si reducen la violencia, y qué resultados tuvieron.</span></button>
+      <button type="button" role="tab" id="tE" aria-selected="false" aria-controls="tabE"><b>Todos los estudios</b><span class="td">Todas las investigaciones del banco, evalúen o no un programa, ordenadas por tipo de violencia.</span></button>
     </div>
     <div id="tabF" role="tabpanel" aria-labelledby="tF">
       <div id="solHome">
-        <h3 class="ejes-h">Ejes de intervención de la Ley N.° 30364</h3>
+        <h3 class="ejes-h">Según los títulos II y III de la Ley N.° 30364</h3>
         <div class="ejes" id="ejes"></div>
       </div>
       <div id="ejeDet" hidden></div>
@@ -175,8 +175,8 @@ function solRender(){
   if(F.sol){$('ejeDet').hidden=true;return solDetail(SOL.soluciones.find(x=>x.id===F.sol))}
   if(F.eje)return ejeDetail(SOL.ejes.find(e=>e.id===F.eje));
   $('ejes').innerHTML=SOL.ejes.map(e=>{const L=SOL.soluciones.filter(x=>x.eje===e.id);
-    return L.length?`<button type="button" class="eje" data-e="${e.id}"><b>${e.n}</b><span class="d">${e.d}</span><span class="n">${L.length} ${L.length===1?'intervención evaluada':'intervenciones evaluadas'}</span><span class="go">Ver qué funciona →</span></button>`
-      :`<div class="eje vacio"><b>${e.n}</b><span class="d">${e.d}</span><span class="n">Todavía no hay estudios que evalúen intervenciones de este eje.</span></div>`}).join('');
+    return L.length?`<button type="button" class="eje" data-e="${e.id}"><span class="q">${e.base}</span><b>${e.n}</b><span class="d">${e.d}</span><span class="n">${L.length} ${L.length===1?'programa evaluado':'programas evaluados'}</span><span class="go">Ver qué funciona →</span></button>`
+      :`<div class="eje vacio"><span class="q">${e.base}</span><b>${e.n}</b><span class="d">${e.d}</span><span class="n">Todavía no hay programas evaluados en este tema.</span></div>`}).join('');
   document.querySelectorAll('button.eje').forEach(b=>b.onclick=()=>{F.eje=b.dataset.e;solRender();scrollTo({top:$('tabF').offsetTop-90})});
 }
 function ejeDetail(e){const L=SOL.soluciones.filter(x=>x.eje===e.id);
