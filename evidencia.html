@@ -144,7 +144,7 @@ function card(r){const o=S.open===r.n,au=r.a?r.a.split(';')[0].trim()+(r.a.inclu
   const f=(t,v)=>v?`<dt>${t}</dt><dd>${esc(v)}</dd>`:'';
   return `<article class="paper"><div class="tags">${tags}<span class="tag ${r.amb==='Nacional'?'pe':'int'}">${r.amb} · ${esc(pais)}</span></div>
    <h3>${esc(r.t)}</h3><div class="by">${[au,r.y].filter(Boolean).map(esc).join(' · ')}${tipos.length?` · Violencia ${tipos.join(', ')}`:''}</div>
-   ${gist(r)?`${gist(r)?`<p class="gist">${esc(gist(r))}</p>`:''}`:''}
+   ${gist(r)?`<p class="gist">${esc(gist(r))}</p>`:''}
    <div class="row"><button type="button" data-open="${r.n}" aria-expanded="${o}">${o?'Cerrar ficha':'Ver ficha completa'}</button>${r.link?`<a href="${esc(r.link)}" target="_blank" rel="noopener">Leer el estudio ↗</a>`:''}</div>
    ${o?`<dl>${f('Autoría',r.a)}${f('País',(r.paises||[]).join(', '))}${f('Tema',(r.temas||[]).join(', '))}${f('Tipo de violencia',(r.tipos||[]).filter(t=>t!=='Estudios sobre varios tipos de violencia').join(', '))}${f('Modalidad',(r.mod||[]).filter(m=>m!==GEN).join(', '))}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
 $('q').oninput=e=>{tab('E');S.q=e.target.value;S.shown=20;show()};

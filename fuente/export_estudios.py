@@ -1,4 +1,6 @@
-# Paso 2: exporta data/estudios.json para la página de evidencia científica (sin duplicados).
+# Referencia: genera fuente/estudios_desde_matriz.json a partir de la matriz original.
+# La base publicada es data/estudios.json y se edita directamente (no la sobrescribe este script).
+# Antes: exporta data/estudios.json para la página de evidencia científica (sin duplicados).
 # Ámbito: solo Nacional o Internacional. Dimensiones de Igualdad de oportunidades agrupadas.
 import json
 import sys,os; sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
@@ -76,7 +78,7 @@ for x in out:
     x['temas']=t
     p=[PMAP[k] for k in x['pob_g'] if PMAP.get(k)]
     x['pob_g']=list(dict.fromkeys(p)) or ['Integrantes del grupo familiar']
-json.dump({'rows':out},open('data/estudios.json','w',encoding='utf-8'),ensure_ascii=False,separators=(',',':'))
+json.dump({'rows':out},open('fuente/estudios_desde_matriz.json','w',encoding='utf-8'),ensure_ascii=False,separators=(',',':'))
 from collections import Counter
 print(Counter(t for x in out for t in x.get('tipos',[]))); print(Counter(m for x in out for m in x.get('mod',[])))
 print(len(out),Counter(x['amb'] for x in out),Counter(x['dim'] for x in out).most_common())

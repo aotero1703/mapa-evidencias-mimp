@@ -271,7 +271,7 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
       <div class="toolbar rbar">
         <p class="count" id="count"></p>
         <button type="button" class="clear" id="clear" hidden>Limpiar filtros</button>
-        <select id="sort" aria-label="Ordenar"><option value="y">Más recientes primero</option><option value="t">Por título (A–Z)</option></select>
+        <select id="sort" aria-label="Ordenar"><option value="y">Publicación más reciente</option><option value="t">Orden alfabético (A–Z)</option></select>
       </div>
       <div class="cards" id="cards"></div>
       <button type="button" class="more" id="more" hidden>Ver más estudios</button>
@@ -283,23 +283,23 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
 '''+FOOTER+r'''<script>
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const TIPOS=['Violencia física','Violencia psicológica','Violencia sexual','Violencia económica o patrimonial','Estudios generales sobre violencia'];
-const TDESC={'Violencia física':'Daño a la integridad corporal o a la salud, incluido el maltrato por negligencia o descuido.','Violencia psicológica':'Controlar o aislar a la persona contra su voluntad, humillarla, avergonzarla, insultarla, estigmatizarla o estereotiparla.','Violencia sexual':'Actos de naturaleza sexual sin consentimiento o bajo coacción, incluso sin contacto físico.','Violencia económica o patrimonial':'Menoscabo de los recursos económicos o patrimoniales: quitar o retener bienes, documentos o ingresos, o no cumplir con los alimentos.','Estudios generales sobre violencia':'Marcos conceptuales, prevalencia general, factores de riesgo y servicios.'};
+const TIPOS=['Violencia física','Violencia psicológica','Violencia sexual','Violencia económica o patrimonial'];
+const TDESC={'Violencia física':'Daño a la integridad corporal o a la salud, incluido el maltrato por negligencia o descuido.','Violencia psicológica':'Controlar o aislar a la persona contra su voluntad, humillarla, avergonzarla, insultarla, estigmatizarla o estereotiparla.','Violencia sexual':'Actos de naturaleza sexual sin consentimiento o bajo coacción, incluso sin contacto físico.','Violencia económica o patrimonial':'Menoscabo de los recursos económicos o patrimoniales: quitar o retener bienes, documentos o ingresos, o no cumplir con los alimentos.'};
 const DDESC={'Cuidados domésticos':'Las tareas del hogar y la atención a la familia: cocinar, limpiar, cuidar a hijas e hijos. Las hacen las propias familias sin pago o trabajadoras del hogar remuneradas.','Cuidados domiciliarios':'La atención que una persona cuidadora brinda en la vivienda a quien depende de otras personas: personas adultas mayores, con discapacidad o con una enfermedad.','Cuidados institucionales':'Servicios de cuidado fuera del hogar, como cunas, guarderías, centros de día o residencias.','Cuidados comunitarios':'Cuidado que organiza la propia comunidad, como ollas comunes, comedores populares y redes vecinales.','Empleo':'Acceso de las mujeres al trabajo y a ingresos propios, y la brecha salarial.','Educación':'Acceso, permanencia y estereotipos en la escuela y la universidad.','Salud':'Salud física, mental, sexual y reproductiva de las mujeres.','Brechas entre mujeres y hombres':'Diferencias entre mujeres y hombres medidas en varios ámbitos a la vez.','Acceso a tecnología':'Uso de internet, celulares y habilidades digitales.','Participación y liderazgo':'Presencia de mujeres en cargos de decisión, la política y las organizaciones.','Enfoques transversales':'Estudios que miran las diferencias por edad, etnia u otras condiciones.'};
 const GROUPS=[['Igualdad de oportunidades','Condiciones que fortalecen la autonomía de las mujeres y reducen el riesgo de violencia.'],['Sistema de cuidados','Quién cuida, dónde y en qué condiciones. Cuando el cuidado recae solo en las mujeres, limita su autonomía económica.']];
 const GEN='Varias o sin modalidad específica';
 let R=[],S={tema:'',tipo:'',pob:'',mod:'',amb:'',q:'',sort:'y',open:null,shown:20};
 const pl=(n,a,b)=>n+' '+(n===1?a:b);
-function gist(r){if(r.resumen)return r.resumen;const t=(r.res||r.prop||'').replace(/\s+/g,' ').trim();const m=t.match(/^.{40,280}?[.;](\s|$)/);return m?m[0].trim():(t.length>260?t.slice(0,260).trim()+'…':t)}
+function gist(r){return (r.resumen||'').trim()}
 const TEMAS=[['Causas y consecuencias de la violencia','Factores que explican la violencia, cómo se presenta y qué efectos tiene en la salud, la educación, el empleo y el bienestar.','Ley N.° 30364, arts. 42 y 45, inc. 1.f'],['Prevención de la violencia','Acciones para evitar que la violencia ocurra, como el trabajo con varones, colegios y comunidades.','Ley N.° 30364, arts. 1 y 27'],['Atención y recuperación de las víctimas','Servicios que atienden a las víctimas y las ayudan a recuperarse.','Ley N.° 30364, arts. 1, 10 y 27 al 29'],['Protección de las víctimas','Medidas de protección, denuncia y respuesta de la policía y el sistema de justicia para proteger a las víctimas.','Ley N.° 30364, arts. 1 y 13 al 26'],['Persecución y sanción','Investigación, procesamiento y sanción de los hechos de violencia.','Ley N.° 30364, arts. 1, 16 al 20'],['Reeducación de las personas agresoras','Tratamiento para que las personas agresoras dejen de ejercer violencia.','Ley N.° 30364, arts. 1 y 30 al 32'],['Reparación del daño','Medidas para reparar el daño causado a las víctimas y restituir sus derechos.','Ley N.° 30364, arts. 1 y 33']];
 const NOTIPO='No trata un tipo de violencia en particular';
 const POBS=['Mujeres','Integrantes del grupo familiar','Niñas, niños y adolescentes','Personas adultas mayores','Personas con discapacidad','Varones y personas agresoras','Operadores del sistema'];
 const PDESC={'Mujeres':'Durante todo su ciclo de vida: niña, adolescente, joven, adulta y adulta mayor (art. 7).','Integrantes del grupo familiar':'Cónyuges, convivientes, padres, hijos y demás parientes que señala el art. 7.','Niñas, niños y adolescentes':'En especial situación de vulnerabilidad (art. 1).','Personas adultas mayores':'En especial situación de vulnerabilidad (art. 1).','Personas con discapacidad':'En especial situación de vulnerabilidad (art. 1).','Varones y personas agresoras':'Programas para varones y reeducación de personas agresoras (arts. 27 y 30 al 32).','Operadores del sistema':'Policía, Ministerio Público, Poder Judicial y servicios de atención (arts. 2, 18 y 45).'};
-const tipoOf=r=>r.tipos||[];
+const tipoOf=r=>(r.tipos||[]).filter(t=>t!=='Estudios sobre varios tipos de violencia');
 function match(r,skip){const q=S.q.trim().toLowerCase();
-  return (skip==='tema'||!S.tema||r.temas.includes(S.tema))&&(skip==='tipo'||!S.tipo||tipoOf(r).includes(S.tipo))&&(skip==='pob'||!S.pob||r.pob_g.includes(S.pob))&&(skip==='amb'||!S.amb||r.amb===S.amb)
-   &&(skip==='mod'||!S.mod||(r.mod||[]).includes(S.mod))&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,r.paises.join(' '),(r.mod||[]).join(' '),r.temas.join(' ')].join(' ').toLowerCase().includes(q))}
-function opts(id,all,vals,cur,key){const n=v=>R.filter(r=>match(r,key)&&(key==='tema'?r.temas.includes(v):key==='tipo'?tipoOf(r).includes(v):r.pob_g.includes(v))).length;
+  return (skip==='tema'||!S.tema||(r.temas||[]).includes(S.tema))&&(skip==='tipo'||!S.tipo||tipoOf(r).includes(S.tipo))&&(skip==='pob'||!S.pob||(r.pob_g||[]).includes(S.pob))&&(skip==='amb'||!S.amb||r.amb===S.amb)
+   &&(skip==='mod'||!S.mod||(r.mod||[]).includes(S.mod))&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,(r.paises||[]).join(' '),(r.mod||[]).join(' '),(r.temas||[]).join(' ')].join(' ').toLowerCase().includes(q))}
+function opts(id,all,vals,cur,key){const n=v=>R.filter(r=>match(r,key)&&(key==='tema'?(r.temas||[]).includes(v):key==='tipo'?tipoOf(r).includes(v):(r.pob_g||[]).includes(v))).length;
   $(id).innerHTML=`<option value="">${all}</option>`+vals.map(v=>{const c=n(v);return `<option value="${esc(v)}"${v===cur?' selected':''}${c||v===cur?'':' disabled'}>${esc(v)} (${c})</option>`}).join('')}
 function home(){}
 function show(){
@@ -308,7 +308,7 @@ function show(){
   opts('fPob','Todas las poblaciones',POBS,S.pob,'pob');$('fAmb').value=S.amb;
   const d=[];if(S.tema){const t=TEMAS.find(t=>t[0]===S.tema);d.push(`<b>${esc(S.tema)}:</b> ${t[1]} <span class="base">${t[2]}</span>`)};if(S.tipo&&TDESC[S.tipo])d.push(`<b>${esc(S.tipo)} (art. 8 de la Ley):</b> ${TDESC[S.tipo]}`);if(S.pob&&PDESC[S.pob])d.push(`<b>${esc(S.pob)}:</b> ${PDESC[S.pob]}`);
   $('fDesc').innerHTML=d.join('<br>');$('fDesc').hidden=!d.length;
-  if(S.tipo&&S.tipo!=='Estudios generales sobre violencia'){const base=R.filter(r=>match(r,'mod')),c={};base.forEach(r=>(r.mod||[]).forEach(m=>c[m]=(c[m]||0)+1));
+  if(S.tipo){const base=R.filter(r=>match(r,'mod')),c={};base.forEach(r=>(r.mod||[]).forEach(m=>c[m]=(c[m]||0)+1));
     const ms=Object.keys(c).sort((a,b)=>(a===GEN)-(b===GEN)||c[b]-c[a]);
     $('mods').innerHTML='<span class="mods-l">Modalidad (Reglamento):</span>'+[`<button type="button" class="dim" data-m="" aria-pressed="${!S.mod}">Todas <em>${base.length}</em></button>`].concat(ms.map(m=>`<button type="button" class="dim" data-m="${esc(m)}" aria-pressed="${S.mod===m}">${esc(m)} <em>${c[m]}</em></button>`)).join('');
     $('mods').hidden=false;document.querySelectorAll('#mods .dim').forEach(b=>b.onclick=()=>{S.mod=b.dataset.m;S.shown=20;show()});
@@ -321,16 +321,16 @@ function show(){
   $('more').hidden=L.length<=S.shown;$('more').textContent=`Ver más investigaciones (${L.length-S.shown} restantes)`;
   document.querySelectorAll('.paper [data-open]').forEach(b=>b.onclick=()=>{const n=+b.dataset.open;S.open=S.open===n?null:n;show()});
 }
-function card(r){const o=S.open===r.n,au=r.a?r.a.split(';')[0].trim()+(r.a.includes(';')?' et al.':''):'Autor no registrado';
-  const pais=r.amb==='Nacional'?'Perú':(r.paises.length>2?'Varios países':r.paises.join(', ')||'Varios países');
-  const tags=r.temas.map(t=>`<span class="tag dimtag">${esc(t)}</span>`).join('');
-  const tipos=r.tipos?r.tipos.filter(t=>t!=='Estudios generales sobre violencia').map(t=>t.replace('Violencia ','')):[];
+function card(r){const o=S.open===r.n,au=r.a?r.a.split(';')[0].trim()+(r.a.includes(';')?' et al.':'') :'';
+  const pais=r.amb==='Nacional'?'Perú':((r.paises||[]).length>2?'Varios países':(r.paises||[]).join(', ')||'Varios países');
+  const tags=(r.temas||[]).map(t=>`<span class="tag dimtag">${esc(t)}</span>`).join('');
+  const tipos=(r.tipos||[]).filter(t=>t!=='Estudios sobre varios tipos de violencia').map(t=>t.replace('Violencia ',''));
   const f=(t,v)=>v?`<dt>${t}</dt><dd>${esc(v)}</dd>`:'';
   return `<article class="paper"><div class="tags">${tags}<span class="tag ${r.amb==='Nacional'?'pe':'int'}">${r.amb} · ${esc(pais)}</span></div>
-   <h3>${esc(r.t)}</h3><div class="by">${esc(au)} · ${esc(r.y||'s. f.')}${tipos.length?` · Violencia ${tipos.join(', ')}`:''}</div>
-   <p class="gist">${esc(gist(r))}</p>
+   <h3>${esc(r.t)}</h3><div class="by">${[au,r.y].filter(Boolean).map(esc).join(' · ')}${tipos.length?` · Violencia ${tipos.join(', ')}`:''}</div>
+   ${gist(r)?`<p class="gist">${esc(gist(r))}</p>`:''}
    <div class="row"><button type="button" data-open="${r.n}" aria-expanded="${o}">${o?'Cerrar ficha':'Ver ficha completa'}</button>${r.link?`<a href="${esc(r.link)}" target="_blank" rel="noopener">Leer el estudio ↗</a>`:''}</div>
-   ${o?`<dl>${f('Autoría',r.a)}${f('País',r.paises.join(', '))}${f('Tema',r.temas.join(', '))}${f('Tipo de violencia',r.tipos?r.tipos.join(', '):'')}${f('Modalidad',r.tipos?r.mod.join(', '):'')}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
+   ${o?`<dl>${f('Autoría',r.a)}${f('País',(r.paises||[]).join(', '))}${f('Tema',(r.temas||[]).join(', '))}${f('Tipo de violencia',(r.tipos||[]).filter(t=>t!=='Estudios sobre varios tipos de violencia').join(', '))}${f('Modalidad',(r.mod||[]).filter(m=>m!==GEN).join(', '))}${f('Población',r.pob)}${f('Propósito',r.prop)}${f('Intervención',[r.tipo,r.det].filter(Boolean).join('\n\n'))}${f('Estado de la evaluación',r.est)}${f('Qué se mide (Y)',r.vy)}${f('Qué lo explica (X)',r.vx)}${f('Resultados',r.res)}${f('Publicado en',r.pub)}${f('N.° en la matriz',String(r.n))}</dl>`:''}</article>`}
 $('q').oninput=e=>{tab('E');S.q=e.target.value;S.shown=20;show()};
 $('sort').onchange=e=>{S.sort=e.target.value;show()};
 $('fTema').onchange=e=>{S.tema=e.target.value;S.shown=20;show()};
