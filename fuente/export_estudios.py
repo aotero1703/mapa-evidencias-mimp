@@ -50,6 +50,29 @@ for r in d['rows']:
     x['pob_g']=[POBN[c] for c in POB[r['n']]]
     out.append(x)
 out+=NUEVOS
+# Solo estudios sobre violencia comprendida en la Ley N.° 30364 (con tipo de violencia).
+out=[x for x in out if x.get('tipos')]
+# Temas alineados con el art. 1 de la Ley N.° 30364 (y arts. 42 y 45 para causas y consecuencias).
+TMAP={'Causas y factores asociados':'Causas y consecuencias de la violencia','Consecuencias de la violencia':'Causas y consecuencias de la violencia',
+ 'Prevención de la violencia':'Prevención de la violencia','Atención y recuperación':'Atención y recuperación de las víctimas',
+ 'Protección y acceso a la justicia':'Protección de las víctimas','Sanción y reeducación':'Reeducación de las personas agresoras',
+ 'Reparación y restitución de derechos':'Reparación del daño'}
+SANC={49:['Persecución y sanción'],95:['Persecución y sanción'],97:['Consecuencias','Persecución y sanción'],206:['Protección de las víctimas','Persecución y sanción'],201:['Atención y recuperación de las víctimas','Protección de las víctimas','Persecución y sanción']}
+PMAP={'Mujeres':'Mujeres','Niñas, niños y adolescentes':'Niñas, niños y adolescentes','Personas adultas mayores':'Personas adultas mayores',
+ 'Hombres':'Varones y personas agresoras','Operadores y servidores públicos':'Operadores del sistema','Población en general':'Integrantes del grupo familiar','Jóvenes':None,'Pueblos indígenas':None}
+for x in out:
+    t=[]
+    for k in x['temas']:
+        v=TMAP[k]
+        if v not in t: t.append(v)
+    if x['n'] in SANC:
+        t=[v for v in t if v!='Protección de las víctimas'] if x['n'] in (49,95,97) else t
+        for v in SANC[x['n']]:
+            v='Causas y consecuencias de la violencia' if v=='Consecuencias' else v
+            if v not in t: t.append(v)
+    x['temas']=t
+    p=[PMAP[k] for k in x['pob_g'] if PMAP.get(k)]
+    x['pob_g']=list(dict.fromkeys(p)) or ['Integrantes del grupo familiar']
 json.dump({'rows':out},open('data/estudios.json','w',encoding='utf-8'),ensure_ascii=False,separators=(',',':'))
 from collections import Counter
 print(Counter(t for x in out for t in x.get('tipos',[]))); print(Counter(m for x in out for m in x.get('mod',[])))

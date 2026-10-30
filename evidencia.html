@@ -38,13 +38,13 @@
     <a class="crumb" href="./">← Banco de Evidencias</a>
     <h1>Evidencia científica</h1>
     <p>Lo que se ha investigado sobre la violencia contra las mujeres y los integrantes del grupo familiar, organizado según la Ley N.° 30364.</p>
-    <div class="hsearch"><input type="search" id="q" placeholder="Buscar en todo el banco: Cuna Más, Línea 100, alcohol, adolescentes…" aria-label="Buscar en todo el banco"></div>
+    <div class="hsearch"><input type="search" id="q" placeholder="Buscar en todo el banco: CEM, Línea 100, feminicidio, adolescentes…" aria-label="Buscar en todo el banco"></div>
   </div>
 </section>
 <section class="section">
   <div class="wrap">
     <div class="tabs" role="tablist" aria-label="Secciones de la evidencia">
-      <button type="button" role="tab" id="tE" aria-selected="true" aria-controls="tabE"><b>Comprender la violencia</b><span class="td">Investigaciones sobre por qué ocurre la violencia, cómo afecta a las personas y cómo responde el Estado.</span></button>
+      <button type="button" role="tab" id="tE" aria-selected="true" aria-controls="tabE"><b>Comprender la violencia</b><span class="td">Investigaciones sobre la violencia que comprende la Ley N.° 30364: sus causas y consecuencias, y la respuesta del Estado.</span></button>
       <button type="button" role="tab" id="tF" aria-selected="false" aria-controls="tabF"><b>¿Qué ayuda a enfrentar la violencia?</b><span class="td">Intervenciones evaluadas y resultados reportados. Una evaluación no implica que el programa sea efectivo.</span></button>
     </div>
     <div id="tabF" role="tabpanel" aria-labelledby="tF" hidden>
@@ -56,7 +56,7 @@
       <div id="solDet" hidden></div>
     </div>
     <div id="tabE" role="tabpanel" aria-labelledby="tE">
-      <p class="fdesc">Los filtros permiten consultar estudios relacionados con la Ley N.° 30364. Los temas son categorías de investigación propuestas, no denominaciones legales oficiales.</p><div class="filt">
+      <p class="fdesc">Solo se incluyen estudios sobre la violencia que comprende la Ley N.° 30364. Los temas siguen las acciones del artículo 1 de la Ley y las poblaciones, sus sujetos de protección (arts. 1 y 7). La clasificación de cada estudio es orientativa.</p><div class="filt">
         <label>Tema de investigación<select id="fTema"></select></label>
         <label>Tipo de violencia<select id="fTipo"></select></label>
         <label>Población<select id="fPob"></select></label>
@@ -107,10 +107,11 @@ const GEN='Varias o sin modalidad específica';
 let R=[],S={tema:'',tipo:'',pob:'',mod:'',amb:'',q:'',sort:'y',open:null,shown:20};
 const pl=(n,a,b)=>n+' '+(n===1?a:b);
 function gist(r){const t=(r.res||r.prop||'').replace(/\s+/g,' ').trim();const m=t.match(/^.{40,280}?[.;](\s|$)/);return m?m[0].trim():(t.length>260?t.slice(0,260).trim()+'…':t)}
-const TEMAS=[['Causas y factores asociados','Desigualdades entre mujeres y hombres, normas sociales, relaciones de poder y factores de riesgo.','Ley N.° 30364, art. 3 (enfoques de género e integralidad) y art. 45, inc. 1.f'],['Consecuencias de la violencia','Efectos de la violencia en la salud, la educación, el empleo y el bienestar.','Ley N.° 30364, art. 42 (el registro consigna causas y consecuencias)'],['Prevención de la violencia','Educación, sensibilización, cambio de normas sociales y programas preventivos.','Ley N.° 30364, arts. 1 y 27'],['Atención y recuperación','Servicios de atención, salud física y mental, acompañamiento y recuperación.','Ley N.° 30364, arts. 1, 10 y 27 al 29'],['Protección y acceso a la justicia','Denuncias, medidas de protección, barreras de acceso y respuesta judicial.','Ley N.° 30364, arts. 1, 10 y 13 al 26'],['Sanción y reeducación','Respuesta penal, sanciones y programas de reeducación de personas agresoras.','Ley N.° 30364, art. 1 y arts. 30 al 32'],['Reparación y restitución de derechos','Reparación del daño, recuperación de derechos y medidas de apoyo.','Ley N.° 30364, arts. 1, 2 (inc. 5) y 33']];
+const TEMAS=[['Causas y consecuencias de la violencia','Factores que explican la violencia, cómo se presenta y qué efectos tiene en la salud, la educación, el empleo y el bienestar.','Ley N.° 30364, arts. 42 y 45, inc. 1.f'],['Prevención de la violencia','Acciones para evitar que la violencia ocurra, como el trabajo con varones, colegios y comunidades.','Ley N.° 30364, arts. 1 y 27'],['Atención y recuperación de las víctimas','Servicios que atienden a las víctimas y las ayudan a recuperarse.','Ley N.° 30364, arts. 1, 10 y 27 al 29'],['Protección de las víctimas','Medidas de protección, denuncia y respuesta de la policía y el sistema de justicia para proteger a las víctimas.','Ley N.° 30364, arts. 1 y 13 al 26'],['Persecución y sanción','Investigación, procesamiento y sanción de los hechos de violencia.','Ley N.° 30364, arts. 1, 16 al 20'],['Reeducación de las personas agresoras','Tratamiento para que las personas agresoras dejen de ejercer violencia.','Ley N.° 30364, arts. 1 y 30 al 32'],['Reparación del daño','Medidas para reparar el daño causado a las víctimas y restituir sus derechos.','Ley N.° 30364, arts. 1 y 33']];
 const NOTIPO='No trata un tipo de violencia en particular';
-const POBS=['Mujeres','Niñas, niños y adolescentes','Jóvenes','Hombres','Personas adultas mayores','Pueblos indígenas','Operadores y servidores públicos','Población en general'];
-const tipoOf=r=>r.tipos?r.tipos:[NOTIPO];
+const POBS=['Mujeres','Integrantes del grupo familiar','Niñas, niños y adolescentes','Personas adultas mayores','Personas con discapacidad','Varones y personas agresoras','Operadores del sistema'];
+const PDESC={'Mujeres':'Durante todo su ciclo de vida: niña, adolescente, joven, adulta y adulta mayor (art. 7).','Integrantes del grupo familiar':'Cónyuges, convivientes, padres, hijos y demás parientes que señala el art. 7.','Niñas, niños y adolescentes':'En especial situación de vulnerabilidad (art. 1).','Personas adultas mayores':'En especial situación de vulnerabilidad (art. 1).','Personas con discapacidad':'En especial situación de vulnerabilidad (art. 1).','Varones y personas agresoras':'Programas para varones y reeducación de personas agresoras (arts. 27 y 30 al 32).','Operadores del sistema':'Policía, Ministerio Público, Poder Judicial y servicios de atención (arts. 2, 18 y 45).'};
+const tipoOf=r=>r.tipos||[];
 function match(r,skip){const q=S.q.trim().toLowerCase();
   return (skip==='tema'||!S.tema||r.temas.includes(S.tema))&&(skip==='tipo'||!S.tipo||tipoOf(r).includes(S.tipo))&&(skip==='pob'||!S.pob||r.pob_g.includes(S.pob))&&(skip==='amb'||!S.amb||r.amb===S.amb)
    &&(skip==='mod'||!S.mod||(r.mod||[]).includes(S.mod))&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,r.paises.join(' '),(r.mod||[]).join(' '),r.temas.join(' ')].join(' ').toLowerCase().includes(q))}
@@ -119,11 +120,11 @@ function opts(id,all,vals,cur,key){const n=v=>R.filter(r=>match(r,key)&&(key==='
 function home(){}
 function show(){
   opts('fTema','Todos los temas',TEMAS.map(t=>t[0]),S.tema,'tema');
-  opts('fTipo','Todos los tipos',TIPOS.concat([NOTIPO]),S.tipo,'tipo');
+  opts('fTipo','Todos los tipos',TIPOS,S.tipo,'tipo');
   opts('fPob','Todas las poblaciones',POBS,S.pob,'pob');$('fAmb').value=S.amb;
-  const d=[];if(S.tema){const t=TEMAS.find(t=>t[0]===S.tema);d.push(`<b>${esc(S.tema)}:</b> ${t[1]} <span class="base">${t[2]}</span>`)};if(S.tipo&&TDESC[S.tipo])d.push(`<b>${esc(S.tipo)} (art. 8 de la Ley):</b> ${TDESC[S.tipo]}`);
+  const d=[];if(S.tema){const t=TEMAS.find(t=>t[0]===S.tema);d.push(`<b>${esc(S.tema)}:</b> ${t[1]} <span class="base">${t[2]}</span>`)};if(S.tipo&&TDESC[S.tipo])d.push(`<b>${esc(S.tipo)} (art. 8 de la Ley):</b> ${TDESC[S.tipo]}`);if(S.pob&&PDESC[S.pob])d.push(`<b>${esc(S.pob)}:</b> ${PDESC[S.pob]}`);
   $('fDesc').innerHTML=d.join('<br>');$('fDesc').hidden=!d.length;
-  if(S.tipo&&S.tipo!==NOTIPO&&S.tipo!=='Estudios generales sobre violencia'){const base=R.filter(r=>match(r,'mod')),c={};base.forEach(r=>(r.mod||[]).forEach(m=>c[m]=(c[m]||0)+1));
+  if(S.tipo&&S.tipo!=='Estudios generales sobre violencia'){const base=R.filter(r=>match(r,'mod')),c={};base.forEach(r=>(r.mod||[]).forEach(m=>c[m]=(c[m]||0)+1));
     const ms=Object.keys(c).sort((a,b)=>(a===GEN)-(b===GEN)||c[b]-c[a]);
     $('mods').innerHTML='<span class="mods-l">Modalidad (Reglamento):</span>'+[`<button type="button" class="dim" data-m="" aria-pressed="${!S.mod}">Todas <em>${base.length}</em></button>`].concat(ms.map(m=>`<button type="button" class="dim" data-m="${esc(m)}" aria-pressed="${S.mod===m}">${esc(m)} <em>${c[m]}</em></button>`)).join('');
     $('mods').hidden=false;document.querySelectorAll('#mods .dim').forEach(b=>b.onclick=()=>{S.mod=b.dataset.m;S.shown=20;show()});
