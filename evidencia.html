@@ -45,18 +45,18 @@
   <div class="wrap">
     <div class="tabs" role="tablist" aria-label="Secciones de la evidencia">
       <button type="button" role="tab" id="tE" aria-selected="true" aria-controls="tabE"><b>Comprender la violencia</b><span class="td">Investigaciones sobre por qué ocurre la violencia, cómo afecta a las personas y cómo responde el Estado.</span></button>
-      <button type="button" role="tab" id="tF" aria-selected="false" aria-controls="tabF"><b>¿Qué ayuda a enfrentar la violencia?</b><span class="td">Programas y servicios que fueron evaluados para saber si reducen la violencia, y qué resultados tuvieron.</span></button>
+      <button type="button" role="tab" id="tF" aria-selected="false" aria-controls="tabF"><b>¿Qué ayuda a enfrentar la violencia?</b><span class="td">Intervenciones evaluadas y resultados reportados. Una evaluación no implica que el programa sea efectivo.</span></button>
     </div>
     <div id="tabF" role="tabpanel" aria-labelledby="tF" hidden>
       <div id="solHome">
-        <h3 class="ejes-h">Según la Ley N.° 30364</h3>
+        <h3 class="ejes-h">Respuestas frente a la violencia</h3><p class="fdesc">Ejes de consulta propuestos a partir de la Ley N.° 30364; no son una clasificación oficial de estudios. Los resultados se presentan según el alcance y las limitaciones de cada evaluación.</p>
         <div class="ejes" id="ejes"></div>
       </div>
       <div id="ejeDet" hidden></div>
       <div id="solDet" hidden></div>
     </div>
     <div id="tabE" role="tabpanel" aria-labelledby="tE">
-      <div class="filt">
+      <p class="fdesc">Los filtros permiten consultar estudios relacionados con la Ley N.° 30364. Los temas son categorías de investigación propuestas, no denominaciones legales oficiales.</p><div class="filt">
         <label>Tema de investigación<select id="fTema"></select></label>
         <label>Tipo de violencia<select id="fTipo"></select></label>
         <label>Población<select id="fPob"></select></label>
@@ -169,14 +169,14 @@ function solRender(){
   if(F.sol){$('ejeDet').hidden=true;return solDetail(SOL.soluciones.find(x=>x.id===F.sol))}
   if(F.eje)return ejeDetail(SOL.ejes.find(e=>e.id===F.eje));
   $('ejes').innerHTML=SOL.ejes.map(e=>{const L=SOL.soluciones.filter(x=>x.eje===e.id);
-    return L.length?`<button type="button" class="eje" data-e="${e.id}"><span class="q">${e.base}</span><b>${e.n}</b><span class="d">${e.d}</span><span class="n">${L.length} ${L.length===1?'programa evaluado':'programas evaluados'}</span><span class="go">Ver qué funciona →</span></button>`
+    return L.length?`<button type="button" class="eje" data-e="${e.id}"><span class="q">${e.base}</span><b>${e.n}</b><span class="d">${e.d}</span><span class="n">${L.length} ${L.length===1?'programa evaluado':'programas evaluados'}</span><span class="go">Ver evaluaciones →</span></button>`
       :`<div class="eje vacio"><span class="q">${e.base}</span><b>${e.n}</b><span class="d">${e.d}</span><span class="n">Todavía no hay programas evaluados en este tema.</span></div>`}).join('');
   document.querySelectorAll('button.eje').forEach(b=>b.onclick=()=>{F.eje=b.dataset.e;solRender();scrollTo({top:$('tabF').offsetTop-90})});
 }
 function ejeDetail(e){const L=SOL.soluciones.filter(x=>x.eje===e.id);
   $('ejeDet').innerHTML=`<button type="button" class="back" id="ejeBack">← Todos los ejes</button>
    <div class="eje-head"><p class="kick">${e.base}</p><h2>${e.n}</h2><p>${e.d}</p></div>
-   <div class="sols">${L.map(x=>{const t=RES[x.ef];return `<button type="button" class="sol" data-s="${x.id}"><b>${x.n}</b><span class="efp ${t[1]}">${t[0]}</span><span class="ev">${x.ev}</span><span class="go">Ver ${x.casos.length===1?'el estudio':'los '+nS(x.casos.length)} →</span></button>`}).join('')}</div>`;
+   <div class="sols">${L.map(x=>{const t=RES[x.ef];return `<button type="button" class="sol" data-s="${x.id}"><b>${x.n}</b><span class="ev">${x.ev}</span><span class="go">Ver ${x.casos.length===1?'el estudio':'los '+nS(x.casos.length)} →</span></button>`}).join('')}</div>`;
   $('ejeBack').onclick=()=>{F.eje='';solRender()};
   document.querySelectorAll('.sol').forEach(b=>b.onclick=()=>{F.sol=b.dataset.s;solRender();scrollTo({top:$('tabF').offsetTop-90})});
 }
