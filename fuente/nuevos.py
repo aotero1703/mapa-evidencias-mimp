@@ -36,10 +36,6 @@ NUEVOS=[
    '10 hombres con orden judicial que culminaron el programa del CAI Breña.','Analizar cómo cambia la masculinidad de los hombres agresores durante el proceso reeducativo.',
    'Los participantes redujeron la violencia y buscaron relaciones más respetuosas, pero los cambios fueron parciales: muchos conservaron posiciones de poder en la pareja. Estudio cualitativo de una muestra pequeña.',
    'https://tesis.pucp.edu.pe/server/api/core/bitstreams/066b2e86-8944-4eab-8ad9-cbd220c0ecd7/content','Pontificia Universidad Católica del Perú (tesis de maestría)','Servicios de prevención y atención',tipo='Centro de Atención Institucional (CAI) del MIMP',est='Estudio cualitativo'),
- st(208,'Percepciones de los/as psicoterapeutas de los Centros de Atención Institucional (CAI) con respecto a su labor de reeducación con hombres agresores judicializados','Universidad Peruana Cayetano Heredia','',['Perú'],'Nacional',[F,P],[PAR],['Sanción y reeducación'],['Operadores y servidores públicos'],
-   'Psicoterapeutas de los CAI del MIMP.','Conocer cómo perciben su trabajo de reeducación quienes atienden a hombres agresores.',
-   'Recoge la experiencia de los equipos de los CAI. Ficha por completar con el texto del estudio.',
-   'https://repositorio.upch.edu.pe/entities/publication/9a3605d3-4b38-4a44-849a-388d8241830f','Universidad Peruana Cayetano Heredia','Servicios de prevención y atención',est='Estudio cualitativo'),
  st(209,'Evaluando la violencia económica: adaptación peruana de la Escala de Abuso Económico (SEA-P)','Rodas-Vera, Nikolai Martin; Sifuentes Sánchez, Magdalena Reyda; Yucra-Camposano, Jennifer Fiorella','2026',['Perú'],'Nacional',[E],[PAR],['Causas y factores asociados'],['Mujeres'],
    '594 mujeres de un centro de salud de Carabayllo, Lima.','Adaptar y validar en el Perú una escala para medir la violencia económica en la pareja.',
    'La escala de 11 ítems es válida y confiable (omega = 0,83). La violencia económica se relaciona con la violencia psicológica, física y sexual y con conductas de control.',
@@ -74,4 +70,5 @@ NUEVOS=[
    'Los programas reducen la reincidencia a un año (OR = 0,52) y entre uno y dos años (OR = 0,60), pero el efecto no es significativo después de dos años. Funcionan mejor los programas basados en el modelo de riesgo, necesidad y responsividad.',
    'https://pure.qub.ac.uk/en/publications/the-effectiveness-of-interventions-to-prevent-recidivism-in-perpe/','Clinical Psychology Review, vol. 84','Servicios de prevención y atención',tipo='Programas de reeducación para agresores',est='Revisión sistemática y metaanálisis'),
 ]
-EXCLUIR={24,46,47,99,100,101,102,103,104,105,106,107,108,109,110,113,114,115,117,120,126,127,128,129,130}
+# Segunda revisión: sin vínculo plausible con la violencia, ensayos sin datos o fichas incompletas.
+EXCLUIR={6,7,8,17,20,21,23,28,30,37,58,67,24,46,47,99,100,101,102,103,104,105,106,107,108,109,110,113,114,115,117,120,126,127,128,129,130}
