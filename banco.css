@@ -292,3 +292,7 @@ button.eje:hover{transform:translateY(-3px);border-color:var(--blue-600)}
 .sol .ev{font-size:.95rem;color:var(--ink);line-height:1.5}
 .efp{font-size:.82rem}
 @media (prefers-reduced-motion:reduce){.eje{transition:none}button.eje:hover{transform:none}}
+
+.pgroup{margin-top:22px}.pgroup h3{margin:0 0 4px;font-family:var(--f-head);font-size:1.15rem;color:var(--blue-900)}
+.pgroup > p{margin:0 0 12px;color:var(--ink-soft);font-size:.92rem;max-width:70ch}
+.rdesc{margin:-4px 0 14px;color:var(--ink-soft);max-width:70ch}

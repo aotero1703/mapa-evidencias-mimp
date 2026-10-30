@@ -251,12 +251,13 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
       <div class="shelf-head"><div><h2>Violencia contra las mujeres y los integrantes del grupo familiar</h2><p class="shelf-sub">Por tipo de violencia, según el artículo 8 de la Ley N.° 30364. Un estudio puede abordar más de un tipo.</p></div><p id="vCount"></p></div>
       <div class="shelves" id="shelvesV"></div>
       <div class="shelf-head second"><div><h2>Factores de prevención</h2><p class="shelf-sub">Estudios sobre igualdad de oportunidades y sistema de cuidados: autonomía económica, educación, salud y corresponsabilidad en los cuidados.</p></div><p id="pCount"></p></div>
-      <div class="shelves small" id="shelvesP"></div>
+      <div id="shelvesP"></div>
       <p class="dl-note">¿Necesitas toda la base? <a href="matriz/Matriz_evidencias_MIMP_revisada.xlsx" download>Descarga la matriz completa en Excel</a>.</p>
     </div>
     <div id="results" hidden>
       <button type="button" class="back" id="back">← Volver al banco</button>
       <h2 id="rTitle"></h2>
+      <p class="rdesc" id="rDesc" hidden></p>
       <div class="mods" id="mods" role="group" aria-label="Modalidad de violencia"></div>
       <div class="toolbar">
         <div class="seg" role="group" aria-label="Ámbito">
@@ -277,6 +278,8 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const TIPOS=['Violencia física','Violencia psicológica','Violencia sexual','Violencia económica o patrimonial','Estudios generales sobre violencia'];
 const TDESC={'Violencia física':'Daño a la integridad corporal o a la salud.','Violencia psicológica':'Control, aislamiento, humillación o daño emocional.','Violencia sexual':'Actos de naturaleza sexual sin consentimiento, incluida la trata con fines de explotación sexual.','Violencia económica o patrimonial':'Menoscabo de los recursos económicos o patrimoniales.','Estudios generales sobre violencia':'Marcos conceptuales, prevalencia general, factores de riesgo y servicios.'};
+const DDESC={'Cuidados domésticos':'Las tareas del hogar y la atención a la familia: cocinar, limpiar, cuidar a hijas e hijos. Las hacen las propias familias sin pago o trabajadoras del hogar remuneradas.','Cuidados domiciliarios':'La atención que una persona cuidadora brinda en la vivienda a quien depende de otras personas: personas adultas mayores, con discapacidad o con una enfermedad.','Cuidados institucionales':'Servicios de cuidado fuera del hogar, como cunas, guarderías, centros de día o residencias.','Cuidados comunitarios':'Cuidado que organiza la propia comunidad, como ollas comunes, comedores populares y redes vecinales.','Empleo':'Acceso de las mujeres al trabajo y a ingresos propios, y la brecha salarial.','Educación':'Acceso, permanencia y estereotipos en la escuela y la universidad.','Salud':'Salud física, mental, sexual y reproductiva de las mujeres.','Brechas entre mujeres y hombres':'Diferencias entre mujeres y hombres medidas en varios ámbitos a la vez.','Acceso a tecnología':'Uso de internet, celulares y habilidades digitales.','Participación y liderazgo':'Presencia de mujeres en cargos de decisión, la política y las organizaciones.','Enfoques transversales':'Estudios que miran las diferencias por edad, etnia u otras condiciones.'};
+const GROUPS=[['Igualdad de oportunidades','Condiciones que fortalecen la autonomía de las mujeres y reducen el riesgo de violencia.'],['Sistema de cuidados','Quién cuida, dónde y en qué condiciones. Cuando el cuidado recae solo en las mujeres, limita su autonomía económica.']];
 const GEN='Varias o sin modalidad específica';
 let R=[],S={kind:'',val:'',mod:'',amb:'',q:'',sort:'y',open:null,shown:20};
 const pl=(n,a,b)=>n+' '+(n===1?a:b);
@@ -290,7 +293,8 @@ function home(){
   $('vCount').textContent=pl(V.length,'estudio','estudios');$('pCount').textContent=pl(P.length,'estudio','estudios');
   $('shelvesV').innerHTML=TIPOS.map(t=>shelf('tipo',t,V.filter(r=>r.tipos.includes(t)),TDESC[t])).join('');
   const g={};P.forEach(r=>(g[r.dim]??=[]).push(r));
-  $('shelvesP').innerHTML=Object.keys(g).sort((a,b)=>g[b].length-g[a].length||a.localeCompare(b,'es')).map(d=>shelf('dim',d,g[d])).join('');
+  $('shelvesP').innerHTML=GROUPS.map(([tem,txt])=>{const ds=Object.keys(g).filter(d=>g[d][0].tem===tem).sort((a,b)=>g[b].length-g[a].length||a.localeCompare(b,'es'));
+    return ds.length?`<div class="pgroup"><h3>${tem}</h3><p>${txt}</p><div class="shelves small">${ds.map(d=>shelf('dim',d,g[d],DDESC[d])).join('')}</div></div>`:''}).join('');
   document.querySelectorAll('button.shelf').forEach(b=>b.onclick=()=>{S.kind=b.dataset.k;S.val=b.dataset.v;S.mod='';S.amb='';S.shown=20;S.open=null;show();$('results').scrollIntoView({block:'start'})});
 }
 function inShelf(r){return S.kind==='tipo'?(r.tipos||[]).includes(S.val):S.kind==='dim'?(!r.tipos&&r.dim===S.val):true}
@@ -306,6 +310,7 @@ function show(){
   let L=base.filter(r=>(!S.mod||(r.mod||[]).includes(S.mod))&&(!S.amb||r.amb===S.amb));
   L.sort(S.sort==='t'?(a,b)=>a.t.localeCompare(b.t,'es'):(a,b)=>(+b.y||0)-(+a.y||0));
   $('rTitle').textContent=S.kind?S.val:`Resultados para «${S.q.trim()}»`;
+  $('rDesc').textContent=S.kind==='tipo'?(TDESC[S.val]||''):S.kind==='dim'?(DDESC[S.val]||''):'';$('rDesc').hidden=!$('rDesc').textContent;
   $('count').textContent=pl(L.length,'estudio','estudios');
   $('cards').innerHTML=L.length?L.slice(0,S.shown).map(card).join(''):'<div class="empty">No hay estudios con esos filtros. Prueba con otra palabra u otra modalidad.</div>';
   $('more').hidden=L.length<=S.shown;$('more').textContent=`Ver más estudios (${L.length-S.shown} restantes)`;
