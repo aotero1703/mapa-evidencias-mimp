@@ -42,7 +42,7 @@ Es un sitio **estático** (HTML, CSS y archivos JSON) publicado en Vercel. No ne
 
 | Sección | Qué contiene |
 |---|---|
-| **[Evidencia científica](https://banco-evidencias-mimp.vercel.app/evidencia.html)** | 120 investigaciones sobre la violencia que comprende la Ley N.° 30364 y 11 programas evaluados |
+| **[Evidencia científica](https://banco-evidencias-mimp.vercel.app/evidencia.html)** | 117 investigaciones sobre la violencia que comprende la Ley N.° 30364 y 11 programas evaluados |
 | **[Indicadores](https://banco-evidencias-mimp.vercel.app/tablero.html)** | Tablero de Power BI con las cifras principales del Observatorio |
 | **[Fuentes externas](https://banco-evidencias-mimp.vercel.app/fuentes.html)** | ENDES, ENARES, Warmi Ñan, Ministerio Público, Poder Judicial y MIMP |
 | **[Servicios](https://banco-evidencias-mimp.vercel.app/servicios.html)** | Los servicios del Catálogo de Servicios del Sector 2026, en tres niveles y en lenguaje sencillo |
