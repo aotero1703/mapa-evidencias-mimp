@@ -19,7 +19,16 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap">
 <link rel="stylesheet" href="banco.css">
-</head>
+<style>
+.guide-panel{display:flex;align-items:center;gap:18px;padding:22px 24px;margin:0 0 20px;border:1px solid #b6c5e4;border-left:5px solid #2f3e8f;border-radius:16px;background:linear-gradient(110deg,#f4f6fd,#fff);box-shadow:0 8px 24px -18px #1d2552}
+.guide-mark{flex:0 0 44px;height:44px;border-radius:13px;background:#2f3e8f;color:#fff;display:grid;place-items:center;font:700 24px Rubik,sans-serif}
+.guide-copy{flex:1;min-width:0}.guide-copy strong{display:block;color:#1d2552;font:700 1.1rem Rubik,sans-serif}.guide-copy p{margin:5px 0 0;color:#4a5068;font-size:.94rem}
+.guide-action{display:inline-flex;align-items:center;gap:12px;white-space:nowrap;background:#2f3e8f;color:#fff;text-decoration:none;border-radius:10px;padding:12px 17px;font-weight:800}.guide-action:hover{background:#1d2552;color:#fff}
+.filter-context{font-size:.9rem;color:#596078;margin:0 0 13px}
+.filter-explain{margin:12px 0 0;padding:10px 14px;border:1px solid #e3e6ee;background:#fff;border-radius:10px;color:#4a5068;font-size:.9rem}
+.filter-explain summary{cursor:pointer;font-weight:700;color:#2f3e8f}.filter-explain #fDesc{margin-top:9px}
+@media(max-width:720px){.guide-panel{align-items:flex-start;flex-wrap:wrap;padding:18px}.guide-mark{flex-basis:38px;height:38px}.guide-copy{flex-basis:calc(100% - 60px)}.guide-action{width:100%;justify-content:center}}
+</style></head>
 <body>
 <header class="site-header">
   <div class="wrap header-inner">
@@ -56,15 +65,15 @@
       <div id="solDet" hidden></div>
     </div>
     <div id="tabE" role="tabpanel" aria-labelledby="tE">
-      <p class="fdesc">Solo se incluyen estudios sobre la violencia que comprende la Ley N.° 30364. Los temas siguen las acciones del artículo 1 de la Ley y las poblaciones, sus sujetos de protección (arts. 1 y 7). La clasificación de cada estudio es orientativa.</p><div class="filt">
+      <div class="guide-panel" role="note"><div class="guide-mark" aria-hidden="true">?</div><div class="guide-copy"><strong>¿Tipo o modalidad de violencia? No son lo mismo.</strong><p>El <b>tipo</b> describe la naturaleza de la violencia; la <b>modalidad</b>, cómo o en qué situación se manifiesta. Puedes explorar ambos criterios por separado.</p></div><a class="guide-action" href="comprender-violencia.html">Explorar la guía <span aria-hidden="true">→</span></a></div><p class="filter-context">Explora investigaciones sobre la violencia comprendida en la Ley N.° 30364. Las categorías de los estudios son orientativas.</p><div class="filt">
         <label>Tema de investigación<select id="fTema"></select></label>
         <label>Tipo de violencia<select id="fTipo"></select></label>
         <label>Modalidad de violencia<select id="fMod"></select></label>
         <label>Población<select id="fPob"></select></label>
         <label>Ámbito<select id="fAmb"><option value="">Nacional e internacional</option><option value="Nacional">Nacional</option><option value="Internacional">Internacional</option></select></label>
       </div>
-      <p class="fdesc" id="fDesc" hidden></p>
-      <p class="fdesc" style="margin-top:10px">El tipo y la modalidad son criterios distintos; puedes consultar cualquiera de ellos de manera independiente. <a href="comprender-violencia.html">Conoce la diferencia →</a></p>
+      <details class="filter-explain" id="filterExplain" hidden><summary>¿Qué significa el filtro seleccionado?</summary><div id="fDesc"></div></details>
+      
       <div class="toolbar rbar">
         <p class="count" id="count"></p>
         <button type="button" class="clear" id="clear" hidden>Limpiar filtros</button>
@@ -125,7 +134,7 @@ function show(){
   opts('fMod','Todas las modalidades',[...new Set(R.flatMap(r=>r.mod||[]))].sort((a,b)=>a.localeCompare(b,'es')),S.mod,'mod');
   opts('fPob','Todas las poblaciones',POBS,S.pob,'pob');$('fAmb').value=S.amb;
   const d=[];if(S.tema){const t=TEMAS.find(t=>t[0]===S.tema);d.push(`<b>${esc(S.tema)}:</b> ${t[1]} <span class="base">${t[2]}</span>`)};if(S.tipo&&TDESC[S.tipo])d.push(`<b>${esc(S.tipo)} (art. 8 de la Ley):</b> ${TDESC[S.tipo]}`);if(S.pob&&PDESC[S.pob])d.push(`<b>${esc(S.pob)}:</b> ${PDESC[S.pob]}`);
-  $('fDesc').innerHTML=d.join('<br>');$('fDesc').hidden=!d.length;
+  $('fDesc').innerHTML=d.join('<br>');$('filterExplain').hidden=!d.length;
   const L=R.filter(r=>match(r));
   L.sort(S.sort==='t'?(a,b)=>a.t.localeCompare(b.t,'es'):(a,b)=>(+b.y||0)-(+a.y||0));
   const any=S.tema||S.tipo||S.mod||S.pob||S.amb||S.q.trim();
