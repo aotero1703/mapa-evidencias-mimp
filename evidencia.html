@@ -147,7 +147,8 @@ function card(r){const o=S.open===r.n,au=r.a?r.a.split(';')[0].trim()+(r.a.inclu
 $('q').oninput=e=>{tab('E');S.q=e.target.value;S.shown=20;show()};
 $('sort').onchange=e=>{S.sort=e.target.value;show()};
 $('fTema').onchange=e=>{S.tema=e.target.value;S.shown=20;show()};
-$('fTipo').onchange=e=>{S.tipo=e.target.value;S.mod='';S.shown=20;show()};
+$('fTipo').onchange=e=>{S.tipo=e.target.value;S.shown=20;show()};
+$('fMod').onchange=e=>{S.mod=e.target.value;S.shown=20;show()};
 $('fPob').onchange=e=>{S.pob=e.target.value;S.shown=20;show()};
 $('fAmb').onchange=e=>{S.amb=e.target.value;S.shown=20;show()};
 $('clear').onclick=()=>{Object.assign(S,{tema:'',tipo:'',pob:'',amb:'',mod:'',q:'',open:null,shown:20});$('q').value='';show()};
