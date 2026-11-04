@@ -59,11 +59,12 @@
       <p class="fdesc">Solo se incluyen estudios sobre la violencia que comprende la Ley N.° 30364. Los temas siguen las acciones del artículo 1 de la Ley y las poblaciones, sus sujetos de protección (arts. 1 y 7). La clasificación de cada estudio es orientativa.</p><div class="filt">
         <label>Tema de investigación<select id="fTema"></select></label>
         <label>Tipo de violencia<select id="fTipo"></select></label>
+        <label>Modalidad de violencia<select id="fMod"></select></label>
         <label>Población<select id="fPob"></select></label>
         <label>Ámbito<select id="fAmb"><option value="">Nacional e internacional</option><option value="Nacional">Nacional</option><option value="Internacional">Internacional</option></select></label>
       </div>
       <p class="fdesc" id="fDesc" hidden></p>
-      <div class="mods" id="mods" role="group" aria-label="Modalidad de violencia" hidden></div>
+      <p class="fdesc" style="margin-top:10px">El tipo y la modalidad son criterios distintos; puedes consultar cualquiera de ellos de manera independiente. <a href="comprender-violencia.html">Conoce la diferencia →</a></p>
       <div class="toolbar rbar">
         <p class="count" id="count"></p>
         <button type="button" class="clear" id="clear" hidden>Limpiar filtros</button>
@@ -115,23 +116,19 @@ const tipoOf=r=>(r.tipos||[]).filter(t=>t!=='Estudios sobre varios tipos de viol
 function match(r,skip){const q=S.q.trim().toLowerCase();
   return (skip==='tema'||!S.tema||(r.temas||[]).includes(S.tema))&&(skip==='tipo'||!S.tipo||tipoOf(r).includes(S.tipo))&&(skip==='pob'||!S.pob||(r.pob_g||[]).includes(S.pob))&&(skip==='amb'||!S.amb||r.amb===S.amb)
    &&(skip==='mod'||!S.mod||(r.mod||[]).includes(S.mod))&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,(r.paises||[]).join(' '),(r.mod||[]).join(' '),(r.temas||[]).join(' ')].join(' ').toLowerCase().includes(q))}
-function opts(id,all,vals,cur,key){const n=v=>R.filter(r=>match(r,key)&&(key==='tema'?(r.temas||[]).includes(v):key==='tipo'?tipoOf(r).includes(v):(r.pob_g||[]).includes(v))).length;
+function opts(id,all,vals,cur,key){const n=v=>R.filter(r=>match(r,key)&&(key==='tema'?(r.temas||[]).includes(v):key==='tipo'?tipoOf(r).includes(v):key==='mod'?(r.mod||[]).includes(v):(r.pob_g||[]).includes(v))).length;
   $(id).innerHTML=`<option value="">${all}</option>`+vals.map(v=>{const c=n(v);return `<option value="${esc(v)}"${v===cur?' selected':''}${c||v===cur?'':' disabled'}>${esc(v)} (${c})</option>`}).join('')}
 function home(){}
 function show(){
   opts('fTema','Todos los temas',TEMAS.map(t=>t[0]),S.tema,'tema');
   opts('fTipo','Todos los tipos',TIPOS,S.tipo,'tipo');
+  opts('fMod','Todas las modalidades',[...new Set(R.flatMap(r=>r.mod||[]))].sort((a,b)=>a.localeCompare(b,'es')),S.mod,'mod');
   opts('fPob','Todas las poblaciones',POBS,S.pob,'pob');$('fAmb').value=S.amb;
   const d=[];if(S.tema){const t=TEMAS.find(t=>t[0]===S.tema);d.push(`<b>${esc(S.tema)}:</b> ${t[1]} <span class="base">${t[2]}</span>`)};if(S.tipo&&TDESC[S.tipo])d.push(`<b>${esc(S.tipo)} (art. 8 de la Ley):</b> ${TDESC[S.tipo]}`);if(S.pob&&PDESC[S.pob])d.push(`<b>${esc(S.pob)}:</b> ${PDESC[S.pob]}`);
   $('fDesc').innerHTML=d.join('<br>');$('fDesc').hidden=!d.length;
-  if(S.tipo){const base=R.filter(r=>match(r,'mod')),c={};base.forEach(r=>(r.mod||[]).forEach(m=>c[m]=(c[m]||0)+1));
-    const ms=Object.keys(c).sort((a,b)=>(a===GEN)-(b===GEN)||c[b]-c[a]);
-    $('mods').innerHTML='<span class="mods-l">Modalidad (Reglamento):</span>'+[`<button type="button" class="dim" data-m="" aria-pressed="${!S.mod}">Todas <em>${base.length}</em></button>`].concat(ms.map(m=>`<button type="button" class="dim" data-m="${esc(m)}" aria-pressed="${S.mod===m}">${esc(m)} <em>${c[m]}</em></button>`)).join('');
-    $('mods').hidden=false;document.querySelectorAll('#mods .dim').forEach(b=>b.onclick=()=>{S.mod=b.dataset.m;S.shown=20;show()});
-  }else{$('mods').hidden=true;S.mod=''}
   const L=R.filter(r=>match(r));
   L.sort(S.sort==='t'?(a,b)=>a.t.localeCompare(b.t,'es'):(a,b)=>(+b.y||0)-(+a.y||0));
-  const any=S.tema||S.tipo||S.pob||S.amb||S.q.trim();
+  const any=S.tema||S.tipo||S.mod||S.pob||S.amb||S.q.trim();
   $('count').textContent=any?pl(L.length,'investigación encontrada','investigaciones encontradas'):`Todas las investigaciones (${L.length})`;$('clear').hidden=!any;
   $('cards').innerHTML=L.length?L.slice(0,S.shown).map(card).join(''):'<div class="empty">No hay investigaciones con esos filtros. Prueba quitando alguno.</div>';
   $('more').hidden=L.length<=S.shown;$('more').textContent=`Ver más investigaciones (${L.length-S.shown} restantes)`;
