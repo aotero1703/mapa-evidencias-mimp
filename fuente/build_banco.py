@@ -30,7 +30,7 @@ def head(title,desc,path=""):
 <body>
 '''
 def header(cur):
-    items=[('evidencia.html','Evidencia científica','ev'),('tablero.html','Indicadores','in'),('fuentes.html','Fuentes externas','fx'),('servicios.html','Servicios','sv'),('territorios-prioritarios.html','Territorios Prioritarios','tp')]
+    items=[('comprender-violencia.html','Tipos y modalidades','cv'),('evidencia.html','Evidencia científica','ev'),('tablero.html','Indicadores','in'),('fuentes.html','Fuentes externas','fx'),('servicios.html','Servicios','sv')]
     nav=''.join(f'<a href="{h}"{" aria-current=\"page\"" if k==cur else ""}>{t}</a>' for h,t,k in items)
     return f'''<header class="site-header">
   <div class="wrap header-inner">
@@ -134,21 +134,28 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
     <a class="door sv" href="servicios.html">
       <div class="top">{ART_SV}<span class="kicker">Servicios</span></div>
       <div class="body">
-        <h2>Servicios del MIMP</h2>
-        <p>Servicios vinculados con la Ley N.° 30364 y acceso complementario al catálogo general del sector MIMP.</p>
-        <div class="facts"><span>Tres niveles</span><span>Catálogo 2026</span></div>
+        <h2>Servicios frente a la violencia</h2>
+        <p>Qué hace el Estado en cada paso, de la prevención a la reparación, y qué dicen los estudios sobre esos servicios.</p>
+        <div class="facts"><span>Ruta en 7 pasos</span><span>Catálogo 2026</span></div>
         <div class="basis"><b>Ley N.° 30364:</b> identifica los servicios pertinentes para la prevención y respuesta frente a la violencia.</div>
         <span class="go">Conocer los servicios <i>→</i></span>
       </div>
     </a>
-    <a class="door tp" href="territorios-prioritarios.html">
-      <div class="top"><svg class="art" viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke="rgba(255,255,255,.24)" stroke-width="2"><circle cx="120" cy="80" r="70"/><circle cx="120" cy="80" r="46"/></g><path d="M70 54l30-15 28 13 29-13v82l-29 13-28-13-30 15z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><path d="M100 39v82m28-69v82" fill="none" stroke="#fff" stroke-width="2" opacity=".65"/><path d="M118 67c-13 0-21 9-21 21 0 16 21 35 21 35s21-19 21-35c0-12-8-21-21-21z" fill="#f2a93b"/><circle cx="118" cy="88" r="7" fill="#fff"/></svg><span class="kicker">Análisis territorial</span></div>
-      <div class="body">
-        <h2>Territorios Prioritarios</h2>
-        <p>Explora los casos atendidos por los servicios especializados y sus diferencias territoriales. Estos registros no miden la prevalencia de violencia.</p>
-        <div class="facts"><span>Mapa interactivo</span><span>Priorización territorial</span></div>
-        <div class="basis"><b>Art. 43:</b> generar información para orientar decisiones y políticas públicas basadas en evidencia.</div>
-        <span class="go">Explorar territorios <i>→</i></span>
+  </div>
+</section>
+<section class="guide-band" aria-label="Guía de tipos y modalidades">
+  <div class="wrap">
+    <a class="gb" href="comprender-violencia.html">
+      <div class="gb-copy">
+        <span class="gb-k">Antes de explorar</span>
+        <h2>Tipo y modalidad: dos formas de describir un mismo hecho</h2>
+        <p>El <b>tipo</b> dice qué daño se produce. La <b>modalidad</b> dice en qué relación o contexto ocurre. Una misma situación tiene las dos.</p>
+        <span class="go">Ver la guía con ejemplos <i>→</i></span>
+      </div>
+      <div class="gb-art" aria-hidden="true">
+        <div class="gb-row"><span class="gb-tag m">En la pareja</span><span class="gb-dot on">Física</span><span class="gb-dot on">Psicológica</span><span class="gb-dot">Sexual</span><span class="gb-dot on">Económica</span></div>
+        <div class="gb-row"><span class="gb-tag m">Hostigamiento</span><span class="gb-dot">Física</span><span class="gb-dot on">Psicológica</span><span class="gb-dot on">Sexual</span><span class="gb-dot">Económica</span></div>
+        <div class="gb-row"><span class="gb-tag m">Por redes y TIC</span><span class="gb-dot">Física</span><span class="gb-dot on">Psicológica</span><span class="gb-dot on">Sexual</span><span class="gb-dot">Económica</span></div>
       </div>
     </a>
   </div>
@@ -260,14 +267,14 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
       <div id="solDet" hidden></div>
     </div>
     <div id="tabE" role="tabpanel" aria-labelledby="tE">
-      <p class="fdesc">Solo se incluyen estudios sobre la violencia que comprende la Ley N.° 30364. Los temas siguen las acciones del artículo 1 de la Ley y las poblaciones, sus sujetos de protección (arts. 1 y 7). La clasificación de cada estudio es orientativa.</p><div class="filt">
+      <div class="guide-panel" role="note"><div class="guide-mark" aria-hidden="true">?</div><div class="guide-copy"><strong>¿Tipo o modalidad de violencia? No son lo mismo.</strong><p>El <b>tipo</b> describe qué daño se produce; la <b>modalidad</b>, en qué relación o contexto ocurre. Puedes filtrar por cada uno por separado.</p></div><a class="guide-action" href="comprender-violencia.html">Ver la guía <span aria-hidden="true">→</span></a></div><p class="filter-context">Solo se incluyen estudios sobre la violencia que comprende la Ley N.° 30364. La clasificación de cada estudio es orientativa.</p><div class="filt f5">
         <label>Tema de investigación<select id="fTema"></select></label>
         <label>Tipo de violencia<select id="fTipo"></select></label>
+        <label>Modalidad de violencia<select id="fMod"></select></label>
         <label>Población<select id="fPob"></select></label>
         <label>Ámbito<select id="fAmb"><option value="">Nacional e internacional</option><option value="Nacional">Nacional</option><option value="Internacional">Internacional</option></select></label>
       </div>
-      <p class="fdesc" id="fDesc" hidden></p>
-      <div class="mods" id="mods" role="group" aria-label="Modalidad de violencia" hidden></div>
+      <details class="filter-explain" id="filterExplain" hidden><summary>¿Qué significa el filtro seleccionado?</summary><div id="fDesc"></div></details>
       <div class="toolbar rbar">
         <p class="count" id="count"></p>
         <button type="button" class="clear" id="clear" hidden>Limpiar filtros</button>
@@ -297,25 +304,23 @@ const POBS=['Mujeres','Integrantes del grupo familiar','Niñas, niños y adolesc
 const PDESC={'Mujeres':'Durante todo su ciclo de vida: niña, adolescente, joven, adulta y adulta mayor (art. 7).','Integrantes del grupo familiar':'Cónyuges, convivientes, padres, hijos y demás parientes que señala el art. 7.','Niñas, niños y adolescentes':'En especial situación de vulnerabilidad (art. 1).','Personas adultas mayores':'En especial situación de vulnerabilidad (art. 1).','Personas con discapacidad':'En especial situación de vulnerabilidad (art. 1).','Varones y personas agresoras':'Programas para varones y reeducación de personas agresoras (arts. 27 y 30 al 32).','Operadores del sistema':'Policía, Ministerio Público, Poder Judicial y servicios de atención (arts. 2, 18 y 45).'};
 const tipoOf=r=>(r.tipos||[]).filter(t=>t!=='Estudios sobre varios tipos de violencia');
 function match(r,skip){const q=S.q.trim().toLowerCase();
+  if(S.ns&&!S.ns.includes(r.n))return false;
   return (skip==='tema'||!S.tema||(r.temas||[]).includes(S.tema))&&(skip==='tipo'||!S.tipo||tipoOf(r).includes(S.tipo))&&(skip==='pob'||!S.pob||(r.pob_g||[]).includes(S.pob))&&(skip==='amb'||!S.amb||r.amb===S.amb)
    &&(skip==='mod'||!S.mod||(r.mod||[]).includes(S.mod))&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,(r.paises||[]).join(' '),(r.mod||[]).join(' '),(r.temas||[]).join(' ')].join(' ').toLowerCase().includes(q))}
-function opts(id,all,vals,cur,key){const n=v=>R.filter(r=>match(r,key)&&(key==='tema'?(r.temas||[]).includes(v):key==='tipo'?tipoOf(r).includes(v):(r.pob_g||[]).includes(v))).length;
+function opts(id,all,vals,cur,key){const n=v=>R.filter(r=>match(r,key)&&(key==='tema'?(r.temas||[]).includes(v):key==='tipo'?tipoOf(r).includes(v):key==='mod'?(r.mod||[]).includes(v):(r.pob_g||[]).includes(v))).length;
   $(id).innerHTML=`<option value="">${all}</option>`+vals.map(v=>{const c=n(v);return `<option value="${esc(v)}"${v===cur?' selected':''}${c||v===cur?'':' disabled'}>${esc(v)} (${c})</option>`}).join('')}
 function home(){}
 function show(){
   opts('fTema','Todos los temas',TEMAS.map(t=>t[0]),S.tema,'tema');
   opts('fTipo','Todos los tipos',TIPOS,S.tipo,'tipo');
+  opts('fMod','Todas las modalidades',[...new Set(R.flatMap(r=>r.mod||[]))].filter(m=>m!==GEN).sort((a,b)=>a.localeCompare(b,'es')),S.mod,'mod');
   opts('fPob','Todas las poblaciones',POBS,S.pob,'pob');$('fAmb').value=S.amb;
   const d=[];if(S.tema){const t=TEMAS.find(t=>t[0]===S.tema);d.push(`<b>${esc(S.tema)}:</b> ${t[1]} <span class="base">${t[2]}</span>`)};if(S.tipo&&TDESC[S.tipo])d.push(`<b>${esc(S.tipo)} (art. 8 de la Ley):</b> ${TDESC[S.tipo]}`);if(S.pob&&PDESC[S.pob])d.push(`<b>${esc(S.pob)}:</b> ${PDESC[S.pob]}`);
-  $('fDesc').innerHTML=d.join('<br>');$('fDesc').hidden=!d.length;
-  if(S.tipo){const base=R.filter(r=>match(r,'mod')),c={};base.forEach(r=>(r.mod||[]).forEach(m=>c[m]=(c[m]||0)+1));
-    const ms=Object.keys(c).sort((a,b)=>(a===GEN)-(b===GEN)||c[b]-c[a]);
-    $('mods').innerHTML='<span class="mods-l">Modalidad (Reglamento):</span>'+[`<button type="button" class="dim" data-m="" aria-pressed="${!S.mod}">Todas <em>${base.length}</em></button>`].concat(ms.map(m=>`<button type="button" class="dim" data-m="${esc(m)}" aria-pressed="${S.mod===m}">${esc(m)} <em>${c[m]}</em></button>`)).join('');
-    $('mods').hidden=false;document.querySelectorAll('#mods .dim').forEach(b=>b.onclick=()=>{S.mod=b.dataset.m;S.shown=20;show()});
-  }else{$('mods').hidden=true;S.mod=''}
+  if(S.mod)d.push(`<b>${esc(S.mod)}:</b> modalidad de violencia según el marco conceptual del MIMP. <a href="comprender-violencia.html#modalidades">Ver en la guía</a>`);
+  $('fDesc').innerHTML=d.join('<br>');$('filterExplain').hidden=!d.length;
   const L=R.filter(r=>match(r));
   L.sort(S.sort==='t'?(a,b)=>a.t.localeCompare(b.t,'es'):(a,b)=>(+b.y||0)-(+a.y||0));
-  const any=S.tema||S.tipo||S.pob||S.amb||S.q.trim();
+  const any=S.tema||S.tipo||S.mod||S.pob||S.amb||S.q.trim()||S.ns;
   $('count').textContent=any?pl(L.length,'investigación encontrada','investigaciones encontradas'):`Todas las investigaciones (${L.length})`;$('clear').hidden=!any;
   $('cards').innerHTML=L.length?L.slice(0,S.shown).map(card).join(''):'<div class="empty">No hay investigaciones con esos filtros. Prueba quitando alguno.</div>';
   $('more').hidden=L.length<=S.shown;$('more').textContent=`Ver más investigaciones (${L.length-S.shown} restantes)`;
@@ -334,10 +339,11 @@ function card(r){const o=S.open===r.n,au=r.a?r.a.split(';')[0].trim()+(r.a.inclu
 $('q').oninput=e=>{tab('E');S.q=e.target.value;S.shown=20;show()};
 $('sort').onchange=e=>{S.sort=e.target.value;show()};
 $('fTema').onchange=e=>{S.tema=e.target.value;S.shown=20;show()};
-$('fTipo').onchange=e=>{S.tipo=e.target.value;S.mod='';S.shown=20;show()};
+$('fTipo').onchange=e=>{S.tipo=e.target.value;S.shown=20;show()};
+$('fMod').onchange=e=>{S.mod=e.target.value;S.shown=20;show()};
 $('fPob').onchange=e=>{S.pob=e.target.value;S.shown=20;show()};
 $('fAmb').onchange=e=>{S.amb=e.target.value;S.shown=20;show()};
-$('clear').onclick=()=>{Object.assign(S,{tema:'',tipo:'',pob:'',amb:'',mod:'',q:'',open:null,shown:20});$('q').value='';show()};
+$('clear').onclick=()=>{history.replaceState(null,'',location.pathname);S.ns=null;Object.assign(S,{tema:'',tipo:'',pob:'',amb:'',mod:'',q:'',open:null,shown:20});$('q').value='';show()};
 $('more').onclick=()=>{S.shown+=20;show()};
 /* ---------- ¿Qué funciona? (tipos de solución por eje de la Ley 30364) ---------- */
 let SOL=null,F={eje:'',sol:null};
@@ -375,6 +381,9 @@ function solDetail(x){const eje=SOL.ejes.find(e=>e.id===x.eje),t=RES[x.ef];
   $('solBack').onclick=()=>{F.sol=null;solRender()};
   document.querySelectorAll('#solDet [data-open]').forEach(b=>b.onclick=()=>{const n=+b.dataset.open;S.open=S.open===n?null:n;solDetail(x)});
 }
+/* enlaces desde la guía y los servicios: evidencia.html?tipo=…&mod=…&tema=…&n=1,2,3 */
+const QP=new URLSearchParams(location.search);['tema','tipo','mod','pob'].forEach(k=>{if(QP.get(k))S[k]=QP.get(k)});
+if(QP.get('n'))S.ns=QP.get('n').split(',').map(Number);
 Promise.all([fetch('data/estudios.json').then(r=>r.json()),fetch('data/soluciones.json').then(r=>r.json())]).then(([d,s])=>{R=d.rows;SOL=s;home();show();solRender()}).catch(()=>{$('ejes').innerHTML='<div class="empty">No se pudieron cargar los datos. Recarga la página.</div>'});
 </script>
 </body>
@@ -413,42 +422,90 @@ for k,t,d,T in NIVELES:
         tipos+=f'''<div class="sv-tipo t-{tk}" id="tipo-{tk}"><div class="sv-tipo-h"><span class="sv-emo">{EMO[tk]}</span><div><h4>{tn}</h4><p>{td}</p></div></div><div class="svc-grid">{''.join(_card(*x) for x in L)}</div></div>'''
     cuerpo+=f'''<section class="sv-nivel" id="nivel-{k}"><div class="sv-nivel-h"><span class="etapa-n">{k}</span><div><span class="etapa-k">Nivel {k}</span><h3>{t}</h3><p>{d}</p></div></div>{tipos}</section>'''
 chips=''.join(f'<button type="button" data-p="{p}" aria-pressed="false">{PROGN[p]}</button>' for p in PROGS)
-SERV=head('Servicios del MIMP · Banco de Evidencias','Todos los servicios del Ministerio de la Mujer y Poblaciones Vulnerables, organizados por nivel y tipo, explicados en palabras sencillas.','servicios.html')+header('sv')+f'''
+import json as _j,html as _h
+from urllib.parse import quote as _q
+_EST={r['n']:r for r in _j.load(open('data/estudios.json',encoding='utf-8'))['rows']}
+_TCOUNT={}
+for _r in _EST.values():
+    for _t in _r.get('temas') or []: _TCOUNT[_t]=_TCOUNT.get(_t,0)+1
+_SV={x[0]:x for x in SERVS}
+# Ruta frente a la violencia: acciones del art. 1 de la Ley N.° 30364 = temas de la evidencia.
+# (clave, paso, tema de evidencia, base legal, descripción, servicios del catálogo, estudios por servicio, estudios destacados, ícono)
+RUTA=[
+ ('prev','Prevenir','Prevención de la violencia','Ley N.° 30364, arts. 1 y 27','Trabajar con varones, adolescentes, familias y colegios para que la violencia no ocurra.',[2,3,4,6,8],{2:[217]},[217,134,92],
+  '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>'),
+ ('ayuda','Pedir ayuda','Atención y recuperación de las víctimas','Ley N.° 30364, art. 10','Canales gratuitos para pedir información, orientación o apoyo emocional ante un caso de violencia.',[23,26],{23:[75,203,136]},[203,75,136],
+  '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>'),
+ ('atender','Atender y acompañar','Atención y recuperación de las víctimas','Ley N.° 30364, arts. 10 y 27 al 29','Atención legal, psicológica y social para que las víctimas estén protegidas y se recuperen.',[21,22,25,27,1],{21:[201,228,205]},[201,228,205],
+  '<path d="M4 5h16v11H9l-5 4z"/><path d="M12 13.5c-2.2-1.4-3.2-2.4-3.2-3.6 0-.9.7-1.6 1.6-1.6.7 0 1.2.4 1.6 1 .4-.6.9-1 1.6-1 .9 0 1.6.7 1.6 1.6 0 1.2-1 2.2-3.2 3.6z"/>'),
+ ('proteger','Proteger','Protección de las víctimas','Ley N.° 30364, arts. 13 al 26','Un lugar seguro cuando la víctima no puede volver a casa, y medidas para resguardarla.',[12,15,39],{},[212,213,201],
+  '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>'),
+ ('sancion','Investigar y sancionar','Persecución y sanción','Ley N.° 30364, arts. 16 al 20','Está a cargo de la Policía Nacional, el Ministerio Público y el Poder Judicial.',[],{},[206,95,201],
+  '<path d="M12 4v16"/><path d="M5 8h14"/><path d="M5 8l-2.5 6a3 3 0 0 0 5 0z"/><path d="M19 8l-2.5 6a3 3 0 0 0 5 0z"/><path d="M8 20h8"/>'),
+ ('reeducar','Reeducar a la persona agresora','Reeducación de las personas agresoras','Ley N.° 30364, arts. 30 al 32','Tratamiento para que quien ejerció violencia deje de hacerlo.',[24],{24:[207]},[207,216,222],
+  '<path d="M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4"/><path d="M20 12a8 8 0 0 1-14 5.3"/><path d="M6 21v-4h4"/>'),
+ ('reparar','Reparar el daño','Reparación del daño','Ley N.° 30364, arts. 1 y 33','Medidas para reparar a las víctimas y a sus familias, como el apoyo a hijas e hijos de víctimas de feminicidio.',[43],{},[],
+  '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>'),
+]
+def _ico(path): return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{path}</svg>'
+def _e(s): return _h.escape(str(s or ''))
+def _first(s):
+    s=(s or '').strip();k=s.find('. ');return s if k<0 else s[:k+1]
+def _study(n):
+    r=_EST.get(n)
+    if not r: return ''
+    lugar='Perú' if r.get('amb')=='Nacional' else 'Internacional'
+    meta=' · '.join(x for x in (lugar,str(r.get('y') or '')) if x)
+    return f'<li><a href="evidencia.html?n={n}"><b>{_e(r["t"])}</b><span>{_e(meta)}</span></a></li>'
+def _svc(n,ev):
+    _,t,name,d,para,prog,v=_SV[n]
+    link=f'<a class="rs-ev" href="evidencia.html?n={",".join(map(str,ev))}">{len(ev)} {"estudio" if len(ev)==1 else "estudios"} sobre este servicio →</a>' if ev else ''
+    return f'<article class="rs"><span class="rs-prog">{PROGN[prog]}</span><h4>{_e(name)}</h4><p>{_e(d)}</p><p class="rs-para"><b>Población objetivo:</b> {_e(para)}</p>{link}</article>'
+steps=''.join(f'<li><a href="#r-{k}"><span class="rt-i">{_ico(ic)}</span><span class="rt-t"><small>{i}</small>{t}</span></a></li>' for i,(k,t,tema,art,d,L,EV,ST,ic) in enumerate(RUTA,1))
+bloques=''
+for i,(k,t,tema,art,d,L,EV,ST,ic) in enumerate(RUTA,1):
+    n=_TCOUNT.get(tema,0)
+    svcs=''.join(_svc(x,EV.get(x,[])) for x in L) if L else '<p class="rs-none">No es un servicio del MIMP. Cuando una víctima acude a un Centro Emergencia Mujer, su equipo legal la acompaña en la denuncia y durante el proceso.</p>'
+    if n:
+        ev=f'<ul class="rx-list">{"".join(_study(x) for x in ST)}</ul><a class="rx-all" href="evidencia.html?tema={_q(tema)}">Ver los {n} estudios sobre {tema[0].lower()+tema[1:]} →</a>'
+    else:
+        ev='<p class="rx-none">El banco aún no tiene estudios sobre este tema. Es un vacío de evidencia que conviene cubrir.</p>'
+    bloques+=f'''<section class="rb{' ext' if not L else ''}" id="r-{k}"><div class="rb-h"><span class="rb-i">{_ico(ic)}</span><div><span class="rb-k">Paso {i} · {art}</span><h3>{t}</h3><p>{d}</p></div></div>
+<div class="rb-body"><div class="rb-svcs">{svcs}</div><aside class="rx"><span class="rx-k">Qué dice la evidencia</span>{ev}</aside></div></section>'''
+SERV=head('Servicios frente a la violencia · Banco de Evidencias','Los servicios del MIMP para prevenir, atender, proteger y reparar frente a la violencia, ordenados según la Ley N.° 30364 y vinculados con la evidencia disponible.','servicios.html')+header('sv')+f'''
 <main>
 <section class="page-hero sv">
   <div class="wrap">
     <a class="crumb" href="./">← Banco de Evidencias</a>
-    <h1>Servicios del MIMP</h1>
-    <p>Consulta primero los servicios relacionados con la prevención y respuesta frente a la violencia en el marco de la Ley N.° 30364. También puedes explorar el catálogo general del sector MIMP, que incluye servicios de otros ámbitos.</p>
+    <h1>Servicios frente a la violencia</h1>
+    <p>Qué hace el Estado en cada momento, desde prevenir la violencia hasta reparar el daño. Cada paso sigue las acciones de la Ley N.° 30364 y muestra los estudios que existen sobre esos servicios.</p>
+    <div class="help"><span class="help-k">¿Necesitas ayuda?</span><a href="tel:100"><b>Línea 100</b><span>Llamada gratuita, las 24 horas</span></a><a href="https://www.gob.pe/institucion/warmi%C3%B1an/tema/nuestros-servicios" target="_blank" rel="noopener"><b>Chat 100</b><span>Por internet o WhatsApp</span></a><a href="tel:105"><b>105</b><span>Emergencias, Policía Nacional</span></a></div>
   </div>
 </section>
-<section class="section sv-levels">
+<section class="section ruta">
   <div class="wrap">
-    <div class="sv-intro"><h2>Tres niveles de servicios</h2><p>El MIMP organiza sus servicios en tres niveles, según a quién llegan. Elige un tipo de servicio para ver cuáles son.</p></div>
+    <div class="sv-intro"><h2>La respuesta frente a la violencia, paso a paso</h2><p>Los pasos no siempre siguen este orden: una persona puede llegar directamente a un Centro Emergencia Mujer o necesitar protección de inmediato.</p></div>
+    <nav aria-label="Pasos de la ruta"><ol class="rt">{steps}</ol></nav>
+    {bloques}
+  </div>
+</section>
+<section class="section sv-levels" id="catalogo">
+  <div class="wrap">
+    <div class="sv-intro"><h2>Catálogo completo del sector</h2><p>El MIMP brinda {len(SERVS)} servicios. Además de los vinculados con la violencia, hay servicios para niñas, niños y adolescentes, personas adultas mayores y personas con discapacidad. Elige un tipo para ver cuáles son.</p></div>
     <div class="sv-lvls">{resumen}</div>
   </div>
 </section>
 <section class="section sv-all" id="svAll" hidden>
   <div class="wrap">
-    <p class="sv-src"><b>Alcance:</b> por defecto se muestran los servicios identificados como vinculados con la violencia. Desmarca el filtro para consultar el catálogo general del MIMP. Esta identificación temática es orientativa y no sustituye la clasificación institucional.</p><div class="sv-filter" role="group" aria-label="Filtrar servicios">
+    <div class="sv-filter" role="group" aria-label="Filtrar servicios">
       <button type="button" class="sv-close" id="svClose">← Elegir otro tipo</button><span>Quién lo brinda:</span><button type="button" data-p="" aria-pressed="true">Todos</button>{chips}
-      <label class="chk"><input type="checkbox" id="soloV" checked> Solo servicios vinculados con la Ley N.° 30364</label>
+      <label class="chk"><input type="checkbox" id="soloV"> Solo servicios frente a la violencia</label>
     </div>
     {cuerpo}
     <p class="sv-empty" id="svEmpty" hidden>No hay servicios con ese filtro.</p>
   </div>
 </section>
-<section class="section sv-data">
-  <div class="wrap">
-    <div class="sv-intro"><h2>Qué datos hay sobre la violencia y los servicios</h2><p>Dos tipos de fuentes permiten seguir el problema y el uso de los servicios.</p></div>
-    <div class="data-grid">
-      <a class="dcard" href="https://portalestadistico.warminan.gob.pe/banco-de-datos/" target="_blank" rel="noopener"><span class="dk">Registros de los servicios</span><h3>Portal Estadístico de Warmi Ñan</h3><p>Casos atendidos en los Centros Emergencia Mujer y Familia y en los demás servicios del programa. Dicen cuántas personas llegan a los servicios, no cuánta violencia hay.</p><span class="go">Ir al banco de datos ↗</span></a>
-      <a class="dcard" href="https://proyectos.inei.gob.pe/endes/" target="_blank" rel="noopener"><span class="dk">Encuesta del INEI</span><h3>ENDES</h3><p>Cuántas mujeres viven violencia de pareja, en todo el país y por región, y si buscaron ayuda en alguna institución.</p><span class="go">Ir a la ENDES ↗</span></a>
-      <a class="dcard" href="fuentes.html"><span class="dk">Encuesta del INEI</span><h3>ENARES 2024</h3><p>Cuánto tolera la sociedad la violencia contra las mujeres, niñas, niños y adolescentes.</p><span class="go">Ver en fuentes externas →</span></a>
-    </div>
-    <p class="sv-src">Fuente: <a href="{CATALOGO}" target="_blank" rel="noopener">Catálogo de Servicios del Sector Mujer y Poblaciones Vulnerables 2026</a>. Las descripciones están resumidas en lenguaje sencillo; el detalle de cada servicio está en el catálogo.</p>
-  </div>
-</section>
+<section class="section sv-foot"><div class="wrap"><p class="sv-src">Fuente: <a href="{CATALOGO}" target="_blank" rel="noopener">Catálogo de Servicios del Sector Mujer y Poblaciones Vulnerables 2026</a>. Las descripciones están resumidas; el detalle de cada servicio está en el catálogo. La relación entre servicios y estudios es orientativa.</p></div></section>
 </main>
 '''+FOOTER+r'''<script>
 (function(){let P='',T='';const btns=document.querySelectorAll('.sv-filter button[data-p]'),v=document.getElementById('soloV'),all=document.getElementById('svAll'),tb=document.querySelectorAll('.sv-types button');
@@ -457,13 +514,150 @@ function apply(){let any=0;document.querySelectorAll('.svc').forEach(c=>{const o
  document.querySelectorAll('.sv-nivel').forEach(n=>n.hidden=!n.querySelector('#tipo-'+T));
  document.getElementById('svEmpty').hidden=!!any;}
 tb.forEach(b=>b.onclick=()=>{T=b.dataset.t;P='';btns.forEach(x=>x.setAttribute('aria-pressed',x.dataset.p===''));tb.forEach(x=>x.setAttribute('aria-pressed',x===b));all.hidden=false;apply();all.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})});
-document.getElementById('svClose').onclick=()=>{all.hidden=true;tb.forEach(x=>x.setAttribute('aria-pressed','false'));document.querySelector('.sv-levels').scrollIntoView({block:'start'})};
+document.getElementById('svClose').onclick=()=>{all.hidden=true;tb.forEach(x=>x.setAttribute('aria-pressed','false'));document.getElementById('catalogo').scrollIntoView({block:'start'})};
 btns.forEach(b=>b.onclick=()=>{P=b.dataset.p;btns.forEach(x=>x.setAttribute('aria-pressed',x===b));apply()});v.onchange=apply;})();
+(function(){const L=[...document.querySelectorAll('.rt a')];if(!('IntersectionObserver' in window))return;
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)L.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on){const ol=a.closest('ol');if(ol.scrollWidth>ol.clientWidth)ol.scrollTo({left:a.parentNode.offsetLeft-ol.clientWidth/2+a.parentNode.offsetWidth/2,behavior:'smooth'})}})}),{rootMargin:'-40% 0px -55% 0px'});
+document.querySelectorAll('.rb').forEach(s=>io.observe(s))})();
 </script>
 </body>
 </html>
 '''
 
-for name,html in (('evidencia.html',EVID),('index.html',INDEX),('tablero.html',TABLERO),('fuentes.html',FUENTES),('servicios.html',SERV)):
+# ---------- Guía: tipos y modalidades de violencia ----------
+_TIPOS=[('Violencia física','fis','Acción o conducta que causa daño a la integridad corporal o a la salud. Incluye el maltrato por negligencia, descuido o privación de necesidades básicas.',
+  '<path d="M12 21s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 11c0 5.7-7 10-7 10z"/><path d="M12 8.5l-1.5 3.5h3L12 15.5"/>'),
+ ('Violencia psicológica','psi','Acción u omisión que busca controlar o aislar a la persona contra su voluntad, humillarla, avergonzarla, insultarla, estigmatizarla o estereotiparla.',
+  '<path d="M9.5 20v-3.2A6.5 6.5 0 1 1 18 11c0 1-.2 1.8-.6 2.6L19 17h-3v3z"/><path d="M10 9.5c.3-1 1.1-1.5 2-1.5 1.2 0 2 .8 2 1.8 0 1.5-2 1.7-2 3"/><path d="M12 15h0"/>'),
+ ('Violencia sexual','sex','Acciones de naturaleza sexual sin consentimiento o bajo coacción, incluso sin penetración ni contacto físico, como la exposición a material pornográfico.',
+  '<circle cx="12" cy="12" r="8.5"/><path d="M7 7l10 10"/>'),
+ ('Violencia económica o patrimonial','eco','Acción u omisión que perjudica los recursos económicos o patrimoniales: quitar o retener bienes, documentos o ingresos, o incumplir los alimentos.',
+  '<rect x="3" y="6.5" width="18" height="12" rx="2"/><path d="M3 10.5h18"/><path d="M7 15h3"/>')]
+_TK={t[0]:t[1] for t in _TIPOS}
+# Casos ilustrativos: (texto, modalidad de la fila, tipos, explicación)
+_CASOS=[('Su pareja la golpea y la empuja durante las discusiones.','pareja',['fis'],'El daño es corporal: violencia <b>física</b>. Ocurre dentro de una relación íntima: modalidad <b>violencia en relación de pareja</b>.'),
+ ('Su pareja la insulta, la amenaza y revisa su celular todos los días.','pareja',['psi'],'Misma modalidad que el caso anterior, pero otro tipo: humillar, amenazar y controlar es violencia <b>psicológica</b>.'),
+ ('Su conviviente se queda con su sueldo y controla todos sus gastos.','pareja',['eco'],'De nuevo en la pareja, ahora con violencia <b>económica o patrimonial</b>. Una modalidad puede incluir cualquiera de los cuatro tipos.'),
+ ('Su expareja difunde fotos íntimas de ella por redes sociales, sin su consentimiento.','tic',['sex','psi'],'Es violencia <b>sexual</b> y <b>psicológica</b> a la vez. La modalidad la da el medio: <b>violencia a través de las tecnologías</b>.'),
+ ('Su jefe le hace comentarios sexuales y le insinúa que perderá el puesto si no accede.','host',['sex','psi'],'Violencia <b>sexual</b> y <b>psicológica</b> en una relación de trabajo: modalidad <b>hostigamiento sexual</b>.'),
+ ('Una regidora recibe amenazas para que renuncie a su cargo.','pol',['psi'],'Las amenazas son violencia <b>psicológica</b>. Como buscan impedir que ejerza un cargo público, la modalidad es <b>acoso político</b>.')]
+_FILAS=[('pareja','Relación de pareja'),('tic','Tecnologías de la información'),('host','Hostigamiento sexual'),('pol','Acoso político')]
+MODURL='https://www.gob.pe/75287-marco-conceptual-conceptos-y-definiciones-modalidades-de-violencia'
+# Las 21 modalidades del marco conceptual del MIMP (número oficial, nombre, resumen, nombre en la base de estudios)
+_MODS={1:('Violencia en relación de pareja','Violencia ejercida en una relación íntima actual o pasada. Puede comprender cualquiera de los cuatro tipos.','Violencia en relación de pareja'),
+ 2:('Feminicidio','Asesinato de una mujer por su condición de tal, tipificado en el Código Penal.','Feminicidio'),
+ 3:('Trata de personas con fines de explotación sexual','Captación, traslado, acogida o retención de personas para explotarlas sexualmente.','Trata de personas con fines de explotación sexual'),
+ 4:('Explotación sexual de niñas, niños y adolescentes','Utilización de niñas, niños o adolescentes con fines sexuales a cambio de una retribución o beneficio.',None),
+ 5:('Acoso sexual','Persecución, hostigamiento o búsqueda de contacto de connotación sexual sin consentimiento, también en espacios públicos.',None),
+ 6:('Violencia en los servicios de salud sexual y reproductiva','Prácticas que vulneran la dignidad, autonomía, privacidad o consentimiento de las mujeres en la atención de salud.',None),
+ 7:('Esterilizaciones forzadas','Esterilización realizada sin consentimiento libre e informado.',None),
+ 8:('Hostigamiento sexual','Conductas sexuales o sexistas no deseadas en relaciones de trabajo, estudio o similares, que afectan la dignidad o crean un ambiente hostil.',None),
+ 9:('Acoso político','Conductas basadas en el género que impiden o restringen el ejercicio de los derechos políticos de las mujeres.',None),
+ 10:('Violencia en conflictos sociales','Violencia de género que se produce o agrava en contextos de conflictividad social.',None),
+ 11:('Violencia en conflicto armado','Violencia contra las mujeres en situaciones de conflicto armado, incluida la violencia sexual.','Violencia en conflicto armado'),
+ 12:('Violencia a través de las tecnologías de la información y comunicación','Agresiones realizadas o facilitadas por medios digitales: amenazas, ciberacoso o difusión de contenido íntimo sin consentimiento.','Violencia a través de las tecnologías de la información'),
+ 13:('Violencia por orientación sexual','Violencia y discriminación por motivos relacionados con la orientación sexual.',None),
+ 14:('Violencia contra mujeres indígenas u originarias','Violencia en la que confluyen la discriminación de género y la étnica.',None),
+ 15:('Violencia contra mujeres afroperuanas','Violencia en la que confluyen la discriminación de género y la racial.',None),
+ 16:('Violencia contra mujeres migrantes','Violencia que puede agravarse por las barreras propias de la situación migratoria.',None),
+ 17:('Violencia contra mujeres con virus de inmunodeficiencia humana','Violencia y discriminación contra mujeres que viven con VIH, también en el acceso a servicios.',None),
+ 18:('Violencia en mujeres privadas de libertad','Violencia que afecta a mujeres en establecimientos penitenciarios u otros lugares de privación de libertad.',None),
+ 19:('Violencia contra las mujeres con discapacidad','Violencia agravada por barreras de accesibilidad y discriminación por discapacidad.',None),
+ 20:('Acoso a través del proceso judicial','Uso abusivo de procesos judiciales para hostigar o desgastar a una persona afectada por violencia.',None),
+ 21:('Desaparición por particulares, entre otras','Desaparición de mujeres, niñas, niños o adolescentes por particulares, que puede vincularse con otras formas de violencia.',None)}
+# Agrupación referencial para facilitar la lectura (no es una clasificación oficial)
+_FAM=[('En las relaciones cercanas','Cuando quien agrede es la pareja, la expareja o alguien del entorno.',[1,2,20,21]),
+ ('Violencia sexual y explotación','Cuando el cuerpo o la sexualidad de la víctima es el objeto de la agresión o del lucro.',[3,4,5,8]),
+ ('En instituciones y la vida pública','Cuando ocurre en servicios del Estado, en la política o en lugares de privación de libertad.',[6,7,9,18]),
+ ('Según el contexto o el medio','Cuando un conflicto o el uso de la tecnología marcan la forma de la violencia.',[10,11,12]),
+ ('Cuando se suma otra discriminación','Cuando la violencia de género se agrava por la etnia, el origen, la salud, la discapacidad o la orientación sexual.',[13,14,15,16,17,19])]
+_TCNT={};_MCNT={}
+for _r in _EST.values():
+    for _t in _r.get('tipos') or []: _TCNT[_t]=_TCNT.get(_t,0)+1
+    for _m in _r.get('mod') or []: _MCNT[_m]=_MCNT.get(_m,0)+1
+_TI={t[1]:t for t in _TIPOS}
+def _tic(k,cls=''): return f'<svg class="{cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_TI[k][3]}</svg>'
+_casos=''.join(f'<button type="button" class="cs" data-c="{i}" aria-pressed="{str(i==0).lower()}"><span class="cs-n">{i+1}</span>{_e(t)}</button>' for i,(t,f,ts,x) in enumerate(_CASOS))
+_head=''.join(f'<span class="gx-th">{_tic(k)}<span>{n.replace("Violencia ","").replace(" o patrimonial","")}</span></span>' for n,k,_,_ in _TIPOS)
+_rows=''.join(f'<div class="gx-row" data-f="{f}"><span class="gx-m">{n}</span>'+''.join(f'<span class="gx-c" data-t="{k}"></span>' for _,k,_,_ in _TIPOS)+'</div>' for f,n in _FILAS)
+_tipos=''
+for n,k,d,ic in _TIPOS:
+    c=_TCNT.get(n,0)
+    _tipos+=f'<article class="tp tp-{k}"><span class="tp-i">{_tic(k)}</span><h3>{n}</h3><p>{d}</p>'+(f'<a href="evidencia.html?tipo={_q(n)}">{c} {"estudio" if c==1 else "estudios"} en el banco →</a>' if c else '<span class="tp-0">Aún no hay estudios en el banco</span>')+'</article>'
+_fams=''
+for t,d,L in _FAM:
+    items=''
+    for n in L:
+        nom,res,key=_MODS[n];c=_MCNT.get(key,0) if key else 0
+        ev=f'<a href="evidencia.html?mod={_q(key)}">Ver {c} {"estudio" if c==1 else "estudios"} →</a>' if c else ''
+        items+=f'<details class="md"><summary><span class="md-n">{n:02d}</span><span class="md-t">{_e(nom)}</span>{f"<span class=md-c>{c}</span>" if c else ""}</summary><p>{_e(res)}</p><div class="md-a">{ev}<a href="{MODURL}" target="_blank" rel="noopener">Definición oficial ↗</a></div></details>'
+    _fams+=f'<section class="fam"><h3>{t}</h3><p>{d}</p><div class="fam-l">{items}</div></section>'
+import json as _json
+_CJ=_json.dumps([{'f':f,'t':ts,'x':x} for (_,f,ts,x) in _CASOS],ensure_ascii=False)
+CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Guía para distinguir los tipos de violencia del artículo 8 de la Ley N.° 30364 y las modalidades del marco conceptual del MIMP, con ejemplos.','comprender-violencia.html')+header('cv')+f'''
+<main>
+<section class="page-hero">
+  <div class="wrap">
+    <a class="crumb" href="./">← Banco de Evidencias</a>
+    <h1>Tipos y modalidades de violencia</h1>
+    <p>Para describir un hecho de violencia hacen falta dos respuestas: qué daño se produjo y en qué relación o contexto ocurrió. Esta guía explica cada una con ejemplos y te lleva a los estudios del banco.</p>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="q2">
+      <div class="q2-c"><span class="q2-k">Tipo de violencia</span><h2>¿Qué daño se produce?</h2><p>La Ley N.° 30364 reconoce cuatro tipos en su artículo 8: física, psicológica, sexual y económica o patrimonial.</p><a href="#tipos">Ver los 4 tipos ↓</a></div>
+      <span class="q2-plus" aria-hidden="true">+</span>
+      <div class="q2-c m"><span class="q2-k">Modalidad de violencia</span><h2>¿En qué relación o contexto ocurre?</h2><p>El marco conceptual del MIMP describe 21 modalidades: en la pareja, en el trabajo, en la política, por medios digitales, entre otras.</p><a href="#modalidades">Ver las 21 modalidades ↓</a></div>
+    </div>
+    <p class="q2-note">No son una lista dentro de la otra: <b>una misma modalidad puede incluir varios tipos</b>, y un mismo tipo aparece en muchas modalidades.</p>
+  </div>
+</section>
+<section class="section gx-sec" id="casos">
+  <div class="wrap">
+    <div class="sv-intro"><h2>Pruébalo con un caso</h2><p>Elige una situación y mira cómo se ubica en las dos dimensiones. Los tres primeros casos ocurren en la pareja y, sin embargo, son de tipos distintos.</p></div>
+    <div class="gx">
+      <div class="gx-cases" role="group" aria-label="Casos de ejemplo">{_casos}</div>
+      <div class="gx-panel">
+        <div class="gx-grid" aria-hidden="true"><div class="gx-row gx-hd"><span class="gx-m gx-corner"><b>Modalidad</b> ↓ · <b>Tipo</b> →</span>{_head}</div>{_rows}</div>
+        <p class="gx-x" id="gxX" aria-live="polite"></p>
+      </div>
+    </div>
+    <p class="gx-note">Casos ilustrativos para comprender las categorías. La calificación de un caso real corresponde a las autoridades competentes.</p>
+  </div>
+</section>
+<section class="section tp-sec" id="tipos">
+  <div class="wrap">
+    <div class="sv-intro"><span class="q2-k">Artículo 8 de la Ley N.° 30364</span><h2>Los cuatro tipos de violencia</h2><p>Síntesis de las definiciones de la ley. Para su interpretación jurídica, consulta siempre el texto vigente de la norma.</p></div>
+    <div class="tps">{_tipos}</div>
+  </div>
+</section>
+<section class="section" id="modalidades">
+  <div class="wrap">
+    <div class="sv-intro"><span class="q2-k m">Marco conceptual del MIMP</span><h2>Las 21 modalidades de violencia</h2><p>Se agrupan aquí en cinco bloques solo para facilitar la lectura; la numeración es la del MIMP. Abre cada una para leer su resumen y ver los estudios del banco que la abordan.</p></div>
+    <div class="fams">{_fams}</div>
+  </div>
+</section>
+<section class="section cv-end">
+  <div class="wrap">
+    <div class="cv-end-in">
+      <div><h2>De las definiciones a la evidencia</h2><p>Clasificar ayuda a ordenar la información, pero no dice por sí solo cuán frecuente es cada forma de violencia ni si una intervención funciona. Para eso hay que revisar el diseño, la medición y las limitaciones de cada estudio. La OMS recomienda medir la violencia a partir de conductas concretas, y advierte que la violencia psicológica y la económica son las más difíciles de comparar entre encuestas.</p><a class="guide-action" href="evidencia.html">Explorar la evidencia →</a></div>
+      <div class="cv-src"><b>Fuentes</b><a href="https://www.gob.pe/74905-ley-n-30364-ley-para-prevenir-sancionar-y-erradicar-la-violencia-contra-las-mujeres-y-los-integrantes-del-grupo-familiar" target="_blank" rel="noopener">Ley N.° 30364, artículo 8 ↗</a><a href="{MODURL}" target="_blank" rel="noopener">MIMP · Marco conceptual: modalidades de violencia ↗</a><a href="https://iris.who.int/handle/10665/375427" target="_blank" rel="noopener">OMS y ONU Mujeres (2023) · Calidad de las encuestas sobre violencia contra las mujeres ↗</a></div>
+    </div>
+  </div>
+</section>
+</main>
+'''+FOOTER+'''<script>
+(function(){const C='''+_CJ+r''';const B=[...document.querySelectorAll('.cs')],X=document.getElementById('gxX');
+function sel(i){const c=C[i];B.forEach((b,j)=>b.setAttribute('aria-pressed',j===i));
+ document.querySelectorAll('.gx-row[data-f]').forEach(r=>{const on=r.dataset.f===c.f;r.classList.toggle('on',on);
+  r.querySelectorAll('.gx-c').forEach(x=>x.classList.toggle('lit',on&&c.t.includes(x.dataset.t)))});X.innerHTML=c.x}
+B.forEach((b,i)=>b.onclick=()=>sel(i));sel(0)})();
+</script>
+</body>
+</html>
+'''
+
+for name,html in (('evidencia.html',EVID),('index.html',INDEX),('tablero.html',TABLERO),('fuentes.html',FUENTES),('servicios.html',SERV),('comprender-violencia.html',CV)):
     open(name,'w',encoding='utf-8').write(html)
 print('ok')

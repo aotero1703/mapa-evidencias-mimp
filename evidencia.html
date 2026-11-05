@@ -19,16 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap">
 <link rel="stylesheet" href="banco.css">
-<style>
-.guide-panel{display:flex;align-items:center;gap:18px;padding:22px 24px;margin:0 0 20px;border:1px solid #b6c5e4;border-left:5px solid #2f3e8f;border-radius:16px;background:linear-gradient(110deg,#f4f6fd,#fff);box-shadow:0 8px 24px -18px #1d2552}
-.guide-mark{flex:0 0 44px;height:44px;border-radius:13px;background:#2f3e8f;color:#fff;display:grid;place-items:center;font:700 24px Rubik,sans-serif}
-.guide-copy{flex:1;min-width:0}.guide-copy strong{display:block;color:#1d2552;font:700 1.1rem Rubik,sans-serif}.guide-copy p{margin:5px 0 0;color:#4a5068;font-size:.94rem}
-.guide-action{display:inline-flex;align-items:center;gap:12px;white-space:nowrap;background:#2f3e8f;color:#fff;text-decoration:none;border-radius:10px;padding:12px 17px;font-weight:800}.guide-action:hover{background:#1d2552;color:#fff}
-.filter-context{font-size:.9rem;color:#596078;margin:0 0 13px}
-.filter-explain{margin:12px 0 0;padding:10px 14px;border:1px solid #e3e6ee;background:#fff;border-radius:10px;color:#4a5068;font-size:.9rem}
-.filter-explain summary{cursor:pointer;font-weight:700;color:#2f3e8f}.filter-explain #fDesc{margin-top:9px}
-@media(max-width:720px){.guide-panel{align-items:flex-start;flex-wrap:wrap;padding:18px}.guide-mark{flex-basis:38px;height:38px}.guide-copy{flex-basis:calc(100% - 60px)}.guide-action{width:100%;justify-content:center}}
-</style></head>
+</head>
 <body>
 <header class="site-header">
   <div class="wrap header-inner">
@@ -37,7 +28,7 @@
       <span class="sep"></span>
       <img class="on" src="img/logo-on.png" alt="Observatorio Nacional de la Violencia contra las Mujeres y los Integrantes del Grupo Familiar">
     </a>
-    <nav class="site-nav" aria-label="Secciones del banco"><a href="comprender-violencia.html">Comprender la violencia</a><a href="evidencia.html" aria-current="page">Evidencia científica</a><a href="tablero.html">Indicadores</a><a href="fuentes.html">Fuentes externas</a><a href="servicios.html">Servicios</a><a href="territorios-prioritarios.html">Territorios Prioritarios</a></nav>
+    <nav class="site-nav" aria-label="Secciones del banco"><a href="comprender-violencia.html">Tipos y modalidades</a><a href="evidencia.html" aria-current="page">Evidencia científica</a><a href="tablero.html">Indicadores</a><a href="fuentes.html">Fuentes externas</a><a href="servicios.html">Servicios</a></nav>
   </div>
 </header>
 
@@ -50,7 +41,7 @@
     <div class="hsearch"><input type="search" id="q" placeholder="Buscar en todo el banco: CEM, Línea 100, feminicidio, adolescentes…" aria-label="Buscar en todo el banco"></div>
   </div>
 </section>
-<div class="wrap" style="padding-top:18px"><a href="comprender-violencia.html" style="display:block;padding:14px 18px;background:#eceff9;border-radius:10px;color:#1d2552;text-decoration:none"><strong>¿Tipo o modalidad de violencia?</strong> Conoce la diferencia y explora las definiciones oficiales →</a></div><section class="section">
+<section class="section">
   <div class="wrap">
     <div class="tabs" role="tablist" aria-label="Secciones de la evidencia">
       <button type="button" role="tab" id="tE" aria-selected="true" aria-controls="tabE"><b>Comprender la violencia</b><span class="td">Investigaciones sobre la violencia que comprende la Ley N.° 30364: sus causas y consecuencias, y la respuesta del Estado.</span></button>
@@ -65,7 +56,7 @@
       <div id="solDet" hidden></div>
     </div>
     <div id="tabE" role="tabpanel" aria-labelledby="tE">
-      <div class="guide-panel" role="note"><div class="guide-mark" aria-hidden="true">?</div><div class="guide-copy"><strong>¿Tipo o modalidad de violencia? No son lo mismo.</strong><p>El <b>tipo</b> describe la naturaleza de la violencia; la <b>modalidad</b>, cómo o en qué situación se manifiesta. Puedes explorar ambos criterios por separado.</p></div><a class="guide-action" href="comprender-violencia.html">Explorar la guía <span aria-hidden="true">→</span></a></div><p class="filter-context">Explora investigaciones sobre la violencia comprendida en la Ley N.° 30364. Las categorías de los estudios son orientativas.</p><div class="filt">
+      <div class="guide-panel" role="note"><div class="guide-mark" aria-hidden="true">?</div><div class="guide-copy"><strong>¿Tipo o modalidad de violencia? No son lo mismo.</strong><p>El <b>tipo</b> describe qué daño se produce; la <b>modalidad</b>, en qué relación o contexto ocurre. Puedes filtrar por cada uno por separado.</p></div><a class="guide-action" href="comprender-violencia.html">Ver la guía <span aria-hidden="true">→</span></a></div><p class="filter-context">Solo se incluyen estudios sobre la violencia que comprende la Ley N.° 30364. La clasificación de cada estudio es orientativa.</p><div class="filt f5">
         <label>Tema de investigación<select id="fTema"></select></label>
         <label>Tipo de violencia<select id="fTipo"></select></label>
         <label>Modalidad de violencia<select id="fMod"></select></label>
@@ -73,7 +64,6 @@
         <label>Ámbito<select id="fAmb"><option value="">Nacional e internacional</option><option value="Nacional">Nacional</option><option value="Internacional">Internacional</option></select></label>
       </div>
       <details class="filter-explain" id="filterExplain" hidden><summary>¿Qué significa el filtro seleccionado?</summary><div id="fDesc"></div></details>
-      
       <div class="toolbar rbar">
         <p class="count" id="count"></p>
         <button type="button" class="clear" id="clear" hidden>Limpiar filtros</button>
@@ -123,6 +113,7 @@ const POBS=['Mujeres','Integrantes del grupo familiar','Niñas, niños y adolesc
 const PDESC={'Mujeres':'Durante todo su ciclo de vida: niña, adolescente, joven, adulta y adulta mayor (art. 7).','Integrantes del grupo familiar':'Cónyuges, convivientes, padres, hijos y demás parientes que señala el art. 7.','Niñas, niños y adolescentes':'En especial situación de vulnerabilidad (art. 1).','Personas adultas mayores':'En especial situación de vulnerabilidad (art. 1).','Personas con discapacidad':'En especial situación de vulnerabilidad (art. 1).','Varones y personas agresoras':'Programas para varones y reeducación de personas agresoras (arts. 27 y 30 al 32).','Operadores del sistema':'Policía, Ministerio Público, Poder Judicial y servicios de atención (arts. 2, 18 y 45).'};
 const tipoOf=r=>(r.tipos||[]).filter(t=>t!=='Estudios sobre varios tipos de violencia');
 function match(r,skip){const q=S.q.trim().toLowerCase();
+  if(S.ns&&!S.ns.includes(r.n))return false;
   return (skip==='tema'||!S.tema||(r.temas||[]).includes(S.tema))&&(skip==='tipo'||!S.tipo||tipoOf(r).includes(S.tipo))&&(skip==='pob'||!S.pob||(r.pob_g||[]).includes(S.pob))&&(skip==='amb'||!S.amb||r.amb===S.amb)
    &&(skip==='mod'||!S.mod||(r.mod||[]).includes(S.mod))&&(!q||[r.t,r.a,r.dim,r.pob,r.prop,r.res,r.tipo,r.vy,r.vx,(r.paises||[]).join(' '),(r.mod||[]).join(' '),(r.temas||[]).join(' ')].join(' ').toLowerCase().includes(q))}
 function opts(id,all,vals,cur,key){const n=v=>R.filter(r=>match(r,key)&&(key==='tema'?(r.temas||[]).includes(v):key==='tipo'?tipoOf(r).includes(v):key==='mod'?(r.mod||[]).includes(v):(r.pob_g||[]).includes(v))).length;
@@ -131,13 +122,14 @@ function home(){}
 function show(){
   opts('fTema','Todos los temas',TEMAS.map(t=>t[0]),S.tema,'tema');
   opts('fTipo','Todos los tipos',TIPOS,S.tipo,'tipo');
-  opts('fMod','Todas las modalidades',[...new Set(R.flatMap(r=>r.mod||[]))].sort((a,b)=>a.localeCompare(b,'es')),S.mod,'mod');
+  opts('fMod','Todas las modalidades',[...new Set(R.flatMap(r=>r.mod||[]))].filter(m=>m!==GEN).sort((a,b)=>a.localeCompare(b,'es')),S.mod,'mod');
   opts('fPob','Todas las poblaciones',POBS,S.pob,'pob');$('fAmb').value=S.amb;
   const d=[];if(S.tema){const t=TEMAS.find(t=>t[0]===S.tema);d.push(`<b>${esc(S.tema)}:</b> ${t[1]} <span class="base">${t[2]}</span>`)};if(S.tipo&&TDESC[S.tipo])d.push(`<b>${esc(S.tipo)} (art. 8 de la Ley):</b> ${TDESC[S.tipo]}`);if(S.pob&&PDESC[S.pob])d.push(`<b>${esc(S.pob)}:</b> ${PDESC[S.pob]}`);
+  if(S.mod)d.push(`<b>${esc(S.mod)}:</b> modalidad de violencia según el marco conceptual del MIMP. <a href="comprender-violencia.html#modalidades">Ver en la guía</a>`);
   $('fDesc').innerHTML=d.join('<br>');$('filterExplain').hidden=!d.length;
   const L=R.filter(r=>match(r));
   L.sort(S.sort==='t'?(a,b)=>a.t.localeCompare(b.t,'es'):(a,b)=>(+b.y||0)-(+a.y||0));
-  const any=S.tema||S.tipo||S.mod||S.pob||S.amb||S.q.trim();
+  const any=S.tema||S.tipo||S.mod||S.pob||S.amb||S.q.trim()||S.ns;
   $('count').textContent=any?pl(L.length,'investigación encontrada','investigaciones encontradas'):`Todas las investigaciones (${L.length})`;$('clear').hidden=!any;
   $('cards').innerHTML=L.length?L.slice(0,S.shown).map(card).join(''):'<div class="empty">No hay investigaciones con esos filtros. Prueba quitando alguno.</div>';
   $('more').hidden=L.length<=S.shown;$('more').textContent=`Ver más investigaciones (${L.length-S.shown} restantes)`;
@@ -160,7 +152,7 @@ $('fTipo').onchange=e=>{S.tipo=e.target.value;S.shown=20;show()};
 $('fMod').onchange=e=>{S.mod=e.target.value;S.shown=20;show()};
 $('fPob').onchange=e=>{S.pob=e.target.value;S.shown=20;show()};
 $('fAmb').onchange=e=>{S.amb=e.target.value;S.shown=20;show()};
-$('clear').onclick=()=>{Object.assign(S,{tema:'',tipo:'',pob:'',amb:'',mod:'',q:'',open:null,shown:20});$('q').value='';show()};
+$('clear').onclick=()=>{history.replaceState(null,'',location.pathname);S.ns=null;Object.assign(S,{tema:'',tipo:'',pob:'',amb:'',mod:'',q:'',open:null,shown:20});$('q').value='';show()};
 $('more').onclick=()=>{S.shown+=20;show()};
 /* ---------- ¿Qué funciona? (tipos de solución por eje de la Ley 30364) ---------- */
 let SOL=null,F={eje:'',sol:null};
@@ -198,6 +190,9 @@ function solDetail(x){const eje=SOL.ejes.find(e=>e.id===x.eje),t=RES[x.ef];
   $('solBack').onclick=()=>{F.sol=null;solRender()};
   document.querySelectorAll('#solDet [data-open]').forEach(b=>b.onclick=()=>{const n=+b.dataset.open;S.open=S.open===n?null:n;solDetail(x)});
 }
+/* enlaces desde la guía y los servicios: evidencia.html?tipo=…&mod=…&tema=…&n=1,2,3 */
+const QP=new URLSearchParams(location.search);['tema','tipo','mod','pob'].forEach(k=>{if(QP.get(k))S[k]=QP.get(k)});
+if(QP.get('n'))S.ns=QP.get('n').split(',').map(Number);
 Promise.all([fetch('data/estudios.json').then(r=>r.json()),fetch('data/soluciones.json').then(r=>r.json())]).then(([d,s])=>{R=d.rows;SOL=s;home();show();solRender()}).catch(()=>{$('ejes').innerHTML='<div class="empty">No se pudieron cargar los datos. Recarga la página.</div>'});
 </script>
 </body>

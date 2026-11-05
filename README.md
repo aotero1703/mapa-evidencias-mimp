@@ -42,11 +42,11 @@ Es un sitio **estático** (HTML, CSS y archivos JSON) publicado en Vercel. No ne
 
 | Sección | Qué contiene |
 |---|---|
+| **[Tipos y modalidades](https://banco-evidencias-mimp.vercel.app/comprender-violencia.html)** | Guía con casos de ejemplo: los 4 tipos del art. 8 de la Ley N.° 30364 y las 21 modalidades del marco conceptual del MIMP |
 | **[Evidencia científica](https://banco-evidencias-mimp.vercel.app/evidencia.html)** | 117 investigaciones sobre la violencia que comprende la Ley N.° 30364 y 11 programas evaluados |
 | **[Indicadores](https://banco-evidencias-mimp.vercel.app/tablero.html)** | Tablero de Power BI con las cifras principales del Observatorio |
 | **[Fuentes externas](https://banco-evidencias-mimp.vercel.app/fuentes.html)** | ENDES, ENARES, Warmi Ñan, Ministerio Público, Poder Judicial y MIMP |
-| **[Servicios](https://banco-evidencias-mimp.vercel.app/servicios.html)** | Los servicios del Catálogo de Servicios del Sector 2026, en tres niveles y en lenguaje sencillo |
-| **[Territorios prioritarios](https://banco-evidencias-mimp.vercel.app/territorios-prioritarios.html)** | Tablero por provincia con los casos atendidos por los CEM en 2025 |
+| **[Servicios](https://banco-evidencias-mimp.vercel.app/servicios.html)** | Ruta frente a la violencia en siete pasos (acciones de la Ley N.° 30364), con los estudios del banco sobre cada servicio, y el catálogo completo del sector 2026 |
 
 ```mermaid
 flowchart LR
@@ -54,7 +54,7 @@ flowchart LR
     P --> T["Indicadores"]
     P --> F["Fuentes externas"]
     P --> S["Servicios"]
-    P --> R["Territorios prioritarios"]
+    P --> G["Tipos y modalidades"]
     E --> C["Comprender la violencia<br/>investigaciones con filtros"]
     E --> Q["¿Qué ayuda a enfrentar la violencia?<br/>programas evaluados"]
 ```
@@ -98,6 +98,8 @@ Los servicios aparecen al elegir un tipo. Por defecto se muestran los vinculados
 ---
 
 ## Territorios prioritarios
+
+> Desde noviembre de 2026 es una página aparte: no aparece en el menú ni en la portada del banco. Sigue publicada en https://banco-evidencias-mimp.vercel.app/territorios-prioritarios.html
 
 Tablero con los casos atendidos por los Centros Emergencia Mujer y Familia en 2025, por provincia: filtros por periodo y departamento, tarjetas por tipo de violencia, distribución por sexo y grupo etario, mapa por nivel de prioridad y ranking de provincias. Solo contiene datos agregados; las cifras menores a 5 se muestran como «menos de 5». Los registros administrativos muestran casos atendidos, no la prevalencia de la violencia.
 
