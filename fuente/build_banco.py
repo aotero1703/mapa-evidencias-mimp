@@ -87,13 +87,13 @@ ART_SV='''<svg class="art" viewBox="0 0 200 200" aria-hidden="true"><g fill="non
 <circle cx="70" cy="120" r="10" fill="#fff"/><circle cx="120" cy="80" r="10" fill="#fff" fill-opacity=".85"/><circle cx="170" cy="40" r="12" fill="#f2a93b"/></svg>'''
 INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica, indicadores y fuentes de datos oficiales sobre la violencia contra las mujeres y los integrantes del grupo familiar. Observatorio Nacional, MIMP (Ley N.° 30364).')+header('')+f'''
 <main>
-<section class="cover" id="hero">
+<section class="cover" id="hero" aria-label="Portada del Banco de Evidencias">
   <div class="wrap cover-in">
     <div class="cover-t">
       <span class="cover-eye">Observatorio Nacional · MIMP</span>
       <h1 class="cover-h"><span class="strip s1">Banco de</span><span class="strip s2">Evidencias</span><span class="strip s3">para una vida libre de violencia</span></h1>
       <p class="cover-p">Estudios, cifras y servicios sobre la violencia contra las mujeres y los integrantes del grupo familiar, reunidos para decidir mejor.</p>
-      <div class="cover-cta"><a class="btn-a" href="evidencia.html">Explorar la evidencia</a><a class="btn-b" href="#tipo-modalidad">¿Tipo o modalidad?</a></div>
+      <div class="cover-cta"><a class="btn-a cover-open" href="#tipo-modalidad">Abrir el banco <span aria-hidden="true">→</span></a></div>
     </div>
     <div class="cover-a">{COLLAGE}</div>
   </div>
@@ -101,12 +101,12 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
 <section class="section tm" id="tipo-modalidad">
   <div class="wrap tm-in">
     <div class="tm-t">
-      <span class="tm-k">Antes de explorar</span>
+      <span class="tm-k">Para empezar</span>
       <h2>Tipo y modalidad: dos formas de describir un mismo hecho</h2>
-      <p>Mira cómo se lee una situación de violencia. Cada color responde una pregunta.</p>
+      <p>Una misma situación se describe respondiendo tres preguntas. Cada color es una de ellas.</p>
       <a class="tm-go" href="comprender-violencia.html">Ver la guía completa →</a>
     </div>
-    {_an.componente([0,4,5],'anHome')}
+    {_an.componente([0,1,2],'anHome')}
   </div>
 </section>
 
@@ -167,7 +167,13 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
   </div>
 </section>
 </main>
-'''+FOOTER+_an.JS+'''
+'''+FOOTER+_an.JS+r'''<script>
+(function(){const c=document.getElementById('hero'),b=c&&c.querySelector('.cover-open');if(!b)return;
+ b.onclick=e=>{e.preventDefault();const t=document.getElementById('tipo-modalidad');
+  const fin=()=>{c.classList.add('closed');scrollTo(0,0);const h=t.querySelector('h2');h.setAttribute('tabindex','-1');h.focus({preventScroll:true})};
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return fin();
+  c.classList.add('opening');setTimeout(fin,950)}})();
+</script>
 </body>
 </html>
 '''

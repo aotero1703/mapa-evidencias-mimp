@@ -4,13 +4,13 @@
 import html as _h
 # Cada caso: lista de tramos (texto, rol, etiqueta) con rol en v (vínculo), t (tipo), m (modalidad) o None; modalidad si no hay; base legal.
 CASOS=[
- ([('Su conviviente','v','Pareja'),(' ',None,''),('la empuja, la tira al suelo y le da bofetadas','t','Física'),('.',None,'')],'Ninguna adicional','Ley N.° 30364, arts. 7 y 8, lit. a'),
- ([('Su exenamorado','v','Pareja'),(' ',None,''),('la insulta, la humilla y la vigila a toda hora','t','Psicológica'),('.',None,'')],'Ninguna adicional','Ley N.° 30364, arts. 7 y 8, lit. b'),
- ([('Su esposo','v','Pareja'),(' ',None,''),('le quita el sueldo y no la deja administrar su dinero','t','Económica'),('.',None,'')],'Ninguna adicional','Ley N.° 30364, art. 8, lit. d'),
- ([('Su jefe','v','Sin vínculo familiar'),(' ',None,''),('la amenaza con despedirla si no accede a sus propuestas sexuales','t','Sexual'),('.',None,'')],'Ninguna adicional','Ley N.° 27942 (hostigamiento sexual), registrado como violencia sexual'),
- ([('Su exnovio','v','Pareja'),(' ',None,''),('publica fotos íntimas de ella sin su autorización','t','Sexual'),(' ',None,''),('en redes sociales','m','Tecnologías (TIC)'),('.',None,'')],None,'Código Penal, art. 154-B · Reglamento de la Ley N.° 30364, art. 8.1'),
- ([('Un regidor','v','Sin vínculo familiar'),(' ',None,''),('insulta y humilla','t','Psicológica'),(' a una regidora ',None,''),('para que no ejerza su cargo','m','Acoso político'),('.',None,'')],None,'Ley N.° 31155, art. 3'),
- ([('Un vecino','v','Sin vínculo familiar'),(' ',None,''),('insulta con expresiones racistas','t','Psicológica'),(' a una mujer ',None,''),('indígena, por su origen y su lengua','m','Mujeres indígenas u originarias'),('.',None,'')],None,'Reglamento de la Ley N.° 30364, art. 8.1'),
+ ([('Su pareja','v','Pareja'),(' ',None,''),('la controla y no la deja ver a sus amigas','t','Psicológica'),('.',None,'')],'Ninguna adicional','Ley N.° 30364, arts. 7 y 8, lit. b'),
+ ([('Su expareja','v','Pareja'),(' ',None,''),('comparte fotos íntimas de ella sin su permiso','t','Sexual'),(' ',None,''),('en redes sociales','m','Tecnologías (TIC)'),('.',None,'')],None,'Ley N.° 30364, art. 8, lit. c · Reglamento, art. 8.1 · Código Penal, art. 154-B'),
+ ([('En el concejo, ',None,''),('sus colegas','v','Sin vínculo familiar'),(' ',None,''),('descalifican a una regidora por ser mujer','t','Psicológica'),(' y ',None,''),('no la dejan hablar en las sesiones','m','Acoso político'),('.',None,'')],None,'Ley N.° 31155, arts. 3 y 4'),
+ ([('Su esposo','v','Pareja'),(' ',None,''),('decide sobre todo el dinero de la casa, incluido el sueldo de ella','t','Económica'),('.',None,'')],'Ninguna adicional','Ley N.° 30364, art. 8, lit. d'),
+ ([('Su jefe','v','Sin vínculo familiar'),(' ',None,''),('le insinúa que tendrá problemas en el trabajo si no acepta sus propuestas sexuales','t','Sexual'),('.',None,'')],'Ninguna adicional','Ley N.° 27942 (hostigamiento sexual); la Ficha CEM lo registra como violencia sexual'),
+ ([('Un vecino','v','Sin vínculo familiar'),(' ',None,''),('se burla de una mujer','t','Psicológica'),(' ',None,''),('por su origen indígena y su lengua','m','Mujeres indígenas u originarias'),('.',None,'')],None,'Reglamento de la Ley N.° 30364, art. 8.1'),
+ ([('Su pareja','v','Pareja'),(' ',None,''),('la lastima físicamente durante las discusiones','t','Física'),('.',None,'')],'Ninguna adicional','Ley N.° 30364, arts. 7 y 8, lit. a'),
 ]
 ROL={'v':'Quién','t':'Tipo','m':'Modalidad'}
 def _frase(c):
