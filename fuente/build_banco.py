@@ -579,115 +579,75 @@ _TCNT={};_MCNT={}
 for _r in _EST.values():
     for _t in _r.get('tipos') or []: _TCNT[_t]=_TCNT.get(_t,0)+1
     for _m in _r.get('mod') or []: _MCNT[_m]=_MCNT.get(_m,0)+1
+_PLAIN={'fis':'Golpes y otros daños al cuerpo o a la salud.','psi':'Insultos, humillaciones, amenazas y control.','sex':'Actos sexuales sin consentimiento, incluso sin contacto físico.','eco':'Quitar o controlar el dinero, los bienes o los documentos.'}
 _tipos=''
 for n,k,d,ic,forms in _TIPOS:
     c=_TCNT.get(n,0)
-    _tipos+=(f'<article class="tp tp-{k}"><span class="tp-i">{_tic(k)}</span><h3>{n}</h3><p>{d}</p>'
-      f'<details class="tp-f"><summary>Cómo se manifiesta ({len(forms)} formas)</summary><ul>{"".join(f"<li>{_e(x)}</li>" for x in forms)}</ul><small>Según la Ficha de Registro de Casos del CEM</small></details>'
-      +(f'<a href="evidencia.html?tipo={_q(n)}">{c} {"estudio" if c==1 else "estudios"} en el banco →</a>' if c else '<span class="tp-0">Aún no hay estudios en el banco</span>')+'</article>')
-_vinc=''.join(f'<article class="vc"><h3>{t}</h3><p>{d}</p></article>' for t,d in _VINC)
+    _tipos+=(f'<article class="tl tl-{k}"><span class="tl-i">{_tic(k)}</span><h3>{n.replace("Violencia ","").capitalize()}</h3><p>{_PLAIN[k]}</p>'
+      f'<details><summary>Qué dice la ley y cómo se manifiesta</summary><blockquote>{_Q[k]}<cite>{_QL[k]}</cite></blockquote>'
+      f'<ul>{"".join(f"<li>{_e(x)}</li>" for x in forms)}</ul><small>Formas que registra la Ficha CEM</small></details>'
+      +(f'<a href="evidencia.html?tipo={_q(n)}">{c} estudios →</a>' if c else '')+'</article>')
+_vinc=''.join(f'<div class="vl"><b>{t}</b><span>{d}</span></div>' for t,d in _VINC)
 _fams=''
 for t,L in _FAM:
-    items=''
+    chips=''
     for n in L:
         nom,res,donde,key=_MODS[n];c=_MCNT.get(key,0) if key else 0
-        ev=f'<a href="evidencia.html?mod={_q(key)}">Ver {c} {"estudio" if c==1 else "estudios"} →</a>' if c else ''
-        dn=f'<span class="md-d">{_DONDE[donde]}</span>' if _DONDE[donde] else ''
-        items+=f'<details class="md"><summary><span class="md-n">{n:02d}</span><span class="md-t">{_e(nom)}</span>{f"<span class=md-c>{c}</span>" if c else ""}</summary><p>{_e(res)}</p>{dn}<div class="md-a">{ev}<a href="{REGL}" target="_blank" rel="noopener">Reglamento, art. 8.1 ↗</a></div></details>'
-    _fams+=f'<section class="fam"><h3>{t}</h3><div class="fam-l">{items}</div></section>'
-_casos=''.join(f'<button type="button" class="cs" data-c="{i}" aria-pressed="{str(i==0).lower()}"><span class="cs-n">{i+1}</span>{_e(c[0])}</button>' for i,c in enumerate(_CASOS))
-_mapa_h=''.join(f'<span class="mp-th">{_tic(k)}<span>{_TSHORT[k]}</span></span>' for _,k,_,_,_ in _TIPOS)
-_mapa_r=''
-for f,nom in _FILAS:
-    cells=''
-    for _,k,_,_,_ in _TIPOS:
-        ns=[i for i,c in enumerate(_CASOS) if c[7]==f and k in c[1]]
-        cells+='<span class="mp-c">'+''.join(f'<button type="button" class="mp-d" data-c="{i}" aria-label="Caso {i+1}">{i+1}</button>' for i in ns)+'</span>'
-    _mapa_r+=f'<div class="mp-row" data-f="{f}"><span class="mp-m">{nom}</span>{cells}</div>'
-import json as _json
-_CJ=_json.dumps([{'s':c[0],'t':[{'n':_TSHORT[k],'ico':_tic(k),'q':_Q[k],'b':_QL[k]} for k in c[1]],'fm':c[2],'v':c[3],'vd':c[4],'m':c[5],'mx':c[6],'f':c[7],
-  'src':''.join(f'<a href="{u}" target="_blank" rel="noopener">{l} ↗</a>' for l,u in c[8])} for c in _CASOS],ensure_ascii=False)
+        extra=(f'<a href="evidencia.html?mod={_q(key)}">Ver {c} {"estudio" if c==1 else "estudios"} →</a>' if c else '')
+        dn=_DONDE[donde]
+        data=_e(f'<b>{n:02d} · {nom}.</b> {res}'+(f' <em>{dn}.</em>' if dn else '')+(f' {extra}' if extra else ''))
+        chips+=f'<button type="button" class="mc" data-d="{data}" aria-pressed="false"><span>{n:02d}</span>{_e(nom)}{f"<i>{c}</i>" if c else ""}</button>'
+    _fams+=f'<div class="mg"><h3>{t}</h3><div class="mg-c">{chips}</div><p class="mg-d" hidden></p></div>'
 CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Cómo se describe un caso de violencia: el tipo (art. 8 de la Ley N.° 30364), el vínculo con la persona agresora y la modalidad (art. 8.1 del Reglamento), con ejemplos.','comprender-violencia.html')+header('cv')+f'''
 <main>
-<section class="page-hero">
+<section class="page-hero cv-h">
   <div class="wrap">
     <a class="crumb" href="./">← Banco de Evidencias</a>
-    <h1>Tipos y modalidades de violencia</h1>
-    <p>Para describir un hecho de violencia, los Centros Emergencia Mujer responden tres preguntas: qué tipo de violencia es, quién la ejerce y si corresponde a alguna modalidad. Esta guía explica cada una con la norma que la sustenta.</p>
+    <h1>Tipo y modalidad de violencia</h1>
+    <p>Un mismo hecho se describe respondiendo tres preguntas. Míralo en colores.</p>
   </div>
 </section>
-<section class="section">
-  <div class="wrap">
-    <div class="sv-intro"><h2>Tres preguntas para describir un caso</h2></div>
-    <div class="q3">
-      <a class="q3-c t" href="#tipos"><span class="q3-n">1</span><span class="q2-k">Tipo de violencia</span><h3>¿Qué daño se produce?</h3><p>Física, psicológica, sexual o económica. Un mismo hecho puede tener más de un tipo.</p><small>Ley N.° 30364, art. 8</small></a>
-      <a class="q3-c v" href="#vinculo"><span class="q3-n">2</span><span class="q2-k">Vínculo</span><h3>¿Quién la ejerce?</h3><p>La pareja o expareja, un familiar u otra persona: un vecino, un docente, un jefe, alguien desconocido.</p><small>Ley N.° 30364, art. 7</small></a>
-      <a class="q3-c m" href="#modalidades"><span class="q3-n">3</span><span class="q2-k">Modalidad</span><h3>¿Hay una situación o contexto particular?</h3><p>Por ejemplo, si ocurre por redes sociales, en la vida política o contra una mujer indígena. Muchos casos no tienen una modalidad adicional.</p><small>Reglamento de la Ley N.° 30364, art. 8.1</small></a>
+<section class="section tm">
+  <div class="wrap tm-in">
+    <div class="tm-t">
+      <span class="tm-k">Lee un caso</span>
+      <h2>¿Quién? ¿Qué daño? ¿En qué contexto?</h2>
+      <p>Así describen los Centros Emergencia Mujer cada caso que atienden. Pasa los ejemplos.</p>
     </div>
-    <p class="q2-note">Las tres respuestas son independientes: <b>el vínculo o la modalidad no deciden el tipo</b>. Al final de la guía puedes <a href="#casos">practicarlo con siete situaciones</a>.</p>
+    '''+_an.componente(list(range(len(_an.CASOS))),'anGuia')+f'''
   </div>
 </section>
-<section class="section tp-sec" id="tipos">
+<section class="section cv-soft" id="tipos">
   <div class="wrap">
-    <div class="sv-intro"><span class="q2-k">Pregunta 1 · Artículo 8 de la Ley N.° 30364</span><h2>Los cuatro tipos de violencia</h2><p>Síntesis de las definiciones de la ley. Abre cada tipo para ver cómo se manifiesta, según las formas que registran los Centros Emergencia Mujer.</p></div>
-    <div class="tps">{_tipos}</div>
+    <div class="sv-intro"><span class="tm-k t">¿Qué daño? · Ley N.° 30364, art. 8</span><h2>Los cuatro tipos de violencia</h2></div>
+    <div class="tls">{_tipos}</div>
   </div>
 </section>
 <section class="section" id="vinculo">
   <div class="wrap">
-    <div class="sv-intro"><span class="q2-k v">Pregunta 2 · Artículo 7 de la Ley N.° 30364</span><h2>El vínculo con la persona agresora</h2><p>La ley protege a las mujeres en todo su ciclo de vida y a los integrantes del grupo familiar. Para registrar un caso, el CEM agrupa el vínculo en tres categorías.</p></div>
-    <div class="vcs">{_vinc}</div>
+    <div class="sv-intro"><span class="tm-k v">¿Quién? · Ley N.° 30364, art. 7</span><h2>El vínculo con quien agrede</h2></div>
+    <div class="vls">{_vinc}</div>
   </div>
 </section>
-<section class="section cv-mods" id="modalidades">
+<section class="section cv-soft" id="modalidades">
   <div class="wrap">
-    <div class="sv-intro"><span class="q2-k m">Pregunta 3 · Artículo 8.1 del Reglamento de la Ley N.° 30364</span><h2>Las 21 modalidades de violencia contra las mujeres</h2><p>El Reglamento enumera 21 modalidades, «entre otras»: la lista no es cerrada. Aquí se agrupan en cinco bloques solo para facilitar la lectura; la numeración es la del Reglamento.</p></div>
-    <div class="mod-note"><b>¿Cómo las registra el CEM?</b> La ficha no las anota todas en el mismo lugar. La relación de pareja queda en el <b>vínculo</b>; la trata, la explotación sexual, el acoso y el hostigamiento sexual, como <b>formas de violencia sexual</b>; el feminicidio, en su propia sección. El resto va en «otras modalidades», con una sola respuesta, o «ninguna otra modalidad» si no corresponde. Desde 2023 la ficha incluye además la <b>violencia contra mujeres defensoras de derechos humanos</b>.</div>
-    <div class="fams">{_fams}</div>
+    <div class="sv-intro"><span class="tm-k m">¿En qué contexto? · Reglamento de la Ley N.° 30364, art. 8.1</span><h2>Las 21 modalidades</h2><p>Toca una para leerla. Muchos casos no tienen una modalidad adicional.</p></div>
+    <div class="mgs">{_fams}</div>
+    <details class="cem-note"><summary>¿Cómo las registra el Centro Emergencia Mujer?</summary><p>La Ficha CEM no las anota todas en el mismo lugar. La relación de pareja queda en el vínculo; la trata, la explotación sexual, el acoso y el hostigamiento sexual, como formas de violencia sexual; el feminicidio, en su propia sección. Las demás van en «otras modalidades», con una sola respuesta, o «ninguna otra modalidad». Desde 2023 la ficha incluye también la violencia contra mujeres defensoras de derechos humanos.</p></details>
   </div>
 </section>
-<section class="section gx-sec" id="casos">
-  <div class="wrap">
-    <div class="sv-intro"><span class="q2-k">Ponlo en práctica</span><h2>¿Cómo se describe un caso?</h2><p>Elige una situación y mira cómo se responden las tres preguntas, con lo que dicen la norma y la ficha de registro.</p></div>
-    <div class="gx">
-      <div class="gx-cases" role="group" aria-label="Situaciones de ejemplo"><span class="gx-lbl">Elige una situación</span>{_casos}</div>
-      <div class="gx-panel" aria-live="polite">
-        <p class="gx-sit"><span>La situación</span><b id="gxS"></b></p>
-        <div class="gx-step t"><span class="gx-n">1</span><div><h3>¿Qué tipo de violencia es?</h3><div class="gx-ans" id="gxT"></div><p class="gx-fm" id="gxF"></p><div id="gxTQ"></div></div></div>
-        <div class="gx-step v"><span class="gx-n">2</span><div><h3>¿Quién la ejerce?</h3><div class="gx-ans"><span class="gx-chip v" id="gxV"></span></div></div></div>
-        <div class="gx-step m"><span class="gx-n">3</span><div><h3>¿Hay una modalidad adicional?</h3><div class="gx-ans"><span class="gx-chip m" id="gxM"></span></div><p class="gx-why" id="gxMX"></p></div></div>
-        <p class="gx-src" id="gxSrc"></p>
-      </div>
-    </div>
-    <div class="mp">
-      <div class="mp-head"><h3>Los siete casos en un solo mapa</h3><p>Los casos 1 a 4 no tienen una modalidad adicional y cada uno es de un tipo distinto. Los casos 2, 6 y 7 son todos de violencia psicológica, con modalidades distintas.</p></div>
-      <div class="mp-grid"><div class="mp-row mp-hd"><span class="mp-m"></span>{_mapa_h}</div>{_mapa_r}</div>
-    </div>
-    <p class="gx-note">Situaciones ilustrativas redactadas a partir de las normas citadas y de las formas que registra la Ficha CEM, con fines pedagógicos. La calificación de un caso real corresponde a las autoridades competentes.</p>
+<section class="section cv-cta">
+  <div class="wrap cv-cta-in">
+    <p><b>Clasificar no basta para saber si algo funciona.</b> Para eso está la evidencia.</p>
+    <a class="btn-a" href="evidencia.html">Explorar la evidencia →</a>
   </div>
-</section>
-<section class="section cv-end">
-  <div class="wrap">
-    <div class="cv-end-in">
-      <div><h2>De las definiciones a la evidencia</h2><p>Clasificar ayuda a ordenar la información, pero no dice por sí solo cuán frecuente es cada forma de violencia ni si una intervención funciona. Para eso hay que revisar el diseño, la medición y las limitaciones de cada estudio. La OMS recomienda medir la violencia a partir de conductas concretas, y advierte que la violencia psicológica y la económica son las más difíciles de comparar entre encuestas.</p><a class="guide-action" href="evidencia.html">Explorar la evidencia →</a></div>
-      <div class="cv-src"><b>Fuentes</b><a href="{L30364}" target="_blank" rel="noopener">Ley N.° 30364, artículos 7 y 8 ↗</a><a href="{REGL}" target="_blank" rel="noopener">Reglamento de la Ley N.° 30364, art. 8.1 (D.S. N.° 005-2022-MIMP) ↗</a><span>{FICHA}, ítems A.6.4, B.2 y B.2.1. Programa Nacional Warmi Ñan.</span><a href="https://iris.who.int/handle/10665/375427" target="_blank" rel="noopener">OMS y ONU Mujeres (2023) · Calidad de las encuestas sobre violencia contra las mujeres ↗</a></div>
-    </div>
-  </div>
+  <div class="wrap"><p class="cv-fuentes">Fuentes: <a href="{L30364}" target="_blank" rel="noopener">Ley N.° 30364, arts. 7 y 8</a> · <a href="{REGL}" target="_blank" rel="noopener">Reglamento, art. 8.1 (D.S. N.° 005-2022-MIMP)</a> · {FICHA}, ítems A.6.4, B.2 y B.2.1 · <a href="{L31155}" target="_blank" rel="noopener">Ley N.° 31155</a> · <a href="{DL1410}" target="_blank" rel="noopener">D. Leg. N.° 1410</a>. Los ejemplos son ilustrativos; la calificación de un caso real corresponde a las autoridades.</p></div>
 </section>
 </main>
-'''+FOOTER+'''<script>
-(function(){const C='''+_CJ+r''';const B=[...document.querySelectorAll('.cs')],$=id=>document.getElementById(id);
-function sel(i){const c=C[i];B.forEach((b,j)=>b.setAttribute('aria-pressed',j===i));
- $('gxS').textContent=c.s;
- $('gxT').innerHTML=c.t.map(t=>`<span class="gx-chip t">${t.ico}Violencia ${t.n.toLowerCase()}</span>`).join('');
- $('gxF').innerHTML='<b>Forma registrada:</b> '+c.fm.join(' · ');
- $('gxTQ').innerHTML=c.t.map(t=>`<blockquote class="gx-q">${t.q}<cite>${t.b}</cite></blockquote>`).join('');
- $('gxV').textContent=c.v+' · '+c.vd;
- $('gxM').textContent=c.m;$('gxM').classList.toggle('none',c.f==='ning');$('gxMX').textContent=c.mx;
- $('gxSrc').innerHTML='Base: '+c.src;
- document.querySelectorAll('.mp-d').forEach(d=>d.classList.toggle('on',+d.dataset.c===i))}
-B.forEach((b,i)=>b.onclick=()=>sel(i));
-document.querySelectorAll('.mp-d').forEach(d=>d.onclick=()=>{sel(+d.dataset.c);document.querySelector('.gx').scrollIntoView({behavior:'smooth',block:'start'})});sel(0)})();
+'''+FOOTER+_an.JS+r'''<script>
+document.querySelectorAll('.mg').forEach(g=>{const d=g.querySelector('.mg-d'),B=[...g.querySelectorAll('.mc')];
+ B.forEach(b=>b.onclick=()=>{const on=b.getAttribute('aria-pressed')!=='true';B.forEach(x=>x.setAttribute('aria-pressed','false'));
+  if(on){b.setAttribute('aria-pressed','true');d.innerHTML=b.dataset.d;d.hidden=false}else d.hidden=true})});
 </script>
 </body>
 </html>
