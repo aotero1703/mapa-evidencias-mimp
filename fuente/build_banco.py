@@ -28,7 +28,7 @@ def head(title,desc,path=""):
 <meta name="twitter:image" content="{SITE}og-banco.png">
 <link rel="icon" href="{ICON}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Rubik:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Rubik:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap">
 <link rel="stylesheet" href="banco.css">
 </head>
 <body>
@@ -616,28 +616,22 @@ CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Cómo se desc
     <div class="tm-t">
       <span class="tm-k">Lee un caso</span>
       <h2>¿Quién? ¿Qué daño? ¿En qué contexto?</h2>
-      <p>Así describen los Centros Emergencia Mujer cada caso que atienden. Pasa los ejemplos.</p>
+      <p>Así se describe cada caso. Pasa los ejemplos.</p>
     </div>
-    '''+_an.componente(list(range(len(_an.CASOS))),'anGuia')+f'''
+    '''+_an.componente([0,1,2],'anGuia')+f'''
   </div>
 </section>
-<section class="section cv-soft" id="tipos">
+<section class="section cv-soft" id="referencia">
   <div class="wrap">
-    <div class="sv-intro"><span class="tm-k t">¿Qué daño? · Ley N.° 30364, art. 8</span><h2>Los cuatro tipos de violencia</h2></div>
-    <div class="tls">{_tipos}</div>
-  </div>
-</section>
-<section class="section" id="vinculo">
-  <div class="wrap">
-    <div class="sv-intro"><span class="tm-k v">¿Quién? · Ley N.° 30364, art. 7</span><h2>El vínculo con quien agrede</h2></div>
-    <div class="vls">{_vinc}</div>
-  </div>
-</section>
-<section class="section cv-soft" id="modalidades">
-  <div class="wrap">
-    <div class="sv-intro"><span class="tm-k m">¿En qué contexto? · Reglamento de la Ley N.° 30364, art. 8.1</span><h2>Las 21 modalidades</h2><p>Toca una para leerla. Muchos casos no tienen una modalidad adicional.</p></div>
-    <div class="mgs">{_fams}</div>
-    <details class="cem-note"><summary>¿Cómo las registra el Centro Emergencia Mujer?</summary><p>La Ficha CEM no las anota todas en el mismo lugar. La relación de pareja queda en el vínculo; la trata, la explotación sexual, el acoso y el hostigamiento sexual, como formas de violencia sexual; el feminicidio, en su propia sección. Las demás van en «otras modalidades», con una sola respuesta, o «ninguna otra modalidad». Desde 2023 la ficha incluye también la violencia contra mujeres defensoras de derechos humanos.</p></details>
+    <div class="rf-tabs" role="tablist" aria-label="Consulta">
+      <button type="button" role="tab" aria-selected="true" data-t="tipos"><b>¿Qué daño?</b><span>4 tipos</span></button>
+      <button type="button" role="tab" aria-selected="false" data-t="vinculo"><b>¿Quién?</b><span>3 vínculos</span></button>
+      <button type="button" role="tab" aria-selected="false" data-t="modalidades"><b>¿Contexto?</b><span>21 modalidades</span></button>
+    </div>
+    <div class="rf-p" id="tipos" data-t="tipos"><p class="rf-src">Ley N.° 30364, art. 8</p><div class="tls">{_tipos}</div></div>
+    <div class="rf-p" id="vinculo" data-t="vinculo" hidden><p class="rf-src">Ley N.° 30364, art. 7</p><div class="vls">{_vinc}</div></div>
+    <div class="rf-p" id="modalidades" data-t="modalidades" hidden><p class="rf-src">Reglamento de la Ley N.° 30364, art. 8.1 · Toca una para leerla. Muchos casos no tienen una modalidad adicional.</p><div class="mgs">{_fams}</div>
+      <details class="cem-note"><summary>¿Cómo las registra el Centro Emergencia Mujer?</summary><p>La Ficha CEM no las anota todas en el mismo lugar. La relación de pareja queda en el vínculo; la trata, la explotación sexual, el acoso y el hostigamiento sexual, como formas de violencia sexual; el feminicidio, en su propia sección. Las demás van en «otras modalidades», con una sola respuesta, o «ninguna otra modalidad». Desde 2023 la ficha incluye también la violencia contra mujeres defensoras de derechos humanos.</p></details></div>
   </div>
 </section>
 <section class="section cv-cta">
@@ -649,6 +643,9 @@ CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Cómo se desc
 </section>
 </main>
 '''+FOOTER+_an.JS+r'''<script>
+(function(){const T=[...document.querySelectorAll('.rf-tabs button')],P=[...document.querySelectorAll('.rf-p')];
+ const go=t=>{T.forEach(b=>b.setAttribute('aria-selected',b.dataset.t===t));P.forEach(p=>p.hidden=p.dataset.t!==t)};
+ T.forEach(b=>b.onclick=()=>go(b.dataset.t));const h=location.hash.slice(1);if(['tipos','vinculo','modalidades'].includes(h))go(h)})();
 document.querySelectorAll('.mg').forEach(g=>{const d=g.querySelector('.mg-d'),B=[...g.querySelectorAll('.mc')];
  B.forEach(b=>b.onclick=()=>{const on=b.getAttribute('aria-pressed')!=='true';B.forEach(x=>x.setAttribute('aria-pressed','false'));
   if(on){b.setAttribute('aria-pressed','true');d.innerHTML=b.dataset.d;d.hidden=false}else d.hidden=true})});

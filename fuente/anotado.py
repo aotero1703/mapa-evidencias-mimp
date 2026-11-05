@@ -13,21 +13,20 @@ CASOS=[
  ([('Su pareja','v','Pareja'),(' ',None,''),('la lastima físicamente durante las discusiones','t','Física'),('.',None,'')],'Ninguna adicional','Ley N.° 30364, arts. 7 y 8, lit. a'),
 ]
 ROL={'v':'Quién','t':'Tipo','m':'Modalidad'}
+_NOTA={'v':'quién','t':'qué daño','m':'contexto'}
 def _frase(c):
     tramos,sinmod,base=c
-    s=''.join((f'<mark class="an {r}">{_h.escape(t)}</mark>' if r else _h.escape(t)) for t,r,l in tramos)
+    s=''.join((f'<mark class="ch-{r}">{_h.escape(t)}</mark>' if r else _h.escape(t)) for t,r,l in tramos)
     lab={r:l for t,r,l in tramos if r}
-    chips=(f'<span class="ch v"><b>¿Quién?</b> {_h.escape(lab["v"])}</span>'
-           f'<span class="ch t"><b>¿Qué daño?</b> Violencia {_h.escape(lab["t"].lower())}</span>'
-           +(f'<span class="ch m"><b>¿Contexto?</b> {_h.escape(lab["m"])}</span>' if 'm' in lab else '<span class="ch n"><b>¿Contexto?</b> Ninguna modalidad adicional</span>'))
-    return f'<p class="an-s">{s}</p><div class="an-ch">{chips}</div><p class="an-b">Base: {_h.escape(base)}</p>'
+    notas=(f'<span class="nt v">↑ {_NOTA["v"]}: <b>{_h.escape(lab["v"].lower())}</b></span>'
+           f'<span class="nt t">↑ {_NOTA["t"]}: <b>{_h.escape(lab["t"].lower())}</b></span>'
+           +(f'<span class="nt m">↑ {_NOTA["m"]}: <b>{_h.escape(lab["m"].lower())}</b></span>' if 'm' in lab else '<span class="nt n">contexto: <b>ninguno en especial</b></span>'))
+    return f'<p class="pz-s">{s}</p><div class="pz-n">{notas}</div><span class="pz-i" tabindex="0" title="Base legal: {_h.escape(base)}" aria-label="Base legal: {_h.escape(base)}">ⓘ</span>'
 def componente(idx,uid,titulo=True):
-    """idx: índices de CASOS a mostrar; uid: prefijo único."""
     tabs=''.join(f'<button type="button" role="tab" aria-selected="{str(j==0).lower()}" data-i="{j}">{j+1}</button>' for j,_ in enumerate(idx))
     panes=''.join(f'<div class="an-p" data-i="{j}"{"" if j==0 else " hidden"}>{_frase(CASOS[i])}</div>' for j,i in enumerate(idx))
-    leyenda=''
-    return (f'<div class="an-box" id="{uid}">{leyenda}<div class="an-card">{panes}</div>'
-            f'<div class="an-nav"><span>Otro ejemplo</span><div class="an-tabs" role="tablist" aria-label="Ejemplos">{tabs}</div><button type="button" class="an-next">Siguiente →</button></div></div>')
+    return (f'<div class="an-box pz-box" id="{uid}"><div class="pz-board">{panes}'
+            f'<div class="an-nav"><div class="an-tabs" role="tablist" aria-label="Ejemplos">{tabs}</div><button type="button" class="an-next">otro ejemplo →</button></div></div><div class="pz-tray" aria-hidden="true"><i></i><i></i><i></i></div></div>')
 JS=r'''<script>
 document.querySelectorAll('.an-box').forEach(box=>{const T=[...box.querySelectorAll('.an-tabs button')],P=[...box.querySelectorAll('.an-p')];let k=0;
  const go=i=>{k=(i+P.length)%P.length;P.forEach((p,j)=>p.hidden=j!==k);T.forEach((t,j)=>t.setAttribute('aria-selected',j===k))};
