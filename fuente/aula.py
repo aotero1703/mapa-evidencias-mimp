@@ -4,6 +4,9 @@ import retratos as R
 def profesora():
     sk='#c48c64';hair='#2a1a12'
     s='<svg class="profe" viewBox="0 0 220 420" role="img" aria-label="Profesora explicando junto a la pizarra" xmlns="http://www.w3.org/2000/svg">'
+    # cabello largo detrás de la espalda
+    s+=f'<path d="M86 60C76 96 78 126 92 146Q110 152 128 146C142 126 144 96 134 60Z" fill="{hair}"/>'
+    s+=f'<rect x="103" y="100" width="14" height="32" rx="4" fill="{sk}"/><path d="M103 108Q110 116 117 108V116Q110 122 103 116Z" fill="#000" opacity=".12"/>'
     # piernas y zapatos
     s+=f'<rect x="88" y="318" width="14" height="80" rx="6" fill="{sk}"/><rect x="118" y="318" width="14" height="80" rx="6" fill="{sk}"/>'
     s+='<path d="M82 396h24v10h-26z" fill="#2a1d3a"/><path d="M114 396h24v10h-26z" fill="#2a1d3a"/>'
@@ -16,8 +19,8 @@ def profesora():
     s+='<path d="M98 128L110 168L122 128" fill="#f4f1e8"/>'
     # brazo izquierdo con libro
     s+=f'<path d="M146 160C160 190 160 214 150 230" stroke="#e5463c" stroke-width="20" stroke-linecap="round" fill="none"/><rect x="128" y="214" width="34" height="26" rx="3" fill="#f2a93b" transform="rotate(-10 145 227)"/><circle cx="146" cy="232" r="9" fill="{sk}"/>'
-    # cabeza (cabello detrás, rostro y melena)
-    s+=f'<g transform="translate(110 78) scale(.74)"><path d="M-40 -30C-46 20 -44 60 -34 80H34C44 60 46 20 40 -30Z" fill="{hair}"/>'
+    # cabeza: rostro y flequillo (el cabello largo va detrás de los hombros, dibujado antes del cuerpo)
+    s+=f'<g transform="translate(110 78) scale(.74)">'
     s+=R.rostro(sk,hair,w=30)
     s+=f'<path d="M-32 -16C-34 -52 -14 -62 0 -62C16 -62 34 -52 32 -16C26 -40 8 -46 -6 -44C-16 -40 -26 -32 -32 -16Z" fill="{hair}"/></g>'
     s+='</svg>'

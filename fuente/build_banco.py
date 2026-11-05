@@ -142,7 +142,7 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
       <div class="top">{ART_SV}<span class="kicker">Servicios</span></div>
       <div class="body">
         <h2>Servicios frente a la violencia contra las mujeres y los integrantes del grupo familiar</h2>
-        <p>Qué hace el Estado en cada paso, de la prevención a la reparación, y qué dicen los estudios sobre esos servicios.</p>
+        <p>Qué hace el Estado en cada paso, de la prevención a la reparación, explicado en palabras sencillas.</p>
         <div class="facts"><span>Ruta en 7 pasos</span><span>Catálogo 2026</span></div>
         <div class="basis"><b>Ley N.° 30364:</b> identifica los servicios pertinentes para la prevención y respuesta frente a la violencia.</div>
         <span class="go">Conocer los servicios <i>→</i></span>
@@ -464,7 +464,7 @@ for i,(k,t,tema,art,d,L,EV,ST,ic) in enumerate(RUTA,1):
     else:
         ev='<p class="rx-none">El banco aún no tiene estudios sobre este tema. Es un vacío de evidencia que conviene cubrir.</p>'
     bloques+=f'''<section class="rb c{i}{' ext' if not L else ''}" id="r-{k}"><div class="rb-h"><span class="rb-i">{_ico(ic)}</span><div><span class="rb-k">Paso {i} · {art}</span><h3>{t}</h3><p>{d}</p></div></div>
-<div class="rb-body"><div class="rb-svcs">{svcs}</div><aside class="rx"><span class="rx-k">Qué dice la evidencia</span>{ev}</aside></div></section>'''
+<div class="rb-body sola"><div class="rb-svcs">{svcs}</div></div></section>'''
 SERV=head('Servicios frente a la violencia contra las mujeres y los integrantes del grupo familiar · Banco de Evidencias','Los servicios del MIMP para prevenir, atender, proteger y reparar frente a la violencia, ordenados según la Ley N.° 30364 y vinculados con la evidencia disponible.','servicios.html')+header('sv')+f'''
 <main>
 <section class="page-hero sv sv-hero">
@@ -480,7 +480,7 @@ SERV=head('Servicios frente a la violencia contra las mujeres y los integrantes 
 </section>
 <section class="section ruta">
   <div class="wrap">
-    <div class="sv-intro"><h2>La respuesta frente a la violencia, paso a paso</h2><p>Siete pasos, de la prevención a la reparación. Elige uno para ver qué servicios hay y qué dicen los estudios. Los pasos no siempre van en orden: una persona puede llegar directo a un Centro Emergencia Mujer o necesitar protección de inmediato.</p></div>
+    <div class="sv-intro"><h2>La respuesta frente a la violencia, paso a paso</h2><p>Siete pasos, de la prevención a la reparación. Elige uno para ver qué servicios hay. Los pasos no siempre van en orden: una persona puede llegar directo a un Centro Emergencia Mujer o necesitar protección de inmediato.</p></div>
     <nav aria-label="Pasos de la ruta"><ol class="rt">{steps}</ol></nav>
     {bloques}
   </div>
@@ -497,7 +497,7 @@ SERV=head('Servicios frente a la violencia contra las mujeres y los integrantes 
     <p class="sv-src">Número de centros: Sexto Informe de avance de la Ley N.° 31155 (MIMP, 2026). Descripciones: Catálogo de Servicios del Sector 2026.</p>
   </div>
 </section>
-<section class="section sv-foot"><div class="wrap"><p class="sv-src">El MIMP brinda {len(SERVS)} servicios en total, también para niñas, niños y adolescentes, personas adultas mayores y personas con discapacidad. <a href="{CATALOGO}" target="_blank" rel="noopener">Ver el Catálogo de Servicios del Sector 2026 (PDF)</a>. Las descripciones de esta página están resumidas; la relación entre servicios y estudios es orientativa.</p></div></section>
+<section class="section sv-foot"><div class="wrap"><p class="sv-src">El MIMP brinda {len(SERVS)} servicios en total, también para niñas, niños y adolescentes, personas adultas mayores y personas con discapacidad. <a href="{CATALOGO}" target="_blank" rel="noopener">Ver el Catálogo de Servicios del Sector 2026 (PDF)</a>. Las descripciones de esta página están resumidas. ¿Buscas investigaciones sobre estos temas? Visita la <a href="evidencia.html">Evidencia científica</a>.</p></div></section>
 </main>
 '''+FOOTER+r'''<script>
 (function(){const L=[...document.querySelectorAll('.rt a')];if(!('IntersectionObserver' in window))return;
