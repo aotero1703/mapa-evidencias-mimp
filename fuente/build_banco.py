@@ -466,7 +466,10 @@ steps=''.join(f'<li class="c{i}"><a href="#r-{k}"><span class="rt-i">{_ico(ic)}<
 bloques=''
 for i,(k,t,tema,art,d,L,EV,ST,ic) in enumerate(RUTA,1):
     n=_TCOUNT.get(tema,0)
-    svcs=''.join(_svc(x,EV.get(x,[])) for x in L) if L else '<p class="rs-none">No es un servicio del MIMP. Cuando una víctima acude a un Centro Emergencia Mujer, su equipo legal la acompaña en la denuncia y durante el proceso.</p>'
+    svcs=''.join(_svc(x,EV.get(x,[])) for x in L) if L else ('<div class="den"><h4>¿Dónde y cómo denunciar?</h4><div class="den-g">'
+      '<div><b>Dónde</b><ul><li>Comisarías de la Policía Nacional</li><li>Fiscalías penales o de familia</li><li>Juzgados de familia</li><li>Donde no los haya: juzgados de paz letrados o juzgados de paz</li></ul></div>'
+      '<div><b>Cómo</b><ul><li>De forma verbal, por escrito o por medios virtuales</li><li>No se necesita abogado ni pagar una tasa</li><li>Puede denunciar la víctima o cualquier otra persona en su favor</li><li>El personal de salud y de educación está obligado a denunciar</li></ul></div>'
+      '</div><p class="den-s">Ley N.° 30364, art. 15. Si acudes a un Centro Emergencia Mujer, su equipo legal te acompaña en la denuncia y durante el proceso.</p></div>')
     if n:
         ev=f'<ul class="rx-list">{"".join(_study(x) for x in ST)}</ul><a class="rx-all" href="evidencia.html?tema={_q(tema)}">Ver los {n} estudios sobre {tema[0].lower()+tema[1:]} →</a>'
     else:
@@ -481,7 +484,7 @@ SERV=head('Servicios frente a la violencia · Banco de Evidencias','Los servicio
     <a class="crumb" href="./">← Banco de Evidencias</a>
     <h1>Servicios frente a la violencia</h1>
     <p>Nadie debería enfrentar la violencia sola. El Estado tiene servicios para cada momento, desde prevenirla hasta reparar el daño, en la ciudad, en el campo y en la Amazonía.</p>
-    <div class="help"><span class="help-k">¿Necesitas ayuda?</span><a href="tel:100"><b>Línea 100</b><span>Llamada gratuita, las 24 horas</span></a><a href="https://www.gob.pe/institucion/warmi%C3%B1an/tema/nuestros-servicios" target="_blank" rel="noopener"><b>Chat 100</b><span>Por internet o WhatsApp</span></a><a href="tel:105"><b>105</b><span>Emergencias, Policía Nacional</span></a></div>
+    <div class="help"><span class="help-k">¿Necesitas ayuda?</span><a href="tel:100"><b>Línea 100</b><span>Llamada gratuita, las 24 horas</span></a><a href="https://www.mimp.gob.pe/chat100" target="_blank" rel="noopener"><b>Chat 100</b><span>Por internet o WhatsApp</span></a><a href="tel:105"><b>105</b><span>Emergencias, Policía Nacional</span></a></div>
    </div>
    <div class="sv-hero-a">'''+RED_APOYO+f'''</div>
   </div>
@@ -541,153 +544,173 @@ document.querySelectorAll('.rb').forEach(s=>io.observe(s))})();
 '''
 
 # ---------- Guía: tipos y modalidades de violencia ----------
-_TIPOS=[('Violencia física','fis','Acción o conducta que causa daño a la integridad corporal o a la salud. Incluye el maltrato por negligencia, descuido o privación de necesidades básicas.',
-  '<path d="M12 21s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 11c0 5.7-7 10-7 10z"/><path d="M12 8.5l-1.5 3.5h3L12 15.5"/>'),
- ('Violencia psicológica','psi','Acción u omisión que busca controlar o aislar a la persona contra su voluntad, humillarla, avergonzarla, insultarla, estigmatizarla o estereotiparla.',
-  '<path d="M9.5 20v-3.2A6.5 6.5 0 1 1 18 11c0 1-.2 1.8-.6 2.6L19 17h-3v3z"/><path d="M10 9.5c.3-1 1.1-1.5 2-1.5 1.2 0 2 .8 2 1.8 0 1.5-2 1.7-2 3"/><path d="M12 15h0"/>'),
- ('Violencia sexual','sex','Acciones de naturaleza sexual sin consentimiento o bajo coacción, incluso sin penetración ni contacto físico, como la exposición a material pornográfico.',
-  '<circle cx="12" cy="12" r="8.5"/><path d="M7 7l10 10"/>'),
- ('Violencia económica o patrimonial','eco','Acción u omisión que perjudica los recursos económicos o patrimoniales: quitar o retener bienes, documentos o ingresos, o incumplir los alimentos.',
-  '<rect x="3" y="6.5" width="18" height="12" rx="2"/><path d="M3 10.5h18"/><path d="M7 15h3"/>')]
-_TK={t[0]:t[1] for t in _TIPOS}
-# Casos ilustrativos: (texto, modalidad de la fila, tipos, explicación)
+# Fuentes: Ley N.° 30364 (arts. 7 y 8); Reglamento, art. 8.1 lit. a (D.S. 004-2019-MIMP, modif. D.S. 005-2022-MIMP);
+# Instructivo de la Ficha de Registro de Casos del CEM 2023 (ítems A.6.4, B.2 y B.2.1).
 L30364='https://www.gob.pe/74905-ley-n-30364-ley-para-prevenir-sancionar-y-erradicar-la-violencia-contra-las-mujeres-y-los-integrantes-del-grupo-familiar'
+REGL='https://busquedas.elperuano.pe/dispositivo/NL/2055357-3'
 L31155='https://busquedas.elperuano.pe/dispositivo/NL/1941276-2'
-L27942='https://www.minedu.gob.pe/reforma-magisterial/pdf/disciplinario/2024/ley27942_ley_de_prevencion_y_sancion_del_hostigamiento_sexual.pdf'
 DL1410='https://busquedas.elperuano.pe/dispositivo/NL/1690482-3'
-MODU='https://www.gob.pe/75287-marco-conceptual-conceptos-y-definiciones-modalidades-de-violencia'
-_Q={'fis':('«Es la acción o conducta, que causa daño a la integridad corporal o a la salud».','Ley N.° 30364, art. 8, literal a'),
- 'psi':('«Es la acción u omisión, tendiente a controlar o aislar a la persona contra su voluntad, a humillarla, avergonzarla, insultarla, estigmatizarla o estereotiparla».','Ley N.° 30364, art. 8, literal b'),
- 'sex':('«Son acciones de naturaleza sexual que se cometen contra una persona sin su consentimiento o bajo coacción. Incluyen actos que no involucran penetración o contacto físico alguno».','Ley N.° 30364, art. 8, literal c'),
- 'eco':('Incluye, entre otras formas, «la limitación o control de sus ingresos».','Ley N.° 30364, art. 8, literal d, numeral 4')}
-# (situación, fila, tipos, modalidad, por qué esa modalidad, [(fuente, enlace)])
-_CASOS=[('Su pareja la golpea y la empuja; le ha causado lesiones.','pareja',['fis'],'Violencia en relación de pareja',
-  'Quien agrede es su pareja. La ley protege a cónyuges, excónyuges, convivientes y exconvivientes como integrantes del grupo familiar.',[('Ley N.° 30364, art. 7',L30364),('Marco conceptual del MIMP',MODU)]),
- ('Su pareja la insulta, la humilla delante de otras personas y controla con quién habla.','pareja',['psi'],'Violencia en relación de pareja',
-  'La misma relación que en el caso anterior, pero otro daño. Por eso la modalidad se repite y el tipo cambia.',[('Ley N.° 30364, art. 7',L30364),('Marco conceptual del MIMP',MODU)]),
- ('Su conviviente se queda con el sueldo de ella y controla todos sus ingresos.','pareja',['eco'],'Violencia en relación de pareja',
-  'Otra vez dentro de la pareja, ahora con un daño económico. Una misma modalidad puede incluir cualquiera de los cuatro tipos.',[('Ley N.° 30364, art. 7',L30364),('Marco conceptual del MIMP',MODU)]),
- ('Su expareja difunde por redes sociales fotos íntimas de ella, sin su autorización.','tic',['sex'],'Violencia a través de las tecnologías',
-  'El medio es digital. El Código Penal sanciona a quien difunde sin autorización imágenes con contenido sexual, con pena mayor si hubo relación de pareja o se usaron redes sociales.',[('Código Penal, art. 154-B (D. Leg. N.° 1410)',DL1410),('Marco conceptual del MIMP',MODU)]),
- ('Su jefe le exige favores sexuales y la amenaza con despedirla si no accede.','host',['sex'],'Hostigamiento sexual',
-  'Ocurre en una relación de trabajo. La ley de hostigamiento sexual incluye las amenazas para exigir una conducta sexual no deseada.',[('Ley N.° 27942, arts. 4 y 6 (modif. D. Leg. N.° 1410)',L27942)]),
- ('En las sesiones de concejo, a una regidora la insultan, la humillan y no la dejan tomar la palabra.','pol',['psi'],'Acoso político',
-  'Es una autoridad electa y se busca limitar el ejercicio de sus derechos políticos. Restringirle el uso de la palabra es una de las conductas que la ley menciona.',[('Ley N.° 31155, arts. 2, 3 y 4',L31155)])]
-_FILAS=[('pareja','En la pareja'),('tic','Por tecnologías'),('host','Hostigamiento sexual'),('pol','Acoso político')]
+FICHA='Instructivo de la Ficha de Registro de Casos del CEM (2023)'
+_TIPOS=[('Violencia física','fis','Acción o conducta que causa daño a la integridad corporal o a la salud. Incluye el maltrato por negligencia, descuido o privación de necesidades básicas.',
+  '<path d="M12 21s-7-4.3-7-10a4 4 0 0 1 7-2.7A4 4 0 0 1 19 11c0 5.7-7 10-7 10z"/><path d="M12 8.5l-1.5 3.5h3L12 15.5"/>',
+  ['Puntapiés o patadas','Puñetazos','Bofetadas','Jalones de cabello','Mordeduras','Empujones, tirar al suelo','Golpes con palos u otros objetos','Latigazos o correazos','Intento de asfixia','Heridas con arma','Quemaduras','Negligencia']),
+ ('Violencia psicológica','psi','Acción u omisión que busca controlar o aislar a la persona contra su voluntad, humillarla, avergonzarla, insultarla, estigmatizarla o estereotiparla.',
+  '<path d="M9.5 20v-3.2A6.5 6.5 0 1 1 18 11c0 1-.2 1.8-.6 2.6L19 17h-3v3z"/><path d="M10 9.5c.3-1 1.1-1.5 2-1.5 1.2 0 2 .8 2 1.8 0 1.5-2 1.7-2 3"/><path d="M12 15h0"/>',
+  ['Gritos e insultos','Insulto étnico-racial','Indiferencia','Rechazo','Desvalorización y humillación','Discriminación por género, orientación sexual o identidad de género','Amenaza de quitarle a sus hijos','Amenazas de daño o muerte','Le impide estudiar, trabajar o salir','Le impide recibir visitas','Rompe cosas en la casa','Vigilancia continua o persecución','Botarla de la casa','Abandono']),
+ ('Violencia sexual','sex','Acciones de naturaleza sexual sin consentimiento o bajo coacción, incluso sin penetración ni contacto físico, como la exposición a material pornográfico.',
+  '<circle cx="12" cy="12" r="8.5"/><path d="M7 7l10 10"/>',
+  ['Violación sexual','Tocamientos sin consentimiento','Hostigamiento sexual','Acoso sexual','Acoso sexual en espacios públicos','Chantaje sexual','Difusión de imágenes o audios con contenido sexual','Trata con fines de explotación sexual','Explotación sexual','Pornografía','Exhibiciones obscenas','Propuestas sexuales a menores por internet']),
+ ('Violencia económica o patrimonial','eco','Acción u omisión que perjudica los recursos económicos o patrimoniales: quitar o retener bienes, documentos o ingresos, o incumplir los alimentos.',
+  '<rect x="3" y="6.5" width="18" height="12" rx="2"/><path d="M3 10.5h18"/><path d="M7 15h3"/>',
+  ['Perturbar la posesión de sus bienes','Quitar, destruir o retener sus documentos, bienes o herramientas de trabajo','Limitar el dinero para sus necesidades','No cumplir con los alimentos','Limitar o controlar sus ingresos','Pagarle menos por el mismo trabajo','Impedir su desarrollo laboral','Quitarle sus ingresos o impedir que los administre','Condicionar los alimentos para someterla'])]
+_TK={t[0]:t[1] for t in _TIPOS}
+_TI={t[1]:t for t in _TIPOS}
 _TSHORT={'fis':'Física','psi':'Psicológica','sex':'Sexual','eco':'Económica'}
-MODURL='https://www.gob.pe/75287-marco-conceptual-conceptos-y-definiciones-modalidades-de-violencia'
-# Las 21 modalidades del marco conceptual del MIMP (número oficial, nombre, resumen, nombre en la base de estudios)
-_MODS={1:('Violencia en relación de pareja','Violencia ejercida en una relación íntima actual o pasada. Puede comprender cualquiera de los cuatro tipos.','Violencia en relación de pareja'),
- 2:('Feminicidio','Asesinato de una mujer por su condición de tal, tipificado en el Código Penal.','Feminicidio'),
- 3:('Trata de personas con fines de explotación sexual','Captación, traslado, acogida o retención de personas para explotarlas sexualmente.','Trata de personas con fines de explotación sexual'),
- 4:('Explotación sexual de niñas, niños y adolescentes','Utilización de niñas, niños o adolescentes con fines sexuales a cambio de una retribución o beneficio.',None),
- 5:('Acoso sexual','Persecución, hostigamiento o búsqueda de contacto de connotación sexual sin consentimiento, también en espacios públicos.',None),
- 6:('Violencia en los servicios de salud sexual y reproductiva','Prácticas que vulneran la dignidad, autonomía, privacidad o consentimiento de las mujeres en la atención de salud.',None),
- 7:('Esterilizaciones forzadas','Esterilización realizada sin consentimiento libre e informado.',None),
- 8:('Hostigamiento sexual','Conductas sexuales o sexistas no deseadas en relaciones de trabajo, estudio o similares, que afectan la dignidad o crean un ambiente hostil.',None),
- 9:('Acoso político','Conductas basadas en el género que impiden o restringen el ejercicio de los derechos políticos de las mujeres.',None),
- 10:('Violencia en conflictos sociales','Violencia de género que se produce o agrava en contextos de conflictividad social.',None),
- 11:('Violencia en conflicto armado','Violencia contra las mujeres en situaciones de conflicto armado, incluida la violencia sexual.','Violencia en conflicto armado'),
- 12:('Violencia a través de las tecnologías de la información y comunicación','Agresiones realizadas o facilitadas por medios digitales: amenazas, ciberacoso o difusión de contenido íntimo sin consentimiento.','Violencia a través de las tecnologías de la información'),
- 13:('Violencia por orientación sexual','Violencia y discriminación por motivos relacionados con la orientación sexual.',None),
- 14:('Violencia contra mujeres indígenas u originarias','Violencia en la que confluyen la discriminación de género y la étnica.',None),
- 15:('Violencia contra mujeres afroperuanas','Violencia en la que confluyen la discriminación de género y la racial.',None),
- 16:('Violencia contra mujeres migrantes','Violencia que puede agravarse por las barreras propias de la situación migratoria.',None),
- 17:('Violencia contra mujeres con virus de inmunodeficiencia humana','Violencia y discriminación contra mujeres que viven con VIH, también en el acceso a servicios.',None),
- 18:('Violencia en mujeres privadas de libertad','Violencia que afecta a mujeres en establecimientos penitenciarios u otros lugares de privación de libertad.',None),
- 19:('Violencia contra las mujeres con discapacidad','Violencia agravada por barreras de accesibilidad y discriminación por discapacidad.',None),
- 20:('Acoso a través del proceso judicial','Uso abusivo de procesos judiciales para hostigar o desgastar a una persona afectada por violencia.',None),
- 21:('Desaparición por particulares, entre otras','Desaparición de mujeres, niñas, niños o adolescentes por particulares, que puede vincularse con otras formas de violencia.',None)}
-# Agrupación referencial para facilitar la lectura (no es una clasificación oficial)
-_FAM=[('En las relaciones cercanas','Cuando quien agrede es la pareja, la expareja o alguien del entorno.',[1,2,20,21]),
- ('Violencia sexual y explotación','Cuando el cuerpo o la sexualidad de la víctima es el objeto de la agresión o del lucro.',[3,4,5,8]),
- ('En instituciones y la vida pública','Cuando ocurre en servicios del Estado, en la política o en lugares de privación de libertad.',[6,7,9,18]),
- ('Según el contexto o el medio','Cuando un conflicto o el uso de la tecnología marcan la forma de la violencia.',[10,11,12]),
- ('Cuando se suma otra discriminación','Cuando la violencia de género se agrava por la etnia, el origen, la salud, la discapacidad o la orientación sexual.',[13,14,15,16,17,19])]
+def _tic(k): return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_TI[k][3]}</svg>'
+_Q={'fis':'«Es la acción o conducta, que causa daño a la integridad corporal o a la salud».',
+ 'psi':'«Es la acción u omisión, tendiente a controlar o aislar a la persona contra su voluntad, a humillarla, avergonzarla, insultarla, estigmatizarla o estereotiparla».',
+ 'sex':'«Son acciones de naturaleza sexual que se cometen contra una persona sin su consentimiento o bajo coacción».',
+ 'eco':'«Es la acción u omisión que ocasiona un menoscabo en los recursos económicos o patrimoniales» de la persona.'}
+_QL={'fis':'Ley N.° 30364, art. 8, lit. a','psi':'Ley N.° 30364, art. 8, lit. b','sex':'Ley N.° 30364, art. 8, lit. c','eco':'Ley N.° 30364, art. 8, lit. d'}
+_VINC=[('Pareja','Cónyuge, conviviente, enamorado/a o novio/a, y sus «ex»; también quien tiene un hijo o hija en común.'),
+ ('Familiar','Madre o padre, padrastro o madrastra, hija o hijo, abuelo/a, hermano/a, tío/a, suegro/a, cuñado/a, entre otros.'),
+ ('Sin vínculo de pareja ni familiar','Vecino/a, docente, compañero/a de estudios o de trabajo, empleador/a, persona desconocida, entre otros.')]
+# Las 21 modalidades del Reglamento, art. 8.1, lit. a (numeración del Reglamento). Tercer campo: dónde la registra la Ficha CEM.
+_MODS={1:('Violencia en relación de pareja','Violencia de una pareja o expareja. Puede incluir cualquiera de los cuatro tipos.','vinc','Violencia en relación de pareja'),
+ 2:('Feminicidio','Asesinato de una mujer por su condición de tal, tipificado en el Código Penal.','fem','Feminicidio'),
+ 3:('Trata de personas con fines de explotación sexual','Captar, trasladar, acoger o retener a una persona para explotarla sexualmente.','sex','Trata de personas con fines de explotación sexual'),
+ 4:('Explotación sexual de niñas, niños y adolescentes','Utilizar a niñas, niños o adolescentes en actos sexuales a cambio de un beneficio.','sex',None),
+ 5:('Acoso sexual','Vigilar, perseguir, hostigar o buscar contacto con una persona, sin su consentimiento, con fines sexuales; también en espacios públicos.','sex',None),
+ 6:('Violencia en los servicios de salud sexual y reproductiva','Acciones violentas o discriminatorias contra los derechos sexuales y reproductivos de las mujeres durante su atención en salud.','mod',None),
+ 7:('Esterilizaciones forzadas','Esterilización realizada sin consentimiento libre e informado.','otro',None),
+ 8:('Hostigamiento sexual','Conducta sexual o sexista no deseada, en el trabajo, el centro de estudios o una relación similar.','sex',None),
+ 9:('Acoso político','Conductas contra mujeres, por su condición de tal, para limitar o impedir el ejercicio de sus derechos políticos.','mod',None),
+ 10:('Violencia en conflictos sociales','Violencia de género que se produce o agrava en contextos de conflicto social, ambiental o de desastre.','mod',None),
+ 11:('Violencia en conflicto armado','Violencia contra las mujeres en situaciones de conflicto armado, sobre todo violencia sexual, como ocurrió entre 1980 y 2000.','mod','Violencia en conflicto armado'),
+ 12:('Violencia a través de las tecnologías de la información y comunicación','Violencia ejercida o facilitada por internet, redes sociales u otros medios digitales.','mod','Violencia a través de las tecnologías de la información'),
+ 13:('Violencia por orientación sexual','Actos que causan daño o sufrimiento a una mujer por su orientación sexual.','mod',None),
+ 14:('Violencia contra mujeres indígenas u originarias','Violencia en la que se cruzan la discriminación de género, la étnica y la racial.','mod',None),
+ 15:('Violencia contra mujeres afroperuanas','Violencia que se expresa sobre todo en insultos racistas y agresiones sexuales basadas en estereotipos.','mod',None),
+ 16:('Violencia contra mujeres migrantes','Violencia agravada por estar fuera de su país de origen: riesgo de trata, tráfico de migrantes y violencia de género.','mod',None),
+ 17:('Violencia contra mujeres con virus de inmunodeficiencia humana','Violencia y discriminación contra mujeres que viven con VIH, en la pareja o en los servicios de salud.','mod',None),
+ 18:('Violencia en mujeres privadas de libertad','Violencia física, sexual o psicológica contra mujeres en prisión, incluida la de quienes las custodian.','mod',None),
+ 19:('Violencia contra las mujeres con discapacidad','Mayor riesgo de violencia, abandono o explotación, dentro y fuera del hogar.','mod',None),
+ 20:('Acoso a través del proceso judicial','Presentar denuncias y demandas en serie contra una expareja para hostigarla y desgastarla.','mod',None),
+ 21:('Desaparición por particulares','Desaparición de mujeres, a menudo vinculada al feminicidio, la trata o la violencia sexual.','mod',None)}
+_DONDE={'vinc':'En la Ficha CEM: vínculo con la persona agresora','fem':'En la Ficha CEM: sección de tentativa de feminicidio','sex':'En la Ficha CEM: forma de violencia sexual','mod':'En la Ficha CEM: «otras modalidades»','otro':''}
+_FAM=[('En las relaciones cercanas',[1,2,20,21]),('Violencia sexual y explotación',[3,4,5,8]),('En instituciones y en la vida pública',[6,7,9,18]),('Según el contexto o el medio',[10,11,12]),('Cuando se suma otra discriminación',[13,14,15,16,17,19])]
+# Casos: (situación, tipos, formas según la Ficha CEM, vínculo, detalle del vínculo, modalidad en la ficha, explicación de la modalidad, fila del mapa, fuentes)
+_CASOS=[('Su conviviente la empuja, la tira al suelo y le da bofetadas.',['fis'],['Empujones, tirar al suelo','Bofetadas'],'Pareja','Conviviente','Ninguna otra modalidad',
+  'Al ser su pareja, el Reglamento lo describe como «violencia en relación de pareja». La ficha ya lo recoge en el vínculo, por eso en «otras modalidades» marca «ninguna».','ning',[('Ley N.° 30364, arts. 7 y 8',L30364),('Reglamento, art. 8.1',REGL)]),
+ ('Su exenamorado la insulta, la humilla y la vigila a toda hora.',['psi'],['Gritos e insultos','Desvalorización y humillación','Vigilancia continua o persecución'],'Pareja','Exenamorado','Ninguna otra modalidad',
+  'Mismo vínculo que el caso anterior, otro tipo de violencia. El vínculo no decide el tipo.','ning',[('Ley N.° 30364, arts. 7 y 8',L30364)]),
+ ('Su esposo le quita el sueldo y no la deja administrar su dinero.',['eco'],['Quitarle sus ingresos o impedir que los administre','Limitar o controlar sus ingresos'],'Pareja','Cónyuge','Ninguna otra modalidad',
+  'Otra vez la pareja, ahora con violencia económica: cualquiera de los cuatro tipos puede ocurrir dentro de un mismo vínculo.','ning',[('Ley N.° 30364, art. 8, lit. d',L30364)]),
+ ('Su jefe la amenaza con despedirla si no accede a sus propuestas sexuales.',['sex'],['Hostigamiento sexual'],'Sin vínculo de pareja ni familiar','Empleador','Ninguna otra modalidad',
+  'El hostigamiento sexual es una de las 21 modalidades del Reglamento, pero la ficha lo registra como una forma de violencia sexual. Por eso en «otras modalidades» va «ninguna».','ning',[('Ley N.° 27942 y su Reglamento (D.S. 014-2019-MIMP)','https://www.minedu.gob.pe/reforma-magisterial/pdf/disciplinario/2024/ley27942_ley_de_prevencion_y_sancion_del_hostigamiento_sexual.pdf')]),
+ ('Su exnovio publica en redes sociales fotos íntimas de ella, sin su autorización.',['sex'],['Difusión de imágenes o audios con contenido sexual'],'Pareja','Exnovio','Violencia a través de las tecnologías de la información y comunicación',
+  'El daño ocurre a través de redes sociales. El Código Penal lo sanciona como delito, con más pena si hubo relación de pareja o se usaron redes sociales.','tic',[('Código Penal, art. 154-B',DL1410),('Reglamento, art. 8.1',REGL)]),
+ ('En el concejo municipal, un regidor insulta y humilla a una regidora para que no ejerza su cargo.',['psi'],['Gritos e insultos','Desvalorización y humillación'],'Sin vínculo de pareja ni familiar','Compañero de trabajo','Acoso político',
+  'Busca impedir que una autoridad electa ejerza sus derechos políticos. Los CEM registran la mayoría de estos casos como violencia psicológica.','pol',[('Ley N.° 31155, arts. 2 y 3',L31155)]),
+ ('Un vecino insulta a una mujer indígena con expresiones racistas por su origen y su lengua.',['psi'],['Insulto étnico-racial'],'Sin vínculo de pareja ni familiar','Vecino','Violencia contra mujeres indígenas u originarias',
+  'La agresión se dirige a su identidad indígena: se suman la discriminación de género y la étnico-racial.','ind',[('Reglamento, art. 8.1',REGL)])]
+_FILAS=[('ning','Ninguna otra modalidad'),('tic','Tecnologías (TIC)'),('pol','Acoso político'),('ind','Mujeres indígenas u originarias')]
 _TCNT={};_MCNT={}
 for _r in _EST.values():
     for _t in _r.get('tipos') or []: _TCNT[_t]=_TCNT.get(_t,0)+1
     for _m in _r.get('mod') or []: _MCNT[_m]=_MCNT.get(_m,0)+1
-_TI={t[1]:t for t in _TIPOS}
-def _tic(k,cls=''): return f'<svg class="{cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_TI[k][3]}</svg>'
+_tipos=''
+for n,k,d,ic,forms in _TIPOS:
+    c=_TCNT.get(n,0)
+    _tipos+=(f'<article class="tp tp-{k}"><span class="tp-i">{_tic(k)}</span><h3>{n}</h3><p>{d}</p>'
+      f'<details class="tp-f"><summary>Cómo se manifiesta ({len(forms)} formas)</summary><ul>{"".join(f"<li>{_e(x)}</li>" for x in forms)}</ul><small>Según la Ficha de Registro de Casos del CEM</small></details>'
+      +(f'<a href="evidencia.html?tipo={_q(n)}">{c} {"estudio" if c==1 else "estudios"} en el banco →</a>' if c else '<span class="tp-0">Aún no hay estudios en el banco</span>')+'</article>')
+_vinc=''.join(f'<article class="vc"><h3>{t}</h3><p>{d}</p></article>' for t,d in _VINC)
+_fams=''
+for t,L in _FAM:
+    items=''
+    for n in L:
+        nom,res,donde,key=_MODS[n];c=_MCNT.get(key,0) if key else 0
+        ev=f'<a href="evidencia.html?mod={_q(key)}">Ver {c} {"estudio" if c==1 else "estudios"} →</a>' if c else ''
+        dn=f'<span class="md-d">{_DONDE[donde]}</span>' if _DONDE[donde] else ''
+        items+=f'<details class="md"><summary><span class="md-n">{n:02d}</span><span class="md-t">{_e(nom)}</span>{f"<span class=md-c>{c}</span>" if c else ""}</summary><p>{_e(res)}</p>{dn}<div class="md-a">{ev}<a href="{REGL}" target="_blank" rel="noopener">Reglamento, art. 8.1 ↗</a></div></details>'
+    _fams+=f'<section class="fam"><h3>{t}</h3><div class="fam-l">{items}</div></section>'
 _casos=''.join(f'<button type="button" class="cs" data-c="{i}" aria-pressed="{str(i==0).lower()}"><span class="cs-n">{i+1}</span>{_e(c[0])}</button>' for i,c in enumerate(_CASOS))
-_mapa_h=''.join(f'<span class="mp-th">{_tic(k)}<span>{_TSHORT[k]}</span></span>' for _,k,_,_ in _TIPOS)
+_mapa_h=''.join(f'<span class="mp-th">{_tic(k)}<span>{_TSHORT[k]}</span></span>' for _,k,_,_,_ in _TIPOS)
 _mapa_r=''
 for f,nom in _FILAS:
     cells=''
-    for _,k,_,_ in _TIPOS:
-        ns=[i for i,c in enumerate(_CASOS) if c[1]==f and k in c[2]]
+    for _,k,_,_,_ in _TIPOS:
+        ns=[i for i,c in enumerate(_CASOS) if c[7]==f and k in c[1]]
         cells+='<span class="mp-c">'+''.join(f'<button type="button" class="mp-d" data-c="{i}" aria-label="Caso {i+1}">{i+1}</button>' for i in ns)+'</span>'
     _mapa_r+=f'<div class="mp-row" data-f="{f}"><span class="mp-m">{nom}</span>{cells}</div>'
-_tipos=''
-for n,k,d,ic in _TIPOS:
-    c=_TCNT.get(n,0)
-    _tipos+=f'<article class="tp tp-{k}"><span class="tp-i">{_tic(k)}</span><h3>{n}</h3><p>{d}</p>'+(f'<a href="evidencia.html?tipo={_q(n)}">{c} {"estudio" if c==1 else "estudios"} en el banco →</a>' if c else '<span class="tp-0">Aún no hay estudios en el banco</span>')+'</article>'
-_fams=''
-for t,d,L in _FAM:
-    items=''
-    for n in L:
-        nom,res,key=_MODS[n];c=_MCNT.get(key,0) if key else 0
-        ev=f'<a href="evidencia.html?mod={_q(key)}">Ver {c} {"estudio" if c==1 else "estudios"} →</a>' if c else ''
-        items+=f'<details class="md"><summary><span class="md-n">{n:02d}</span><span class="md-t">{_e(nom)}</span>{f"<span class=md-c>{c}</span>" if c else ""}</summary><p>{_e(res)}</p><div class="md-a">{ev}<a href="{MODURL}" target="_blank" rel="noopener">Definición oficial ↗</a></div></details>'
-    _fams+=f'<section class="fam"><h3>{t}</h3><p>{d}</p><div class="fam-l">{items}</div></section>'
 import json as _json
-_CJ=_json.dumps([{'f':c[1],'s':c[0],'t':[{'k':k,'n':_TSHORT[k],'ico':_tic(k),'q':_Q[k][0],'b':_Q[k][1]} for k in c[2]],'m':c[3],'mx':c[4],'mb':''.join(f'<a href="{u}" target="_blank" rel="noopener">{l} ↗</a>' for l,u in c[5])} for c in _CASOS],ensure_ascii=False)
-CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Guía para distinguir los tipos de violencia del artículo 8 de la Ley N.° 30364 y las modalidades del marco conceptual del MIMP, con ejemplos.','comprender-violencia.html')+header('cv')+f'''
+_CJ=_json.dumps([{'s':c[0],'t':[{'n':_TSHORT[k],'ico':_tic(k),'q':_Q[k],'b':_QL[k]} for k in c[1]],'fm':c[2],'v':c[3],'vd':c[4],'m':c[5],'mx':c[6],'f':c[7],
+  'src':''.join(f'<a href="{u}" target="_blank" rel="noopener">{l} ↗</a>' for l,u in c[8])} for c in _CASOS],ensure_ascii=False)
+CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Cómo se describe un caso de violencia: el tipo (art. 8 de la Ley N.° 30364), el vínculo con la persona agresora y la modalidad (art. 8.1 del Reglamento), con ejemplos.','comprender-violencia.html')+header('cv')+f'''
 <main>
 <section class="page-hero">
   <div class="wrap">
     <a class="crumb" href="./">← Banco de Evidencias</a>
     <h1>Tipos y modalidades de violencia</h1>
-    <p>Para describir un hecho de violencia hacen falta dos respuestas: qué daño se produjo y en qué relación o contexto ocurrió. Esta guía explica cada una con ejemplos y te lleva a los estudios del banco.</p>
+    <p>Para describir un hecho de violencia, los Centros Emergencia Mujer responden tres preguntas: qué tipo de violencia es, quién la ejerce y si corresponde a alguna modalidad. Esta guía explica cada una con la norma que la sustenta.</p>
   </div>
 </section>
 <section class="section">
   <div class="wrap">
-    <div class="q2">
-      <div class="q2-c"><span class="q2-k">Tipo de violencia</span><h2>¿Qué daño se produce?</h2><p>La Ley N.° 30364 reconoce cuatro tipos en su artículo 8: física, psicológica, sexual y económica o patrimonial.</p><a href="#tipos">Ver los 4 tipos ↓</a></div>
-      <span class="q2-plus" aria-hidden="true">+</span>
-      <div class="q2-c m"><span class="q2-k">Modalidad de violencia</span><h2>¿En qué relación o contexto ocurre?</h2><p>El marco conceptual del MIMP describe 21 modalidades: en la pareja, en el trabajo, en la política, por medios digitales, entre otras.</p><a href="#modalidades">Ver las 21 modalidades ↓</a></div>
+    <div class="sv-intro"><h2>Tres preguntas para describir un caso</h2></div>
+    <div class="q3">
+      <a class="q3-c t" href="#tipos"><span class="q3-n">1</span><span class="q2-k">Tipo de violencia</span><h3>¿Qué daño se produce?</h3><p>Física, psicológica, sexual o económica. Un mismo hecho puede tener más de un tipo.</p><small>Ley N.° 30364, art. 8</small></a>
+      <a class="q3-c v" href="#vinculo"><span class="q3-n">2</span><span class="q2-k">Vínculo</span><h3>¿Quién la ejerce?</h3><p>La pareja o expareja, un familiar u otra persona: un vecino, un docente, un jefe, alguien desconocido.</p><small>Ley N.° 30364, art. 7</small></a>
+      <a class="q3-c m" href="#modalidades"><span class="q3-n">3</span><span class="q2-k">Modalidad</span><h3>¿Hay una situación o contexto particular?</h3><p>Por ejemplo, si ocurre por redes sociales, en la vida política o contra una mujer indígena. Muchos casos no tienen una modalidad adicional.</p><small>Reglamento de la Ley N.° 30364, art. 8.1</small></a>
     </div>
-    <p class="q2-note">No son una lista dentro de la otra: <b>una misma modalidad puede incluir varios tipos</b>, y un mismo tipo aparece en muchas modalidades. Al final de la guía puedes <a href="#casos">practicarlo con seis situaciones</a>.</p>
+    <p class="q2-note">Las tres respuestas son independientes: <b>el vínculo o la modalidad no deciden el tipo</b>. Al final de la guía puedes <a href="#casos">practicarlo con siete situaciones</a>.</p>
   </div>
 </section>
 <section class="section tp-sec" id="tipos">
   <div class="wrap">
-    <div class="sv-intro"><span class="q2-k">Artículo 8 de la Ley N.° 30364</span><h2>Los cuatro tipos de violencia</h2><p>Síntesis de las definiciones de la ley. Para su interpretación jurídica, consulta siempre el texto vigente de la norma.</p></div>
+    <div class="sv-intro"><span class="q2-k">Pregunta 1 · Artículo 8 de la Ley N.° 30364</span><h2>Los cuatro tipos de violencia</h2><p>Síntesis de las definiciones de la ley. Abre cada tipo para ver cómo se manifiesta, según las formas que registran los Centros Emergencia Mujer.</p></div>
     <div class="tps">{_tipos}</div>
   </div>
 </section>
-<section class="section" id="modalidades">
+<section class="section" id="vinculo">
   <div class="wrap">
-    <div class="sv-intro"><span class="q2-k m">Marco conceptual del MIMP</span><h2>Las 21 modalidades de violencia</h2><p>Se agrupan aquí en cinco bloques solo para facilitar la lectura; la numeración es la del MIMP. Abre cada una para leer su resumen y ver los estudios del banco que la abordan.</p></div>
+    <div class="sv-intro"><span class="q2-k v">Pregunta 2 · Artículo 7 de la Ley N.° 30364</span><h2>El vínculo con la persona agresora</h2><p>La ley protege a las mujeres en todo su ciclo de vida y a los integrantes del grupo familiar. Para registrar un caso, el CEM agrupa el vínculo en tres categorías.</p></div>
+    <div class="vcs">{_vinc}</div>
+  </div>
+</section>
+<section class="section cv-mods" id="modalidades">
+  <div class="wrap">
+    <div class="sv-intro"><span class="q2-k m">Pregunta 3 · Artículo 8.1 del Reglamento de la Ley N.° 30364</span><h2>Las 21 modalidades de violencia contra las mujeres</h2><p>El Reglamento enumera 21 modalidades, «entre otras»: la lista no es cerrada. Aquí se agrupan en cinco bloques solo para facilitar la lectura; la numeración es la del Reglamento.</p></div>
+    <div class="mod-note"><b>¿Cómo las registra el CEM?</b> La ficha no las anota todas en el mismo lugar. La relación de pareja queda en el <b>vínculo</b>; la trata, la explotación sexual, el acoso y el hostigamiento sexual, como <b>formas de violencia sexual</b>; el feminicidio, en su propia sección. El resto va en «otras modalidades», con una sola respuesta, o «ninguna otra modalidad» si no corresponde. Desde 2023 la ficha incluye además la <b>violencia contra mujeres defensoras de derechos humanos</b>.</div>
     <div class="fams">{_fams}</div>
   </div>
 </section>
 <section class="section gx-sec" id="casos">
   <div class="wrap">
-    <div class="sv-intro"><span class="q2-k">Ponlo en práctica</span><h2>¿Cómo se describe un caso?</h2><p>Ya conoces los tipos y las modalidades. Ahora mira cómo se usan juntos: elige una situación y responde las dos preguntas. Cada respuesta muestra lo que dice la norma.</p></div>
+    <div class="sv-intro"><span class="q2-k">Ponlo en práctica</span><h2>¿Cómo se describe un caso?</h2><p>Elige una situación y mira cómo se responden las tres preguntas, con lo que dicen la norma y la ficha de registro.</p></div>
     <div class="gx">
       <div class="gx-cases" role="group" aria-label="Situaciones de ejemplo"><span class="gx-lbl">Elige una situación</span>{_casos}</div>
       <div class="gx-panel" aria-live="polite">
         <p class="gx-sit"><span>La situación</span><b id="gxS"></b></p>
-        <div class="gx-step t"><span class="gx-n">1</span><div><h3>¿Qué daño se produce?</h3><div class="gx-ans" id="gxT"></div><div id="gxTQ"></div></div></div>
-        <div class="gx-step m"><span class="gx-n">2</span><div><h3>¿En qué relación o contexto ocurre?</h3><div class="gx-ans"><span class="gx-chip m" id="gxM"></span></div><p class="gx-why" id="gxMX"></p><p class="gx-src" id="gxMB"></p></div></div>
-        <p class="gx-res"><b>Se describe así:</b> <span id="gxR"></span></p>
+        <div class="gx-step t"><span class="gx-n">1</span><div><h3>¿Qué tipo de violencia es?</h3><div class="gx-ans" id="gxT"></div><p class="gx-fm" id="gxF"></p><div id="gxTQ"></div></div></div>
+        <div class="gx-step v"><span class="gx-n">2</span><div><h3>¿Quién la ejerce?</h3><div class="gx-ans"><span class="gx-chip v" id="gxV"></span></div></div></div>
+        <div class="gx-step m"><span class="gx-n">3</span><div><h3>¿Hay una modalidad adicional?</h3><div class="gx-ans"><span class="gx-chip m" id="gxM"></span></div><p class="gx-why" id="gxMX"></p></div></div>
+        <p class="gx-src" id="gxSrc"></p>
       </div>
     </div>
     <div class="mp">
-      <div class="mp-head"><h3>Los seis casos en un solo mapa</h3><p>Los casos 1, 2 y 3 ocurren en la pareja, y cada uno es de un tipo distinto: <b>la modalidad no decide el tipo</b>. Los casos 4 y 5 son ambos de violencia sexual, en modalidades distintas.</p></div>
+      <div class="mp-head"><h3>Los siete casos en un solo mapa</h3><p>Los casos 1 a 4 no tienen una modalidad adicional y cada uno es de un tipo distinto. Los casos 2, 6 y 7 son todos de violencia psicológica, con modalidades distintas.</p></div>
       <div class="mp-grid"><div class="mp-row mp-hd"><span class="mp-m"></span>{_mapa_h}</div>{_mapa_r}</div>
     </div>
-    <p class="gx-note">Situaciones ilustrativas redactadas a partir del texto de las normas citadas, con fines pedagógicos. Un mismo hecho puede encajar en más de un tipo, y la calificación de un caso real corresponde a las autoridades competentes.</p>
+    <p class="gx-note">Situaciones ilustrativas redactadas a partir de las normas citadas y de las formas que registra la Ficha CEM, con fines pedagógicos. La calificación de un caso real corresponde a las autoridades competentes.</p>
   </div>
 </section>
 <section class="section cv-end">
   <div class="wrap">
     <div class="cv-end-in">
       <div><h2>De las definiciones a la evidencia</h2><p>Clasificar ayuda a ordenar la información, pero no dice por sí solo cuán frecuente es cada forma de violencia ni si una intervención funciona. Para eso hay que revisar el diseño, la medición y las limitaciones de cada estudio. La OMS recomienda medir la violencia a partir de conductas concretas, y advierte que la violencia psicológica y la económica son las más difíciles de comparar entre encuestas.</p><a class="guide-action" href="evidencia.html">Explorar la evidencia →</a></div>
-      <div class="cv-src"><b>Fuentes</b><a href="https://www.gob.pe/74905-ley-n-30364-ley-para-prevenir-sancionar-y-erradicar-la-violencia-contra-las-mujeres-y-los-integrantes-del-grupo-familiar" target="_blank" rel="noopener">Ley N.° 30364, artículo 8 ↗</a><a href="{MODURL}" target="_blank" rel="noopener">MIMP · Marco conceptual: modalidades de violencia ↗</a><a href="https://iris.who.int/handle/10665/375427" target="_blank" rel="noopener">OMS y ONU Mujeres (2023) · Calidad de las encuestas sobre violencia contra las mujeres ↗</a></div>
+      <div class="cv-src"><b>Fuentes</b><a href="{L30364}" target="_blank" rel="noopener">Ley N.° 30364, artículos 7 y 8 ↗</a><a href="{REGL}" target="_blank" rel="noopener">Reglamento de la Ley N.° 30364, art. 8.1 (D.S. N.° 005-2022-MIMP) ↗</a><span>{FICHA}, ítems A.6.4, B.2 y B.2.1. Programa Nacional Warmi Ñan.</span><a href="https://iris.who.int/handle/10665/375427" target="_blank" rel="noopener">OMS y ONU Mujeres (2023) · Calidad de las encuestas sobre violencia contra las mujeres ↗</a></div>
     </div>
   </div>
 </section>
@@ -697,11 +720,12 @@ CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Guía para di
 function sel(i){const c=C[i];B.forEach((b,j)=>b.setAttribute('aria-pressed',j===i));
  $('gxS').textContent=c.s;
  $('gxT').innerHTML=c.t.map(t=>`<span class="gx-chip t">${t.ico}Violencia ${t.n.toLowerCase()}</span>`).join('');
+ $('gxF').innerHTML='<b>Forma registrada:</b> '+c.fm.join(' · ');
  $('gxTQ').innerHTML=c.t.map(t=>`<blockquote class="gx-q">${t.q}<cite>${t.b}</cite></blockquote>`).join('');
- $('gxM').textContent=c.m;$('gxMX').textContent=c.mx;$('gxMB').innerHTML='Base: '+c.mb;
- $('gxR').innerHTML=`<span class="gx-chip t sm">Tipo: ${c.t.map(t=>t.n).join(' y ')}</span> + <span class="gx-chip m sm">Modalidad: ${c.m}</span>`;
- document.querySelectorAll('.mp-d').forEach(d=>d.classList.toggle('on',+d.dataset.c===i));
- document.querySelectorAll('.mp-row[data-f]').forEach(r=>r.classList.toggle('on',r.dataset.f===c.f))}
+ $('gxV').textContent=c.v+' · '+c.vd;
+ $('gxM').textContent=c.m;$('gxM').classList.toggle('none',c.f==='ning');$('gxMX').textContent=c.mx;
+ $('gxSrc').innerHTML='Base: '+c.src;
+ document.querySelectorAll('.mp-d').forEach(d=>d.classList.toggle('on',+d.dataset.c===i))}
 B.forEach((b,i)=>b.onclick=()=>sel(i));
 document.querySelectorAll('.mp-d').forEach(d=>d.onclick=()=>{sel(+d.dataset.c);document.querySelector('.gx').scrollIntoView({behavior:'smooth',block:'start'})});sel(0)})();
 </script>
