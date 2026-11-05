@@ -254,7 +254,7 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
       <div id="solDet" hidden></div>
     </div>
     <div id="tabE" role="tabpanel" aria-labelledby="tE">
-      <div class="guide-panel" role="note"><div class="guide-mark" aria-hidden="true">?</div><div class="guide-copy"><strong>¿Tipo o modalidad de violencia? No son lo mismo.</strong><p>El <b>tipo de violencia</b> (física, psicológica, sexual o económica) y la <b>modalidad</b> (por ejemplo, acoso político o violencia por redes sociales) son conceptos distintos de la Ley N.° 30364. Puedes filtrar por cada uno.</p></div><a class="guide-action" href="comprender-violencia.html">Ver la guía <span aria-hidden="true">→</span></a></div><p class="filter-context">Solo se incluyen estudios sobre la violencia que comprende la Ley N.° 30364. La clasificación de cada estudio es orientativa.</p><div class="filt f5">
+      <p class="filter-context">Solo se incluyen estudios sobre la violencia que comprende la Ley N.° 30364. La clasificación de cada estudio es orientativa.</p><div class="filt f5">
         <label>Tema de investigación<select id="fTema"></select></label>
         <label>Tipo de violencia<select id="fTipo"></select></label>
         <label>Modalidad de violencia<select id="fMod"></select></label>
@@ -655,6 +655,8 @@ document.querySelectorAll('.mg').forEach(g=>{const d=g.querySelector('.mg-d'),B=
 </html>
 '''
 
+import chatbot as _cb
+EVID=EVID.replace('</body>',_cb.HTML+_cb.JS+'\n</body>',1)
 for name,html in (('evidencia.html',EVID),('index.html',INDEX),('tablero.html',TABLERO),('fuentes.html',FUENTES),('servicios.html',SERV),('comprender-violencia.html',CV)):
     open(name,'w',encoding='utf-8').write(html)
 print('ok')
