@@ -134,7 +134,7 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
     <a class="door sv" href="servicios.html">
       <div class="top">{ART_SV}<span class="kicker">Servicios</span></div>
       <div class="body">
-        <h2>Servicios frente a la violencia</h2>
+        <h2>Servicios frente a la violencia contra las mujeres y los integrantes del grupo familiar</h2>
         <p>Qué hace el Estado en cada paso, de la prevención a la reparación, y qué dicen los estudios sobre esos servicios.</p>
         <div class="facts"><span>Ruta en 7 pasos</span><span>Catálogo 2026</span></div>
         <div class="basis"><b>Ley N.° 30364:</b> identifica los servicios pertinentes para la prevención y respuesta frente a la violencia.</div>
@@ -476,13 +476,13 @@ for i,(k,t,tema,art,d,L,EV,ST,ic) in enumerate(RUTA,1):
         ev='<p class="rx-none">El banco aún no tiene estudios sobre este tema. Es un vacío de evidencia que conviene cubrir.</p>'
     bloques+=f'''<section class="rb c{i}{' ext' if not L else ''}" id="r-{k}"><div class="rb-h"><span class="rb-i">{_ico(ic)}</span><div><span class="rb-k">Paso {i} · {art}</span><h3>{t}</h3><p>{d}</p></div></div>
 <div class="rb-body"><div class="rb-svcs">{svcs}</div><aside class="rx"><span class="rx-k">Qué dice la evidencia</span>{ev}</aside></div></section>'''
-SERV=head('Servicios frente a la violencia · Banco de Evidencias','Los servicios del MIMP para prevenir, atender, proteger y reparar frente a la violencia, ordenados según la Ley N.° 30364 y vinculados con la evidencia disponible.','servicios.html')+header('sv')+f'''
+SERV=head('Servicios frente a la violencia contra las mujeres y los integrantes del grupo familiar · Banco de Evidencias','Los servicios del MIMP para prevenir, atender, proteger y reparar frente a la violencia, ordenados según la Ley N.° 30364 y vinculados con la evidencia disponible.','servicios.html')+header('sv')+f'''
 <main>
 <section class="page-hero sv sv-hero">
   <div class="wrap sv-hero-in">
    <div class="sv-hero-t">
     <a class="crumb" href="./">← Banco de Evidencias</a>
-    <h1>Servicios frente a la violencia</h1>
+    <h1>Servicios frente a la violencia contra las mujeres y los integrantes del grupo familiar</h1>
     <p>Nadie debería enfrentar la violencia sola. El Estado tiene servicios para cada momento, desde prevenirla hasta reparar el daño, en la ciudad, en el campo y en la Amazonía.</p>
     <div class="help"><span class="help-k">¿Necesitas ayuda?</span><a href="tel:100"><b>Línea 100</b><span>Llamada gratuita, las 24 horas</span></a><a href="https://www.mimp.gob.pe/chat100" target="_blank" rel="noopener"><b>Chat 100</b><span>Por internet o WhatsApp</span></a><a href="tel:105"><b>105</b><span>Emergencias, Policía Nacional</span></a></div>
    </div>

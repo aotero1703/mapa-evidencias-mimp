@@ -706,3 +706,4 @@ a.sv-lvl{text-decoration:none;color:inherit;transition:transform .15s,border-col
 .den ul{margin:6px 0 0;padding-left:18px;font-size:.9rem;color:var(--ink-soft)}.den li{margin:3px 0}
 .den-s{margin:12px 0 0;font-size:.8rem;color:var(--ink-soft)}
 @media (max-width:600px){.den-g{grid-template-columns:1fr}}
+.sv-hero h1{font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:1.15;margin-bottom:14px}
