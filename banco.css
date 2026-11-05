@@ -1000,3 +1000,8 @@ html.poom .doors .door:nth-child(2){animation-delay:.05s}html.poom .doors .door:
 .cover-l li::before{content:'';flex:0 0 22px;height:22px;border-radius:50%;background:#7ec4d4 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%231d2552' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/14px no-repeat}
 @media (max-width:860px){.cover-l{gap:5px;margin-bottom:14px}.cover-l li{font-size:.95rem}}
 @media (max-width:860px) and (max-height:720px){.cover-l li{font-size:.88rem}}
+/* check dibujado a mano */
+.cover-l li::before{flex:0 0 26px;height:24px;border-radius:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 26'%3E%3Cpath d='M3.5 14.2c1.6.6 3.4 2.4 5.2 6.1.4.8 1 .9 1.4.1C13 13 17.6 7.2 24.8 2.6' fill='none' stroke='%23f2a93b' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5 15.6c1.3.7 2.6 2 3.9 4.3' fill='none' stroke='%23f2a93b' stroke-width='1.6' stroke-linecap='round' opacity='.55'/%3E%3C/svg%3E") center/contain no-repeat}
+.cover-l li:nth-child(1)::before{transform:rotate(-4deg)}
+.cover-l li:nth-child(2)::before{transform:rotate(3deg) translateY(1px)}
+.cover-l li:nth-child(3)::before{transform:rotate(-1deg) scale(.95)}
