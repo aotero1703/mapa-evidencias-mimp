@@ -12,6 +12,11 @@ ESCENAS=[
   <p class="sc-big">mujeres de 15 a 49 años en el Perú experimentaron alguna vez violencia por parte de su esposo o compañero.</p>
   <div class="sc-dots" aria-hidden="true">{_dots}</div>
   <p class="sc-src">ENDES 2025, primer semestre (INEI) · <a href="{MICRO}" target="_blank" rel="noopener">Microinforme del MIMP ↗</a></p></div>'''),
+ ('tolerancia',f'''<div class="sc-tol"><p class="sc-lead">Incluso, la violencia todavía se tolera.</p>
+  <div class="sc-bars"><div class="sc-bar h"><span class="sc-bl">Hombres</span><div class="sc-bt"><i style="--w:80.8%"></i></div><b>80,8 %</b></div>
+  <div class="sc-bar m"><span class="sc-bl">Mujeres</span><div class="sc-bt"><i style="--w:70.9%"></i></div><b>70,9 %</b></div></div>
+  <p class="sc-big">de los hombres y de las mujeres de 18 años a más toleran la violencia contra las mujeres.</p>
+  <p class="sc-src">ENARES 2024 (INEI) · <a href="https://www.gob.pe/en/institucion/inei/noticias/1205421-28-6-de-las-mujeres-de-18-y-mas-anos-de-edad-vive-bajo-la-dependencia-economica-de-la-pareja-o-expareja" target="_blank" rel="noopener">Nota del INEI ↗</a></p></div>'''),
  ('porque','''<div class="sc-mid"><p class="sc-lead">Detrás de cada cifra hay historias distintas.</p>
   <div class="sc-cards"><span>La controla y no la deja salir</span><span>Le quita su sueldo</span><span>Difunde sus fotos en redes</span></div>
   <p class="sc-big">Para registrarlas, atenderlas y estudiarlas, la <b>Ley N.° 30364</b> nos da un lenguaje común, con tres conceptos.</p></div>'''),
@@ -31,7 +36,7 @@ ESCENAS=[
   <p class="sc-big">Así puedes buscar estudios por tipo, por modalidad o por población.</p>
   <div class="sc-end"><a class="btn-a tm-go2" href="#banco">Entrar al banco →</a><a class="sc-guia" href="comprender-violencia.html">Ver la guía completa</a></div></div>'''),
 ]
-DUR=[7500,7000,6500,6000,6500,7500,9000]
+DUR=[7500,7500,7000,6500,6000,6500,7500,9000]
 def html():
     sc=''.join(f'<div class="sc sc-{k}" data-i="{i}"{"" if i==0 else " hidden"}>{c}</div>' for i,(k,c) in enumerate(ESCENAS))
     seg=''.join(f'<button type="button" class="vp-seg" data-i="{i}" aria-label="Escena {i+1}"><i></i></button>' for i in range(len(ESCENAS)))
