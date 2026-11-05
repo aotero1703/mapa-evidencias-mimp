@@ -48,7 +48,7 @@ def torso(cl,skin,w=82,neck_w=11):
 
 # 1. Mujer andina: sombrero de paja, trenzas con pompones, lliclla
 def andina():
-    sk='#a86a45';hair='#17100d'
+    sk='#bd8058';hair='#17100d'
     s=f'<path d="M-30 -20C-36 20 -34 60 -30 96L-20 96C-24 60 -24 20 -22 -10Z" fill="{hair}"/><path d="M30 -20C36 20 34 60 30 96L20 96C24 60 24 20 22 -10Z" fill="{hair}"/>'
     s+=torso('#c23a2f',sk)
     s+='<path d="M-82 120C-80 82 -64 56 -26 48L-6 120ZM82 120C80 82 64 56 26 48L6 120Z" fill="#f2a93b"/>'
@@ -73,7 +73,7 @@ def afro_costa():
 
 # 3. Mujer amazónica: cabello largo con flequillo, collar de semillas, túnica con diseño geométrico
 def amazonica():
-    sk='#a7724a';hair='#120c0a'
+    sk='#cf9a70';hair='#120c0a'
     s=f'<path d="M-36 -30C-40 20 -40 70 -32 110H32C40 70 40 20 36 -30Z" fill="{hair}"/>'
     s+=torso('#f1e6cf',sk)
     s+='<g fill="none" stroke="#7a2e22" stroke-width="3"><path d="M-70 92l10 -10l10 10l10 -10l10 10l10 -10l10 10l10 -10l10 10l10 -10l10 10l10 -10l10 10l10 -10"/><path d="M-74 106h148"/><path d="M-56 70h16v10h16M56 70h-16v10h-16"/></g>'
@@ -84,7 +84,7 @@ def amazonica():
 
 # 4. Adulta mayor: canas en moño, lentes, chompa
 def mayor():
-    sk='#c08860';hair='#dcd8de'
+    sk='#f1d0b4';hair='#dcd8de'
     s=torso('#6a4fb0',sk)+'<path d="M-24 48L-10 120M24 48L10 120" stroke="#5a3f9e" stroke-width="5"/><circle cx="0" cy="80" r="3" fill="#f2a93b"/><circle cx="0" cy="98" r="3" fill="#f2a93b"/>'
     s+=rostro(sk,'#9c96a0',closed=False,glasses=True,age=1)
     s+=f'<path d="M-31 -16C-34 -52 -14 -62 0 -62C14 -62 34 -52 31 -16C27 -38 14 -48 0 -48C-14 -48 -27 -38 -31 -16Z" fill="{hair}"/><circle cx="0" cy="-66" r="13" fill="{hair}"/><path d="M-8 -52q8 -6 16 0" stroke="#bdb7c2" stroke-width="1.5" fill="none"/>'
@@ -92,17 +92,17 @@ def mayor():
 
 # 5. Padre de la costa con su hija
 def familia():
-    sk1,sk2='#9a6342','#b98058'
-    a='<g transform="translate(-24 6) scale(.9)">'+torso('#2a96ad',sk1,neck_w=13)+rostro(sk1,'#16100c',w=31,jaw=.7,chin=42)
-    a+='<path d="M-31 -18C-33 -50 -14 -62 0 -62C16 -62 34 -50 31 -18C28 -40 12 -48 0 -48C-14 -48 -28 -40 -31 -18Z" fill="#16100c"/>'
+    sk1,sk2='#e2b590','#eac6a2'
+    a='<g transform="translate(-24 6) scale(.9)">'+torso('#2a96ad',sk1,neck_w=13)+rostro(sk1,'#3a2618',w=31,jaw=.7,chin=42)
+    a+='<path d="M-31 -18C-33 -50 -14 -62 0 -62C16 -62 34 -50 31 -18C28 -40 12 -48 0 -48C-14 -48 -28 -40 -31 -18Z" fill="#3a2618"/>'
     a+='<path d="M-22 14C-20 34 -10 42 0 42C10 42 20 34 22 14" stroke="#16100c" stroke-width="1" fill="none" opacity=".25"/></g>'
-    c='<g transform="translate(40 32) scale(.6)">'+torso('#f2a93b',sk2)+rostro(sk2,'#2f1d12',w=27,chin=36)
-    c+='<path d="M-29 -16C-30 -48 -12 -58 0 -58C12 -58 30 -48 29 -16C24 -36 10 -44 0 -44C-10 -44 -24 -36 -29 -16Z" fill="#2f1d12"/><circle cx="-34" cy="-30" r="11" fill="#2f1d12"/><circle cx="34" cy="-30" r="11" fill="#2f1d12"/><circle cx="-26" cy="-36" r="4" fill="#e5463c"/><circle cx="26" cy="-36" r="4" fill="#e5463c"/></g>'
+    c='<g transform="translate(40 32) scale(.6)">'+torso('#f2a93b',sk2)+rostro(sk2,'#4a2e1c',w=27,chin=36)
+    c+='<path d="M-29 -16C-30 -48 -12 -58 0 -58C12 -58 30 -48 29 -16C24 -36 10 -44 0 -44C-10 -44 -24 -36 -29 -16Z" fill="#4a2e1c"/><circle cx="-34" cy="-30" r="11" fill="#4a2e1c"/><circle cx="34" cy="-30" r="11" fill="#4a2e1c"/><circle cx="-26" cy="-36" r="4" fill="#e5463c"/><circle cx="26" cy="-36" r="4" fill="#e5463c"/></g>'
     return a+c
 
 # 6. Joven andino con chullo
 def chullo():
-    sk='#9b6340'
+    sk='#b8784e'
     s=torso('#3b4c9e',sk)+'<path d="M-24 48Q0 66 24 48" stroke="#2a3780" stroke-width="6" fill="none"/>'
     s+=rostro(sk,'#16100c',w=29,jaw=.68)
     s+='<path d="M-32 -16C-34 -60 -16 -78 0 -78C16 -78 34 -60 32 -16L34 10L26 12L26 -20H-26L-26 12L-34 10Z" fill="#e5463c"/>'
@@ -113,7 +113,7 @@ def chullo():
 
 # 7. Niña de la Amazonía con trenza
 def nina():
-    sk='#b07a50';hair='#1a110d'
+    sk='#dba77d';hair='#2e1d14'
     s=f'<path d="M24 -10C40 20 36 60 30 90" stroke="{hair}" stroke-width="12" stroke-linecap="round" fill="none"/>'
     s+=torso('#b5d334',sk)+rostro(sk,hair,w=27,chin=34)
     s+=f'<path d="M-29 -14C-30 -48 -12 -58 0 -58C12 -58 30 -48 29 -14C26 -34 12 -42 0 -42C-14 -42 -24 -34 -29 -14Z" fill="{hair}"/>'
