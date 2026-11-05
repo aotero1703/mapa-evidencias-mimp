@@ -993,3 +993,4 @@ html.poom .doors .door:nth-child(2){animation-delay:.05s}html.poom .doors .door:
 @keyframes pulse{0%,100%{transform:scale(.7);opacity:.08}50%{transform:scale(1.5);opacity:.28}}
 @media (prefers-reduced-motion: reduce){.cover-art .rg,.cover-art .net,.cover-art .netl,.cover-art .halo{animation:none}}
 .cover-q{max-width:540px}
+@media (max-width:860px){.cover-art{max-height:230px;width:auto;margin:0 auto}.cover-in{padding-top:14px;padding-bottom:20px;gap:6px}.cover-eye{margin-bottom:8px}.cover-p{margin-bottom:14px}}
