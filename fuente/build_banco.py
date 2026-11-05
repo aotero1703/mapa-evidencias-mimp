@@ -3,6 +3,7 @@
 import sys as _sys0,os as _os0; _sys0.path.insert(0,_os0.path.dirname(_os0.path.abspath(__file__)))
 from portada import COLLAGE
 import anotado as _an
+import tutorial as _tu
 POWERBI="https://app.powerbi.com/view?r=eyJrIjoiZTdiNmUwZGItN2QzOS00OTY0LWExYWMtZWE1MzlhMTg1MjFmIiwidCI6IjY4MTljNDYzLTVkZWItNDA3MC1hY2I2LTlmZGQzY2FhZTk4NCJ9"
 SITE="https://banco-evidencias-mimp.vercel.app/"
 ICON="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='26' fill='none' stroke='%232f3e8f' stroke-width='8'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%23f2a93b' stroke='%23e5463c' stroke-width='4'/%3E%3C/svg%3E"
@@ -99,18 +100,8 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
     <div class="cover-a">{COLLAGE}</div>
   </div>
 </section>
-<section class="section tm tm-screen" id="tipo-modalidad" aria-label="Tipo y modalidad">
-  <a class="tm-skip" href="#banco">Omitir <span aria-hidden="true">→</span></a>
-  <div class="wrap tm-in">
-    <div class="tm-t">
-      <span class="tm-k">Para empezar</span>
-      <h2>Tipo y modalidad: dos formas de describir un mismo hecho</h2>
-      <p>Una misma situación se describe respondiendo tres preguntas. Cada color es una de ellas.</p>
-      <a class="tm-go" href="comprender-violencia.html">Ver la guía completa →</a>
-    </div>
-    {_an.componente([0,1,2],'anHome')}
-  </div>
-  <div class="wrap tm-next"><a class="btn-a tm-go2" href="#banco">Ir al banco <span aria-hidden="true">↓</span></a></div>
+<section class="tm-screen tm-video" id="tipo-modalidad" aria-label="Introducción: por qué distinguir tipo y modalidad">
+  <div class="wrap">{_tu.html()}</div>
 </section>
 
 <section class="doors" id="banco" aria-label="Elige por dónde empezar">
@@ -171,12 +162,12 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
   </div>
 </section>
 </main>
-'''+FOOTER+_an.JS+r'''<script>
+'''+FOOTER+_an.JS+_tu.JS+r'''<script>
 (function(){const h=document.documentElement,c=document.getElementById('hero'),s=document.getElementById('tipo-modalidad'),d=document.getElementById('banco');if(!c||!s||!d)return;
  const quieto=matchMedia('(prefers-reduced-motion: reduce)').matches,paso=n=>{h.classList.remove('paso1','paso2','paso3');h.classList.add('paso'+n);scrollTo(0,0)};
- c.querySelector('.cover-open').onclick=e=>{e.preventDefault();const fin=()=>{c.classList.remove('opening');paso(2);const t=s.querySelector('h2');t.setAttribute('tabindex','-1');t.focus({preventScroll:true})};
-  if(quieto)return fin();c.classList.add('opening');setTimeout(fin,950)};
- const ir=e=>{e.preventDefault();const fin=()=>{s.classList.remove('leaving');paso(3);h.classList.add('poom');try{sessionStorage.setItem('bancoIntro','1')}catch(e){}d.setAttribute('tabindex','-1');d.focus({preventScroll:true});setTimeout(()=>h.classList.remove('poom'),1400)};
+ c.querySelector('.cover-open').onclick=e=>{e.preventDefault();const fin=()=>{c.classList.remove('opening');paso(2);if(window.bancoTutorial)bancoTutorial.start();const t=s.querySelector('.vp');t.setAttribute('tabindex','-1');t.focus({preventScroll:true})};
+  if(quieto)return fin();c.classList.add('opening');setTimeout(fin,800)};
+ const ir=e=>{e.preventDefault();if(window.bancoTutorial)bancoTutorial.stop();const fin=()=>{s.classList.remove('leaving');paso(3);h.classList.add('poom');try{sessionStorage.setItem('bancoIntro','1')}catch(e){}d.setAttribute('tabindex','-1');d.focus({preventScroll:true});setTimeout(()=>h.classList.remove('poom'),1400)};
   if(quieto)return fin();s.classList.add('leaving');setTimeout(fin,500)};
  s.querySelectorAll('.tm-skip,.tm-go2').forEach(a=>a.onclick=ir);
  const r=document.getElementById('verPortada');if(r)r.onclick=e=>{e.preventDefault();try{sessionStorage.removeItem('bancoIntro')}catch(e){}paso(1)}})();
