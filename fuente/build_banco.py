@@ -535,13 +535,30 @@ _TIPOS=[('Violencia física','fis','Acción o conducta que causa daño a la inte
   '<rect x="3" y="6.5" width="18" height="12" rx="2"/><path d="M3 10.5h18"/><path d="M7 15h3"/>')]
 _TK={t[0]:t[1] for t in _TIPOS}
 # Casos ilustrativos: (texto, modalidad de la fila, tipos, explicación)
-_CASOS=[('Su pareja la golpea y la empuja durante las discusiones.','pareja',['fis'],'El daño es corporal: violencia <b>física</b>. Ocurre dentro de una relación íntima: modalidad <b>violencia en relación de pareja</b>.'),
- ('Su pareja la insulta, la amenaza y revisa su celular todos los días.','pareja',['psi'],'Misma modalidad que el caso anterior, pero otro tipo: humillar, amenazar y controlar es violencia <b>psicológica</b>.'),
- ('Su conviviente se queda con su sueldo y controla todos sus gastos.','pareja',['eco'],'De nuevo en la pareja, ahora con violencia <b>económica o patrimonial</b>. Una modalidad puede incluir cualquiera de los cuatro tipos.'),
- ('Su expareja difunde fotos íntimas de ella por redes sociales, sin su consentimiento.','tic',['sex','psi'],'Es violencia <b>sexual</b> y <b>psicológica</b> a la vez. La modalidad la da el medio: <b>violencia a través de las tecnologías</b>.'),
- ('Su jefe le hace comentarios sexuales y le insinúa que perderá el puesto si no accede.','host',['sex','psi'],'Violencia <b>sexual</b> y <b>psicológica</b> en una relación de trabajo: modalidad <b>hostigamiento sexual</b>.'),
- ('Una regidora recibe amenazas para que renuncie a su cargo.','pol',['psi'],'Las amenazas son violencia <b>psicológica</b>. Como buscan impedir que ejerza un cargo público, la modalidad es <b>acoso político</b>.')]
-_FILAS=[('pareja','Relación de pareja'),('tic','Tecnologías de la información'),('host','Hostigamiento sexual'),('pol','Acoso político')]
+L30364='https://www.gob.pe/74905-ley-n-30364-ley-para-prevenir-sancionar-y-erradicar-la-violencia-contra-las-mujeres-y-los-integrantes-del-grupo-familiar'
+L31155='https://busquedas.elperuano.pe/dispositivo/NL/1941276-2'
+L27942='https://www.minedu.gob.pe/reforma-magisterial/pdf/disciplinario/2024/ley27942_ley_de_prevencion_y_sancion_del_hostigamiento_sexual.pdf'
+DL1410='https://busquedas.elperuano.pe/dispositivo/NL/1690482-3'
+MODU='https://www.gob.pe/75287-marco-conceptual-conceptos-y-definiciones-modalidades-de-violencia'
+_Q={'fis':('«Es la acción o conducta, que causa daño a la integridad corporal o a la salud».','Ley N.° 30364, art. 8, literal a'),
+ 'psi':('«Es la acción u omisión, tendiente a controlar o aislar a la persona contra su voluntad, a humillarla, avergonzarla, insultarla, estigmatizarla o estereotiparla».','Ley N.° 30364, art. 8, literal b'),
+ 'sex':('«Son acciones de naturaleza sexual que se cometen contra una persona sin su consentimiento o bajo coacción. Incluyen actos que no involucran penetración o contacto físico alguno».','Ley N.° 30364, art. 8, literal c'),
+ 'eco':('Incluye, entre otras formas, «la limitación o control de sus ingresos».','Ley N.° 30364, art. 8, literal d, numeral 4')}
+# (situación, fila, tipos, modalidad, por qué esa modalidad, [(fuente, enlace)])
+_CASOS=[('Su pareja la golpea y la empuja; le ha causado lesiones.','pareja',['fis'],'Violencia en relación de pareja',
+  'Quien agrede es su pareja. La ley protege a cónyuges, excónyuges, convivientes y exconvivientes como integrantes del grupo familiar.',[('Ley N.° 30364, art. 7',L30364),('Marco conceptual del MIMP',MODU)]),
+ ('Su pareja la insulta, la humilla delante de otras personas y controla con quién habla.','pareja',['psi'],'Violencia en relación de pareja',
+  'La misma relación que en el caso anterior, pero otro daño. Por eso la modalidad se repite y el tipo cambia.',[('Ley N.° 30364, art. 7',L30364),('Marco conceptual del MIMP',MODU)]),
+ ('Su conviviente se queda con el sueldo de ella y controla todos sus ingresos.','pareja',['eco'],'Violencia en relación de pareja',
+  'Otra vez dentro de la pareja, ahora con un daño económico. Una misma modalidad puede incluir cualquiera de los cuatro tipos.',[('Ley N.° 30364, art. 7',L30364),('Marco conceptual del MIMP',MODU)]),
+ ('Su expareja difunde por redes sociales fotos íntimas de ella, sin su autorización.','tic',['sex'],'Violencia a través de las tecnologías',
+  'El medio es digital. El Código Penal sanciona a quien difunde sin autorización imágenes con contenido sexual, con pena mayor si hubo relación de pareja o se usaron redes sociales.',[('Código Penal, art. 154-B (D. Leg. N.° 1410)',DL1410),('Marco conceptual del MIMP',MODU)]),
+ ('Su jefe le exige favores sexuales y la amenaza con despedirla si no accede.','host',['sex'],'Hostigamiento sexual',
+  'Ocurre en una relación de trabajo. La ley de hostigamiento sexual incluye las amenazas para exigir una conducta sexual no deseada.',[('Ley N.° 27942, arts. 4 y 6 (modif. D. Leg. N.° 1410)',L27942)]),
+ ('En las sesiones de concejo, a una regidora la insultan, la humillan y no la dejan tomar la palabra.','pol',['psi'],'Acoso político',
+  'Es una autoridad electa y se busca limitar el ejercicio de sus derechos políticos. Restringirle el uso de la palabra es una de las conductas que la ley menciona.',[('Ley N.° 31155, arts. 2, 3 y 4',L31155)])]
+_FILAS=[('pareja','En la pareja'),('tic','Por tecnologías'),('host','Hostigamiento sexual'),('pol','Acoso político')]
+_TSHORT={'fis':'Física','psi':'Psicológica','sex':'Sexual','eco':'Económica'}
 MODURL='https://www.gob.pe/75287-marco-conceptual-conceptos-y-definiciones-modalidades-de-violencia'
 # Las 21 modalidades del marco conceptual del MIMP (número oficial, nombre, resumen, nombre en la base de estudios)
 _MODS={1:('Violencia en relación de pareja','Violencia ejercida en una relación íntima actual o pasada. Puede comprender cualquiera de los cuatro tipos.','Violencia en relación de pareja'),
@@ -577,9 +594,15 @@ for _r in _EST.values():
     for _m in _r.get('mod') or []: _MCNT[_m]=_MCNT.get(_m,0)+1
 _TI={t[1]:t for t in _TIPOS}
 def _tic(k,cls=''): return f'<svg class="{cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_TI[k][3]}</svg>'
-_casos=''.join(f'<button type="button" class="cs" data-c="{i}" aria-pressed="{str(i==0).lower()}"><span class="cs-n">{i+1}</span>{_e(t)}</button>' for i,(t,f,ts,x) in enumerate(_CASOS))
-_head=''.join(f'<span class="gx-th">{_tic(k)}<span>{n.replace("Violencia ","").replace(" o patrimonial","")}</span></span>' for n,k,_,_ in _TIPOS)
-_rows=''.join(f'<div class="gx-row" data-f="{f}"><span class="gx-m">{n}</span>'+''.join(f'<span class="gx-c" data-t="{k}"></span>' for _,k,_,_ in _TIPOS)+'</div>' for f,n in _FILAS)
+_casos=''.join(f'<button type="button" class="cs" data-c="{i}" aria-pressed="{str(i==0).lower()}"><span class="cs-n">{i+1}</span>{_e(c[0])}</button>' for i,c in enumerate(_CASOS))
+_mapa_h=''.join(f'<span class="mp-th">{_tic(k)}<span>{_TSHORT[k]}</span></span>' for _,k,_,_ in _TIPOS)
+_mapa_r=''
+for f,nom in _FILAS:
+    cells=''
+    for _,k,_,_ in _TIPOS:
+        ns=[i for i,c in enumerate(_CASOS) if c[1]==f and k in c[2]]
+        cells+='<span class="mp-c">'+''.join(f'<button type="button" class="mp-d" data-c="{i}" aria-label="Caso {i+1}">{i+1}</button>' for i in ns)+'</span>'
+    _mapa_r+=f'<div class="mp-row" data-f="{f}"><span class="mp-m">{nom}</span>{cells}</div>'
 _tipos=''
 for n,k,d,ic in _TIPOS:
     c=_TCNT.get(n,0)
@@ -593,7 +616,7 @@ for t,d,L in _FAM:
         items+=f'<details class="md"><summary><span class="md-n">{n:02d}</span><span class="md-t">{_e(nom)}</span>{f"<span class=md-c>{c}</span>" if c else ""}</summary><p>{_e(res)}</p><div class="md-a">{ev}<a href="{MODURL}" target="_blank" rel="noopener">Definición oficial ↗</a></div></details>'
     _fams+=f'<section class="fam"><h3>{t}</h3><p>{d}</p><div class="fam-l">{items}</div></section>'
 import json as _json
-_CJ=_json.dumps([{'f':f,'t':ts,'x':x} for (_,f,ts,x) in _CASOS],ensure_ascii=False)
+_CJ=_json.dumps([{'f':c[1],'s':c[0],'t':[{'k':k,'n':_TSHORT[k],'ico':_tic(k),'q':_Q[k][0],'b':_Q[k][1]} for k in c[2]],'m':c[3],'mx':c[4],'mb':''.join(f'<a href="{u}" target="_blank" rel="noopener">{l} ↗</a>' for l,u in c[5])} for c in _CASOS],ensure_ascii=False)
 CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Guía para distinguir los tipos de violencia del artículo 8 de la Ley N.° 30364 y las modalidades del marco conceptual del MIMP, con ejemplos.','comprender-violencia.html')+header('cv')+f'''
 <main>
 <section class="page-hero">
@@ -610,20 +633,7 @@ CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Guía para di
       <span class="q2-plus" aria-hidden="true">+</span>
       <div class="q2-c m"><span class="q2-k">Modalidad de violencia</span><h2>¿En qué relación o contexto ocurre?</h2><p>El marco conceptual del MIMP describe 21 modalidades: en la pareja, en el trabajo, en la política, por medios digitales, entre otras.</p><a href="#modalidades">Ver las 21 modalidades ↓</a></div>
     </div>
-    <p class="q2-note">No son una lista dentro de la otra: <b>una misma modalidad puede incluir varios tipos</b>, y un mismo tipo aparece en muchas modalidades.</p>
-  </div>
-</section>
-<section class="section gx-sec" id="casos">
-  <div class="wrap">
-    <div class="sv-intro"><h2>Pruébalo con un caso</h2><p>Elige una situación y mira cómo se ubica en las dos dimensiones. Los tres primeros casos ocurren en la pareja y, sin embargo, son de tipos distintos.</p></div>
-    <div class="gx">
-      <div class="gx-cases" role="group" aria-label="Casos de ejemplo">{_casos}</div>
-      <div class="gx-panel">
-        <div class="gx-grid" aria-hidden="true"><div class="gx-row gx-hd"><span class="gx-m gx-corner"><b>Modalidad</b> ↓ · <b>Tipo</b> →</span>{_head}</div>{_rows}</div>
-        <p class="gx-x" id="gxX" aria-live="polite"></p>
-      </div>
-    </div>
-    <p class="gx-note">Casos ilustrativos para comprender las categorías. La calificación de un caso real corresponde a las autoridades competentes.</p>
+    <p class="q2-note">No son una lista dentro de la otra: <b>una misma modalidad puede incluir varios tipos</b>, y un mismo tipo aparece en muchas modalidades. Al final de la guía puedes <a href="#casos">practicarlo con seis situaciones</a>.</p>
   </div>
 </section>
 <section class="section tp-sec" id="tipos">
@@ -638,6 +648,25 @@ CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Guía para di
     <div class="fams">{_fams}</div>
   </div>
 </section>
+<section class="section gx-sec" id="casos">
+  <div class="wrap">
+    <div class="sv-intro"><span class="q2-k">Ponlo en práctica</span><h2>¿Cómo se describe un caso?</h2><p>Ya conoces los tipos y las modalidades. Ahora mira cómo se usan juntos: elige una situación y responde las dos preguntas. Cada respuesta muestra lo que dice la norma.</p></div>
+    <div class="gx">
+      <div class="gx-cases" role="group" aria-label="Situaciones de ejemplo"><span class="gx-lbl">Elige una situación</span>{_casos}</div>
+      <div class="gx-panel" aria-live="polite">
+        <p class="gx-sit"><span>La situación</span><b id="gxS"></b></p>
+        <div class="gx-step t"><span class="gx-n">1</span><div><h3>¿Qué daño se produce?</h3><div class="gx-ans" id="gxT"></div><div id="gxTQ"></div></div></div>
+        <div class="gx-step m"><span class="gx-n">2</span><div><h3>¿En qué relación o contexto ocurre?</h3><div class="gx-ans"><span class="gx-chip m" id="gxM"></span></div><p class="gx-why" id="gxMX"></p><p class="gx-src" id="gxMB"></p></div></div>
+        <p class="gx-res"><b>Se describe así:</b> <span id="gxR"></span></p>
+      </div>
+    </div>
+    <div class="mp">
+      <div class="mp-head"><h3>Los seis casos en un solo mapa</h3><p>Los casos 1, 2 y 3 ocurren en la pareja, y cada uno es de un tipo distinto: <b>la modalidad no decide el tipo</b>. Los casos 4 y 5 son ambos de violencia sexual, en modalidades distintas.</p></div>
+      <div class="mp-grid"><div class="mp-row mp-hd"><span class="mp-m"></span>{_mapa_h}</div>{_mapa_r}</div>
+    </div>
+    <p class="gx-note">Situaciones ilustrativas redactadas a partir del texto de las normas citadas, con fines pedagógicos. Un mismo hecho puede encajar en más de un tipo, y la calificación de un caso real corresponde a las autoridades competentes.</p>
+  </div>
+</section>
 <section class="section cv-end">
   <div class="wrap">
     <div class="cv-end-in">
@@ -648,11 +677,17 @@ CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Guía para di
 </section>
 </main>
 '''+FOOTER+'''<script>
-(function(){const C='''+_CJ+r''';const B=[...document.querySelectorAll('.cs')],X=document.getElementById('gxX');
+(function(){const C='''+_CJ+r''';const B=[...document.querySelectorAll('.cs')],$=id=>document.getElementById(id);
 function sel(i){const c=C[i];B.forEach((b,j)=>b.setAttribute('aria-pressed',j===i));
- document.querySelectorAll('.gx-row[data-f]').forEach(r=>{const on=r.dataset.f===c.f;r.classList.toggle('on',on);
-  r.querySelectorAll('.gx-c').forEach(x=>x.classList.toggle('lit',on&&c.t.includes(x.dataset.t)))});X.innerHTML=c.x}
-B.forEach((b,i)=>b.onclick=()=>sel(i));sel(0)})();
+ $('gxS').textContent=c.s;
+ $('gxT').innerHTML=c.t.map(t=>`<span class="gx-chip t">${t.ico}Violencia ${t.n.toLowerCase()}</span>`).join('');
+ $('gxTQ').innerHTML=c.t.map(t=>`<blockquote class="gx-q">${t.q}<cite>${t.b}</cite></blockquote>`).join('');
+ $('gxM').textContent=c.m;$('gxMX').textContent=c.mx;$('gxMB').innerHTML='Base: '+c.mb;
+ $('gxR').innerHTML=`<span class="gx-chip t sm">Tipo: ${c.t.map(t=>t.n).join(' y ')}</span> + <span class="gx-chip m sm">Modalidad: ${c.m}</span>`;
+ document.querySelectorAll('.mp-d').forEach(d=>d.classList.toggle('on',+d.dataset.c===i));
+ document.querySelectorAll('.mp-row[data-f]').forEach(r=>r.classList.toggle('on',r.dataset.f===c.f))}
+B.forEach((b,i)=>b.onclick=()=>sel(i));
+document.querySelectorAll('.mp-d').forEach(d=>d.onclick=()=>{sel(+d.dataset.c);document.querySelector('.gx').scrollIntoView({behavior:'smooth',block:'start'})});sel(0)})();
 </script>
 </body>
 </html>
