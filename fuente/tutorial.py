@@ -9,7 +9,7 @@ def _i(k): return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" s
 _dots=''.join(f'<i style="--d:{i}"></i>' for i in range(100))
 ESCENAS=[
  ('dato',f'''<div class="sc-stat"><div class="sc-num"><b data-count="50">0</b><span>de cada 100</span></div>
-  <p class="sc-big">mujeres de 15 a 49 años en el Perú vivieron alguna vez violencia de parte de su pareja.</p>
+  <p class="sc-big">mujeres de 15 a 49 años en el Perú experimentaron alguna vez violencia por parte de su esposo o compañero.</p>
   <div class="sc-dots" aria-hidden="true">{_dots}</div>
   <p class="sc-src">ENDES 2025, primer semestre (INEI) · <a href="{MICRO}" target="_blank" rel="noopener">Microinforme del MIMP ↗</a></p></div>'''),
  ('porque','''<div class="sc-mid"><p class="sc-lead">Detrás de cada cifra hay historias distintas.</p>
