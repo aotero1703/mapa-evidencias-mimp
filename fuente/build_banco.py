@@ -87,6 +87,7 @@ ART_SV='''<svg class="art" viewBox="0 0 200 200" aria-hidden="true"><g fill="non
 <circle cx="70" cy="120" r="10" fill="#fff"/><circle cx="120" cy="80" r="10" fill="#fff" fill-opacity=".85"/><circle cx="170" cy="40" r="12" fill="#f2a93b"/></svg>'''
 INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica, indicadores y fuentes de datos oficiales sobre la violencia contra las mujeres y los integrantes del grupo familiar. Observatorio Nacional, MIMP (Ley N.° 30364).')+header('')+f'''
 <main>
+<script>(function(){{var h=document.documentElement,v=null;try{{v=sessionStorage.getItem('bancoIntro')}}catch(e){{}}h.classList.add(v?'paso3':'paso1')}})();</script>
 <section class="cover" id="hero" aria-label="Portada del Banco de Evidencias">
   <div class="wrap cover-in">
     <div class="cover-t">
@@ -113,6 +114,7 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
 </section>
 
 <section class="doors" id="banco" aria-label="Elige por dónde empezar">
+  <div class="wrap replay"><a href="./" id="verPortada">↺ Ver la portada</a></div>
   <div class="wrap">
     <a class="door ev" href="evidencia.html">
       <div class="top">{ART_EV}<span class="kicker">Evidencia científica</span></div>
@@ -170,15 +172,14 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
 </section>
 </main>
 '''+FOOTER+_an.JS+r'''<script>
-(function(){const c=document.getElementById('hero'),b=c&&c.querySelector('.cover-open');if(!b)return;
- b.onclick=e=>{e.preventDefault();const t=document.getElementById('tipo-modalidad');
-  const fin=()=>{c.classList.add('closed');scrollTo(0,0);const h=t.querySelector('h2');h.setAttribute('tabindex','-1');h.focus({preventScroll:true})};
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return fin();
-  c.classList.add('opening');setTimeout(fin,950)}})();
-(function(){const s=document.getElementById('tipo-modalidad'),d=document.getElementById('banco');if(!s||!d)return;
- const ir=e=>{e.preventDefault();const fin=()=>{s.classList.add('closed');const c=document.getElementById('hero');if(c)c.classList.add('closed');scrollTo(0,0);d.setAttribute('tabindex','-1');d.focus({preventScroll:true})};
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return fin();s.classList.add('leaving');setTimeout(fin,600)};
- s.querySelectorAll('.tm-skip,.tm-go2').forEach(a=>a.onclick=ir)})();
+(function(){const h=document.documentElement,c=document.getElementById('hero'),s=document.getElementById('tipo-modalidad'),d=document.getElementById('banco');if(!c||!s||!d)return;
+ const quieto=matchMedia('(prefers-reduced-motion: reduce)').matches,paso=n=>{h.classList.remove('paso1','paso2','paso3');h.classList.add('paso'+n);scrollTo(0,0)};
+ c.querySelector('.cover-open').onclick=e=>{e.preventDefault();const fin=()=>{c.classList.remove('opening');paso(2);const t=s.querySelector('h2');t.setAttribute('tabindex','-1');t.focus({preventScroll:true})};
+  if(quieto)return fin();c.classList.add('opening');setTimeout(fin,950)};
+ const ir=e=>{e.preventDefault();const fin=()=>{s.classList.remove('leaving');paso(3);h.classList.add('poom');try{sessionStorage.setItem('bancoIntro','1')}catch(e){}d.setAttribute('tabindex','-1');d.focus({preventScroll:true});setTimeout(()=>h.classList.remove('poom'),1400)};
+  if(quieto)return fin();s.classList.add('leaving');setTimeout(fin,500)};
+ s.querySelectorAll('.tm-skip,.tm-go2').forEach(a=>a.onclick=ir);
+ const r=document.getElementById('verPortada');if(r)r.onclick=e=>{e.preventDefault();try{sessionStorage.removeItem('bancoIntro')}catch(e){}paso(1)}})();
 </script>
 </body>
 </html>

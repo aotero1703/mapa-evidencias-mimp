@@ -33,6 +33,7 @@
 </header>
 
 <main>
+<script>(function(){var h=document.documentElement,v=null;try{v=sessionStorage.getItem('bancoIntro')}catch(e){}h.classList.add(v?'paso3':'paso1')})();</script>
 <section class="cover" id="hero" aria-label="Portada del Banco de Evidencias">
   <div class="wrap cover-in">
     <div class="cover-t">
@@ -59,6 +60,7 @@
 </section>
 
 <section class="doors" id="banco" aria-label="Elige por dónde empezar">
+  <div class="wrap replay"><a href="./" id="verPortada">↺ Ver la portada</a></div>
   <div class="wrap">
     <a class="door ev" href="evidencia.html">
       <div class="top"><svg class="art" viewBox="0 0 200 200" aria-hidden="true"><g fill="none" stroke="rgba(255,255,255,.22)" stroke-width="2">
@@ -152,15 +154,14 @@ document.querySelectorAll('.an-box').forEach(box=>{const T=[...box.querySelector
  const go=i=>{k=(i+P.length)%P.length;P.forEach((p,j)=>p.hidden=j!==k);T.forEach((t,j)=>t.setAttribute('aria-selected',j===k))};
  T.forEach((t,j)=>t.onclick=()=>go(j));box.querySelector('.an-next').onclick=()=>go(k+1)});
 </script><script>
-(function(){const c=document.getElementById('hero'),b=c&&c.querySelector('.cover-open');if(!b)return;
- b.onclick=e=>{e.preventDefault();const t=document.getElementById('tipo-modalidad');
-  const fin=()=>{c.classList.add('closed');scrollTo(0,0);const h=t.querySelector('h2');h.setAttribute('tabindex','-1');h.focus({preventScroll:true})};
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return fin();
-  c.classList.add('opening');setTimeout(fin,950)}})();
-(function(){const s=document.getElementById('tipo-modalidad'),d=document.getElementById('banco');if(!s||!d)return;
- const ir=e=>{e.preventDefault();const fin=()=>{s.classList.add('closed');const c=document.getElementById('hero');if(c)c.classList.add('closed');scrollTo(0,0);d.setAttribute('tabindex','-1');d.focus({preventScroll:true})};
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return fin();s.classList.add('leaving');setTimeout(fin,600)};
- s.querySelectorAll('.tm-skip,.tm-go2').forEach(a=>a.onclick=ir)})();
+(function(){const h=document.documentElement,c=document.getElementById('hero'),s=document.getElementById('tipo-modalidad'),d=document.getElementById('banco');if(!c||!s||!d)return;
+ const quieto=matchMedia('(prefers-reduced-motion: reduce)').matches,paso=n=>{h.classList.remove('paso1','paso2','paso3');h.classList.add('paso'+n);scrollTo(0,0)};
+ c.querySelector('.cover-open').onclick=e=>{e.preventDefault();const fin=()=>{c.classList.remove('opening');paso(2);const t=s.querySelector('h2');t.setAttribute('tabindex','-1');t.focus({preventScroll:true})};
+  if(quieto)return fin();c.classList.add('opening');setTimeout(fin,950)};
+ const ir=e=>{e.preventDefault();const fin=()=>{s.classList.remove('leaving');paso(3);h.classList.add('poom');try{sessionStorage.setItem('bancoIntro','1')}catch(e){}d.setAttribute('tabindex','-1');d.focus({preventScroll:true});setTimeout(()=>h.classList.remove('poom'),1400)};
+  if(quieto)return fin();s.classList.add('leaving');setTimeout(fin,500)};
+ s.querySelectorAll('.tm-skip,.tm-go2').forEach(a=>a.onclick=ir);
+ const r=document.getElementById('verPortada');if(r)r.onclick=e=>{e.preventDefault();try{sessionStorage.removeItem('bancoIntro')}catch(e){}paso(1)}})();
 </script>
 </body>
 </html>

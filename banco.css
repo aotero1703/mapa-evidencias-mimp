@@ -837,3 +837,15 @@ a.sv-lvl{text-decoration:none;color:inherit;transition:transform .15s,border-col
 .tm-next{display:flex;justify-content:center;margin-top:34px}
 .tm-screen~.doors{padding-top:36px}
 @media (max-width:860px){.tm-screen{padding-top:64px}}
+/* Flujo en tres pasos de la portada */
+html.paso1 main>section:not(.cover),html.paso1 .site-footer{display:none}
+html.paso2 main>section:not(.tm-screen),html.paso2 .site-footer{display:none}
+html.paso3 .cover,html.paso3 .tm-screen{display:none}
+html.paso1 body,html.paso2 body{overflow-x:hidden}
+.replay{display:flex;justify-content:flex-end;margin-bottom:10px}
+.replay a{font-size:.82rem;font-weight:800;color:var(--ink-soft);text-decoration:none}.replay a:hover{color:var(--blue-600)}
+html:not(.paso3) .replay{display:none}
+@keyframes poom{0%{opacity:0;transform:translateY(26px) scale(.9)}60%{opacity:1;transform:translateY(-4px) scale(1.03)}100%{opacity:1;transform:none}}
+html.poom .doors .door{animation:poom .7s cubic-bezier(.3,1.4,.5,1) both}
+html.poom .doors .door:nth-child(2){animation-delay:.05s}html.poom .doors .door:nth-child(3){animation-delay:.12s}html.poom .doors .door:nth-child(4){animation-delay:.19s}html.poom .doors .door:nth-child(5){animation-delay:.26s}
+@media (prefers-reduced-motion: reduce){html.poom .doors .door{animation:none}}
