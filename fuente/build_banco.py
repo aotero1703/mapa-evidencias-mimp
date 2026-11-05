@@ -1,5 +1,8 @@
 # Paso 3: genera las páginas del Banco de Evidencias (portada, tablero y fuentes) con la misma cabecera y pie.
 # Uso: python3 fuente/build_banco.py   (desde la raíz del repositorio)
+import sys as _sys0,os as _os0; _sys0.path.insert(0,_os0.path.dirname(_os0.path.abspath(__file__)))
+from portada import COLLAGE
+import anotado as _an
 POWERBI="https://app.powerbi.com/view?r=eyJrIjoiZTdiNmUwZGItN2QzOS00OTY0LWExYWMtZWE1MzlhMTg1MjFmIiwidCI6IjY4MTljNDYzLTVkZWItNDA3MC1hY2I2LTlmZGQzY2FhZTk4NCJ9"
 SITE="https://banco-evidencias-mimp.vercel.app/"
 ICON="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='26' fill='none' stroke='%232f3e8f' stroke-width='8'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%23f2a93b' stroke='%23e5463c' stroke-width='4'/%3E%3C/svg%3E"
@@ -24,7 +27,7 @@ def head(title,desc,path=""):
 <meta name="twitter:image" content="{SITE}og-banco.png">
 <link rel="icon" href="{ICON}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Rubik:wght@500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&display=swap">
 <link rel="stylesheet" href="banco.css">
 </head>
 <body>
@@ -84,18 +87,26 @@ ART_SV='''<svg class="art" viewBox="0 0 200 200" aria-hidden="true"><g fill="non
 <circle cx="70" cy="120" r="10" fill="#fff"/><circle cx="120" cy="80" r="10" fill="#fff" fill-opacity=".85"/><circle cx="170" cy="40" r="12" fill="#f2a93b"/></svg>'''
 INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica, indicadores y fuentes de datos oficiales sobre la violencia contra las mujeres y los integrantes del grupo familiar. Observatorio Nacional, MIMP (Ley N.° 30364).')+header('')+f'''
 <main>
-<section class="hero" id="hero">
-  <canvas id="heroCanvas" aria-hidden="true"></canvas>
-  <div class="wrap">
-    <div>
-      <span class="eyebrow">Observatorio Nacional · Ley N.° 30364</span>
-      <h1>Banco de Evidencias <span>sobre la violencia contra las mujeres y los integrantes del grupo familiar</span></h1>
-      <p class="lede">Reúne en un solo lugar la evidencia científica, los indicadores y las fuentes de datos oficiales que el Observatorio usa para orientar las políticas de prevención y erradicación de la violencia.</p>
+<section class="cover" id="hero">
+  <div class="wrap cover-in">
+    <div class="cover-t">
+      <span class="cover-eye">Observatorio Nacional · MIMP</span>
+      <h1 class="cover-h"><span class="strip s1">Banco de</span><span class="strip s2">Evidencias</span><span class="strip s3">para una vida libre de violencia</span></h1>
+      <p class="cover-p">Estudios, cifras y servicios sobre la violencia contra las mujeres y los integrantes del grupo familiar, reunidos para decidir mejor.</p>
+      <div class="cover-cta"><a class="btn-a" href="evidencia.html">Explorar la evidencia</a><a class="btn-b" href="#tipo-modalidad">¿Tipo o modalidad?</a></div>
     </div>
-    <div class="law">
-      <q>Su misión es desarrollar un sistema de información permanente que brinde insumos para el diseño, implementación y gestión de políticas públicas.</q>
-      <small>Ley N.° 30364, artículo 43</small>
+    <div class="cover-a">{COLLAGE}</div>
+  </div>
+</section>
+<section class="section tm" id="tipo-modalidad">
+  <div class="wrap tm-in">
+    <div class="tm-t">
+      <span class="tm-k">Antes de explorar</span>
+      <h2>Tipo y modalidad: dos formas de describir un mismo hecho</h2>
+      <p>Mira cómo se lee una situación de violencia. Cada color responde una pregunta.</p>
+      <a class="tm-go" href="comprender-violencia.html">Ver la guía completa →</a>
     </div>
+    {_an.componente([0,4,5],'anHome')}
   </div>
 </section>
 
@@ -143,23 +154,6 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
     </a>
   </div>
 </section>
-<section class="guide-band" aria-label="Guía de tipos y modalidades">
-  <div class="wrap">
-    <a class="gb" href="comprender-violencia.html">
-      <div class="gb-copy">
-        <span class="gb-k">Antes de explorar</span>
-        <h2>Tipo y modalidad: dos formas de describir un mismo hecho</h2>
-        <p>El <b>tipo</b> dice qué daño se produce. La <b>modalidad</b> dice en qué relación o contexto ocurre. Una misma situación tiene las dos.</p>
-        <span class="go">Ver la guía con ejemplos <i>→</i></span>
-      </div>
-      <div class="gb-art" aria-hidden="true">
-        <div class="gb-row"><span class="gb-tag m">En la pareja</span><span class="gb-dot on">Física</span><span class="gb-dot on">Psicológica</span><span class="gb-dot">Sexual</span><span class="gb-dot on">Económica</span></div>
-        <div class="gb-row"><span class="gb-tag m">Hostigamiento</span><span class="gb-dot">Física</span><span class="gb-dot on">Psicológica</span><span class="gb-dot on">Sexual</span><span class="gb-dot">Económica</span></div>
-        <div class="gb-row"><span class="gb-tag m">Por redes y TIC</span><span class="gb-dot">Física</span><span class="gb-dot on">Psicológica</span><span class="gb-dot on">Sexual</span><span class="gb-dot">Económica</span></div>
-      </div>
-    </a>
-  </div>
-</section>
 
 <section class="section">
   <div class="wrap">
@@ -173,19 +167,7 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
   </div>
 </section>
 </main>
-'''+FOOTER+'''<script>
-/* anillos del logo del Observatorio en el fondo de la portada */
-(function(){const hero=document.getElementById('hero'),cv=document.getElementById('heroCanvas'),ctx=cv.getContext('2d');
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches,C=['#3b4c9e','#7ec4d4','#e5463c','#f2a93b'];let w,h,cx,cy,R,dots=[],mx=0,my=0,t0=performance.now();
-function size(){const d=Math.min(devicePixelRatio||1,2);w=hero.clientWidth;h=hero.clientHeight;cv.width=w*d;cv.height=h*d;ctx.setTransform(d,0,0,d,0,0);
- cx=w<900?w*.86:w*.62;cy=h*.42;R=Math.max(h*.5,240);dots=Array.from({length:w<640?22:44},(_,i)=>({ring:i%4,a:Math.random()*6.283,s:(Math.random()*.6+.4)*(i%2?1:-1),r:Math.random()*1.8+1.2}))}
-function f(now){const t=(now-t0)/1000;ctx.clearRect(0,0,w,h);const px=mx*12,py=my*8;
- for(let i=0;i<4;i++){const rr=R*(1-i*.2),gap=.9+i*.15,rot=t*.04*(i%2?-1:1)+i;ctx.beginPath();ctx.arc(cx+px*(i+1)/4,cy+py*(i+1)/4,rr,rot+gap/2,rot+6.283-gap/2);
-  ctx.strokeStyle=C[i];ctx.globalAlpha=.12+i*.03;ctx.lineWidth=Math.max(10,rr*.11);ctx.lineCap='round';ctx.stroke()}
- for(const d of dots){const rr=R*(1-d.ring*.2);d.a+=reduce?0:d.s*.0016;ctx.beginPath();ctx.arc(cx+px*(d.ring+1)/4+Math.cos(d.a)*rr,cy+py*(d.ring+1)/4+Math.sin(d.a)*rr,d.r,0,6.283);ctx.fillStyle=C[(d.ring+1)%4];ctx.globalAlpha=.6;ctx.fill()}
- ctx.globalAlpha=1;if(!reduce)requestAnimationFrame(f)}
-size();addEventListener('resize',size);hero.addEventListener('mousemove',e=>{const r=hero.getBoundingClientRect();mx=(e.clientX-r.left)/r.width-.5;my=(e.clientY-r.top)/r.height-.5});requestAnimationFrame(f)})();
-</script>
+'''+FOOTER+_an.JS+'''
 </body>
 </html>
 '''
@@ -393,6 +375,8 @@ Promise.all([fetch('data/estudios.json').then(r=>r.json()),fetch('data/solucione
 # ---------- Servicios del MIMP (Catálogo de Servicios 2026), en lenguaje sencillo ----------
 import sys as _s,os as _o; _s.path.insert(0,_o.path.dirname(_o.path.abspath(__file__)))
 from servicios_data import NIVELES,S as SERVS
+from portada import COLLAGE
+import anotado as _an
 from ilustraciones import RED_APOYO,ESC_CIUDAD,ESC_SIERRA,ESC_RIO,ESC_FONO
 _P={'a':'<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',
  'b':'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
@@ -484,14 +468,21 @@ SERV=head('Servicios frente a la violencia contra las mujeres y los integrantes 
     <a class="crumb" href="./">← Banco de Evidencias</a>
     <h1>Servicios frente a la violencia contra las mujeres y los integrantes del grupo familiar</h1>
     <p>Nadie debería enfrentar la violencia sola. El Estado tiene servicios para cada momento, desde prevenirla hasta reparar el daño, en la ciudad, en el campo y en la Amazonía.</p>
-    <div class="help"><span class="help-k">¿Necesitas ayuda?</span><a href="tel:100"><b>Línea 100</b><span>Llamada gratuita, las 24 horas</span></a><a href="https://www.mimp.gob.pe/chat100" target="_blank" rel="noopener"><b>Chat 100</b><span>Por internet o WhatsApp</span></a><a href="tel:105"><b>105</b><span>Emergencias, Policía Nacional</span></a></div>
+    <div class="help"><span class="help-k">¿Necesitas ayuda?</span><a href="tel:100"><b>Línea 100</b><span>Llamada gratuita, las 24 horas</span></a><a href="https://chat100.warminan.gob.pe/" target="_blank" rel="noopener"><b>Chat 100</b><span>Por internet o WhatsApp</span></a><a href="tel:105"><b>105</b><span>Emergencias, Policía Nacional</span></a></div>
    </div>
    <div class="sv-hero-a">'''+RED_APOYO+f'''</div>
   </div>
 </section>
+<section class="section ruta">
+  <div class="wrap">
+    <div class="sv-intro"><h2>La respuesta frente a la violencia, paso a paso</h2><p>Siete pasos, de la prevención a la reparación. Elige uno para ver qué servicios hay y qué dicen los estudios. Los pasos no siempre van en orden: una persona puede llegar directo a un Centro Emergencia Mujer o necesitar protección de inmediato.</p></div>
+    <nav aria-label="Pasos de la ruta"><ol class="rt">{steps}</ol></nav>
+    {bloques}
+  </div>
+</section>
 <section class="section pais">
   <div class="wrap">
-    <div class="sv-intro"><h2>Servicios que llegan a todo el país</h2><p>La atención se adapta al territorio y a la cultura de cada comunidad.</p></div>
+    <div class="sv-intro"><h2>Estos servicios llegan a todo el país</h2><p>La atención se adapta al territorio y a la cultura de cada comunidad: en la ciudad, en el campo, por los ríos de la Amazonía o desde un teléfono.</p></div>
     <div class="pais-g">
       <article class="pz"><div class="pz-a">'''+ESC_CIUDAD+f'''</div><span class="pz-k">En las ciudades</span><h3>Centros Emergencia Mujer y Familia</h3><p>439 centros en todo el país, con atención legal, psicológica y social gratuita.</p><a href="#r-atender">Ver en la ruta →</a></article>
       <article class="pz"><div class="pz-a">'''+ESC_SIERRA+f'''</div><span class="pz-k">En el campo</span><h3>Servicio de Atención Rural</h3><p>Atiende en zonas rurales respetando la cultura local y trabajando junto con las autoridades comunales.</p><a href="#r-atender">Ver en la ruta →</a></article>
@@ -501,40 +492,9 @@ SERV=head('Servicios frente a la violencia contra las mujeres y los integrantes 
     <p class="sv-src">Número de centros: Sexto Informe de avance de la Ley N.° 31155 (MIMP, 2026). Descripciones: Catálogo de Servicios del Sector 2026.</p>
   </div>
 </section>
-<section class="section ruta">
-  <div class="wrap">
-    <div class="sv-intro"><h2>La respuesta frente a la violencia, paso a paso</h2><p>Los pasos no siempre siguen este orden: una persona puede llegar directamente a un Centro Emergencia Mujer o necesitar protección de inmediato.</p></div>
-    <nav aria-label="Pasos de la ruta"><ol class="rt">{steps}</ol></nav>
-    {bloques}
-  </div>
-</section>
-<section class="section sv-levels" id="catalogo">
-  <div class="wrap">
-    <div class="sv-intro"><h2>Catálogo completo del sector</h2><p>El MIMP brinda {len(SERVS)} servicios. Además de los vinculados con la violencia, hay servicios para niñas, niños y adolescentes, personas adultas mayores y personas con discapacidad. Elige un tipo para ver cuáles son.</p></div>
-    <div class="sv-lvls">{resumen}</div>
-  </div>
-</section>
-<section class="section sv-all" id="svAll" hidden>
-  <div class="wrap">
-    <div class="sv-filter" role="group" aria-label="Filtrar servicios">
-      <button type="button" class="sv-close" id="svClose">← Elegir otro tipo</button><span>Quién lo brinda:</span><button type="button" data-p="" aria-pressed="true">Todos</button>{chips}
-      <label class="chk"><input type="checkbox" id="soloV"> Solo servicios frente a la violencia</label>
-    </div>
-    {cuerpo}
-    <p class="sv-empty" id="svEmpty" hidden>No hay servicios con ese filtro.</p>
-  </div>
-</section>
-<section class="section sv-foot"><div class="wrap"><p class="sv-src">Fuente: <a href="{CATALOGO}" target="_blank" rel="noopener">Catálogo de Servicios del Sector Mujer y Poblaciones Vulnerables 2026</a>. Las descripciones están resumidas; el detalle de cada servicio está en el catálogo. La relación entre servicios y estudios es orientativa.</p></div></section>
+<section class="section sv-foot"><div class="wrap"><p class="sv-src">El MIMP brinda {len(SERVS)} servicios en total, también para niñas, niños y adolescentes, personas adultas mayores y personas con discapacidad. <a href="{CATALOGO}" target="_blank" rel="noopener">Ver el Catálogo de Servicios del Sector 2026 (PDF)</a>. Las descripciones de esta página están resumidas; la relación entre servicios y estudios es orientativa.</p></div></section>
 </main>
 '''+FOOTER+r'''<script>
-(function(){let P='',T='';const btns=document.querySelectorAll('.sv-filter button[data-p]'),v=document.getElementById('soloV'),all=document.getElementById('svAll'),tb=document.querySelectorAll('.sv-types button');
-function apply(){let any=0;document.querySelectorAll('.svc').forEach(c=>{const ok=c.closest('.sv-tipo').id==='tipo-'+T&&(!P||c.dataset.prog===P)&&(!v.checked||c.dataset.v==='1');c.hidden=!ok;if(ok)any++});
- document.querySelectorAll('.sv-tipo').forEach(t=>t.hidden=t.id!=='tipo-'+T);
- document.querySelectorAll('.sv-nivel').forEach(n=>n.hidden=!n.querySelector('#tipo-'+T));
- document.getElementById('svEmpty').hidden=!!any;}
-tb.forEach(b=>b.onclick=()=>{T=b.dataset.t;P='';btns.forEach(x=>x.setAttribute('aria-pressed',x.dataset.p===''));tb.forEach(x=>x.setAttribute('aria-pressed',x===b));all.hidden=false;apply();all.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'})});
-document.getElementById('svClose').onclick=()=>{all.hidden=true;tb.forEach(x=>x.setAttribute('aria-pressed','false'));document.getElementById('catalogo').scrollIntoView({block:'start'})};
-btns.forEach(b=>b.onclick=()=>{P=b.dataset.p;btns.forEach(x=>x.setAttribute('aria-pressed',x===b));apply()});v.onchange=apply;})();
 (function(){const L=[...document.querySelectorAll('.rt a')];if(!('IntersectionObserver' in window))return;
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)L.forEach(a=>{const on=a.getAttribute('href')==='#'+e.target.id;a.classList.toggle('on',on);if(on){const ol=a.closest('ol');if(ol.scrollWidth>ol.clientWidth)ol.scrollTo({left:a.parentNode.offsetLeft-ol.clientWidth/2+a.parentNode.offsetWidth/2,behavior:'smooth'})}})}),{rootMargin:'-40% 0px -55% 0px'});
 document.querySelectorAll('.rb').forEach(s=>io.observe(s))})();
