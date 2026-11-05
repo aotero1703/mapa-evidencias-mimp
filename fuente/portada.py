@@ -1,5 +1,6 @@
 # Portada del Banco de Evidencias: collage de retratos ilustrados (dibujo propio, sin fotos externas).
 import math, random
+import retratos as R
 
 INK='#1b1430'
 def _face(skin,smile=True,blush='#e8826b',eyes_closed=False):
@@ -26,7 +27,7 @@ def _sticker(x,y,r,bg,inner,rot=0,shape='circle'):
     return (f'<g transform="translate({x} {y}) rotate({rot}) scale({k})">'
             f'<g filter="url(#sh)"><g fill="#fff" stroke="#fff" stroke-width="16">{outline}</g></g>'
             f'<clipPath id="{cid}">{clip}</clipPath><g clip-path="url(#{cid})"><rect x="-110" y="-110" width="220" height="220" fill="{bg}"/>'
-            f'<rect x="-110" y="-110" width="220" height="220" fill="url(#ht)"/><g transform="translate(0 4) scale(1.2)">{inner}</g>'
+            f'<rect x="-110" y="-110" width="220" height="220" fill="url(#ht)"/><g transform="translate(0 6) scale(1.12)">{inner}</g>'
             f'<rect x="-110" y="-110" width="220" height="220" fill="url(#ht2)"/></g></g>')
 
 def p_andina():
@@ -90,16 +91,16 @@ def _leaf(x,y,rot,c,k=1):
 
 DEFS=('<defs><filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0b0820" flood-opacity=".35"/></filter>'
       '<pattern id="ht" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="3.5" cy="3.5" r="1.6" fill="#fff" opacity=".22"/></pattern>'
-      '<pattern id="ht2" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(15)"><circle cx="2.5" cy="2.5" r=".9" fill="#1b1430" opacity=".14"/></pattern></defs>')
+      '<pattern id="ht2" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(15)"><circle cx="2.5" cy="2.5" r=".8" fill="#1b1430" opacity=".06"/></pattern></defs>')
 
-COLLAGE=('<svg class="cover-art" viewBox="0 0 640 560" role="img" aria-label="Collage ilustrado de mujeres diversas e integrantes del grupo familiar: una mujer andina con sombrero, una joven, una adulta mayor, una mujer afroperuana, un padre con su hija, una mujer amazónica y un niño" xmlns="http://www.w3.org/2000/svg">'+DEFS
+COLLAGE=('<svg class="cover-art" viewBox="0 0 640 560" role="img" aria-label="Collage ilustrado de mujeres e integrantes del grupo familiar de la costa, la sierra y la Amazonía: una mujer andina con sombrero, una mujer afroperuana, un joven con chullo, un padre con su hija, una adulta mayor, una mujer amazónica y una niña" xmlns="http://www.w3.org/2000/svg">'+DEFS
   +_burst(330,290,22,170,300,'#b5d334',3)+_burst(330,290,14,150,250,'#7ec4d4',7)
   +_leaf(70,470,-20,'#6a4fb0',1.6)+_leaf(560,120,160,'#6a4fb0',1.3)+_leaf(590,430,-60,'#b5d334',1.2)+_leaf(110,110,40,'#e5463c',1)
-  +_sticker(200,170,108,'#f2a93b',p_andina(),-6)
-  +_sticker(430,140,94,'#b5d334',p_joven(),5,'sq')
-  +_sticker(530,310,82,'#ef7a6a',p_afro(),-4)
-  +_sticker(330,330,104,'#7ec4d4',p_familia(),3,'sq')
-  +_sticker(120,380,86,'#c9b8ec',p_mayor(),-8)
-  +_sticker(450,470,80,'#f3ead6',p_amazonica(),6)
-  +_sticker(250,500,58,'#b5d334',p_nino(),-4)
+  +_sticker(200,170,112,'#f2a93b',R.andina(),-6)
+  +_sticker(436,140,96,'#b5d334',R.afro_costa(),5,'sq')
+  +_sticker(540,320,82,'#ef7a6a',R.chullo(),-4)
+  +_sticker(330,335,106,'#7ec4d4',R.familia(),3,'sq')
+  +_sticker(118,382,88,'#c9b8ec',R.mayor(),-8)
+  +_sticker(452,478,82,'#f3ead6',R.amazonica(),6)
+  +_sticker(252,500,60,'#b5d334',R.nina(),-4)
   +'</svg>')
