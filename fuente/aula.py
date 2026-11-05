@@ -12,17 +12,17 @@ def profesora():
     s+='<path d="M82 396h24v10h-26z" fill="#2a1d3a"/><path d="M114 396h24v10h-26z" fill="#2a1d3a"/>'
     # falda
     s+='<path d="M74 236h72l14 92H60Z" fill="#2f3e8f"/>'
-    # brazo derecho (señalando hacia la pizarra, a la izquierda)
-    s+=f'<path d="M78 170C56 160 36 136 22 112" stroke="#e5463c" stroke-width="20" stroke-linecap="round" fill="none"/><circle cx="20" cy="108" r="10" fill="{sk}"/><path d="M14 102l-10 -8" stroke="#f4f1e8" stroke-width="5" stroke-linecap="round"/>'
+    # brazo derecho (señalando la pizarra); se anima al cambiar de ejemplo
+    s+=f'<g class="brazo"><path d="M78 170C56 160 36 136 22 112" stroke="#e5463c" stroke-width="20" stroke-linecap="round" fill="none"/><circle cx="20" cy="108" r="10" fill="{sk}"/><path d="M14 102l-10 -8" stroke="#f4f1e8" stroke-width="5" stroke-linecap="round"/></g>'
     # torso (chompa)
     s+='<path d="M70 150C70 136 82 128 96 126Q110 140 124 126C138 128 150 136 150 150L148 240H72Z" fill="#e5463c"/>'
     s+='<path d="M98 128L110 168L122 128" fill="#f4f1e8"/>'
     # brazo izquierdo con libro
     s+=f'<path d="M146 160C160 190 160 214 150 230" stroke="#e5463c" stroke-width="20" stroke-linecap="round" fill="none"/><rect x="128" y="214" width="34" height="26" rx="3" fill="#f2a93b" transform="rotate(-10 145 227)"/><circle cx="146" cy="232" r="9" fill="{sk}"/>'
     # cabeza: rostro y flequillo (el cabello largo va detrás de los hombros, dibujado antes del cuerpo)
-    s+=f'<g transform="translate(110 78) scale(.74)">'
+    s+=f'<g class="cabeza"><g transform="translate(110 78) scale(.74)">'
     s+=R.rostro(sk,hair,w=30)
-    s+=f'<path d="M-32 -16C-34 -52 -14 -62 0 -62C16 -62 34 -52 32 -16C26 -40 8 -46 -6 -44C-16 -40 -26 -32 -32 -16Z" fill="{hair}"/></g>'
+    s+=f'<path d="M-32 -16C-34 -52 -14 -62 0 -62C16 -62 34 -52 32 -16C26 -40 8 -46 -6 -44C-16 -40 -26 -32 -32 -16Z" fill="{hair}"/></g></g>'
     s+='</svg>'
     return s
 

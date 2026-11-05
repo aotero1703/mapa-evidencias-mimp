@@ -614,9 +614,9 @@ CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Cómo se desc
 </section>
 <section class="section aula-sec">
   <div class="wrap">
-    <div class="aula-t"><span class="tm-k">En clase</span><h2>Vínculo, tipo de violencia y modalidad</h2><p>Así se describe cada caso. Pasa los ejemplos en la pizarra.</p></div>
+    <div class="aula-t"><span class="tm-k">En clase</span><h2>Vínculo, tipo de violencia y modalidad</h2><p>Así se describe cada caso. Los ejemplos cambian solos en la pizarra.</p></div>
     <div class="aula">
-      <div class="aula-board">'''+_an.componente([0,1,2],'anGuia')+f'''</div>
+      <div class="aula-board">'''+_an.componente([0,1,2],'anGuia',auto=True)+f'''</div>
       <div class="aula-profe">'''+_aula.profesora()+f'''</div>
       <div class="aula-alumnas">'''+_aula.alumnas()+f'''</div>
     </div>

@@ -22,13 +22,16 @@ def _frase(c):
            f'<span class="nt t">↑ {_NOTA["t"]}: <b>{_h.escape(lab["t"].lower())}</b></span>'
            +(f'<span class="nt m">↑ {_NOTA["m"]}: <b>{_h.escape(lab["m"].lower())}</b></span>' if 'm' in lab else '<span class="nt n">modalidad: <b>ninguna adicional</b></span>'))
     return f'<p class="pz-s">{s}</p><div class="pz-n">{notas}</div><span class="pz-i" tabindex="0" title="Base legal: {_h.escape(base)}" aria-label="Base legal: {_h.escape(base)}">ⓘ</span>'
-def componente(idx,uid,titulo=True):
+def componente(idx,uid,titulo=True,auto=False):
     tabs=''.join(f'<button type="button" role="tab" aria-selected="{str(j==0).lower()}" data-i="{j}">{j+1}</button>' for j,_ in enumerate(idx))
     panes=''.join(f'<div class="an-p" data-i="{j}"{"" if j==0 else " hidden"}>{_frase(CASOS[i])}</div>' for j,i in enumerate(idx))
-    return (f'<div class="an-box pz-box" id="{uid}"><div class="pz-board">{panes}'
-            f'<div class="an-nav"><div class="an-tabs" role="tablist" aria-label="Ejemplos">{tabs}</div><button type="button" class="an-next">otro ejemplo →</button></div></div><div class="pz-tray" aria-hidden="true"><i></i><i></i><i></i></div></div>')
+    return (f'<div class="an-box pz-box" id="{uid}"{' data-auto="7000"' if auto else ''}><div class="pz-board">{panes}'
+            f'<div class="an-nav"><div class="an-tabs" role="tablist" aria-label="Ejemplos">{tabs}</div>{'' if auto else '<button type="button" class="an-next">otro ejemplo →</button>'}</div></div><div class="pz-tray" aria-hidden="true"><i></i><i></i><i></i></div></div>')
 JS=r'''<script>
-document.querySelectorAll('.an-box').forEach(box=>{const T=[...box.querySelectorAll('.an-tabs button')],P=[...box.querySelectorAll('.an-p')];let k=0;
- const go=i=>{k=(i+P.length)%P.length;P.forEach((p,j)=>p.hidden=j!==k);T.forEach((t,j)=>t.setAttribute('aria-selected',j===k))};
- T.forEach((t,j)=>t.onclick=()=>go(j));box.querySelector('.an-next').onclick=()=>go(k+1)});
+document.querySelectorAll('.an-box').forEach(box=>{const T=[...box.querySelectorAll('.an-tabs button')],P=[...box.querySelectorAll('.an-p')],nx=box.querySelector('.an-next');let k=0,tm=null;
+ const profe=document.querySelector('.profe'),auto=+box.dataset.auto||0,quieto=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const explica=()=>{if(!profe)return;profe.classList.remove('explica');void profe.getBoundingClientRect();profe.classList.add('explica')};
+ const go=i=>{k=(i+P.length)%P.length;P.forEach((p,j)=>p.hidden=j!==k);T.forEach((t,j)=>t.setAttribute('aria-selected',j===k));explica()};
+ const ciclo=()=>{clearInterval(tm);if(auto&&!quieto)tm=setInterval(()=>{if(!document.hidden)go(k+1)},auto)};
+ T.forEach((t,j)=>t.onclick=()=>{go(j);ciclo()});if(nx)nx.onclick=()=>go(k+1);ciclo()});
 </script>'''

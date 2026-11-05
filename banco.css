@@ -1006,3 +1006,16 @@ html.poom .doors .door:nth-child(2){animation-delay:.05s}html.poom .doors .door:
 .cover-l li:nth-child(2)::before{transform:rotate(3deg) translateY(1px)}
 .cover-l li:nth-child(3)::before{transform:rotate(-1deg) scale(.95)}
 .cover-l li::before{content:none}.cover-l{gap:6px}.cover-l li{padding-left:14px;border-left:3px solid #f2a93b}
+/* Profesora animada al cambiar de ejemplo */
+.profe .brazo{transform-box:view-box;transform-origin:80px 168px}
+.profe .cabeza{transform-box:view-box;transform-origin:110px 120px}
+.profe{animation:respira 4s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes respira{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+.profe.explica .brazo{animation:senala 1.2s ease-in-out}
+.profe.explica .cabeza{animation:asiente 1.2s ease-in-out}
+@keyframes senala{0%{transform:rotate(0)}25%{transform:rotate(14deg)}50%{transform:rotate(-8deg)}75%{transform:rotate(6deg)}100%{transform:rotate(0)}}
+@keyframes asiente{0%,100%{transform:rotate(0)}30%{transform:rotate(-5deg)}65%{transform:rotate(3deg)}}
+.pz-box .an-p:not([hidden]){animation:tiza .6s ease both}
+@keyframes tiza{from{opacity:0;filter:blur(2px)}to{opacity:1;filter:none}}
+@media (prefers-reduced-motion: reduce){.profe,.profe.explica .brazo,.profe.explica .cabeza,.pz-box .an-p{animation:none!important}}
+.pz-board{padding-right:46px}.pz-i{top:8px;right:10px}
