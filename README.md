@@ -99,7 +99,7 @@ Los servicios aparecen al elegir un tipo. Por defecto se muestran los vinculados
 
 ## Territorios prioritarios
 
-> Desde noviembre de 2026 es una página aparte: no aparece en el menú ni en la portada del banco. Sigue publicada en https://banco-evidencias-mimp.vercel.app/territorios-prioritarios.html
+> Desde noviembre de 2026 es un **sitio aparte**: https://territorios-prioritarios-mimp.vercel.app. Su código está en la carpeta `territorios/` de este repositorio y se publica como otro proyecto de Vercel (`territorios-prioritarios-mimp`, directorio raíz `territorios`). La dirección antigua del banco redirige al sitio nuevo.
 
 Tablero con los casos atendidos por los Centros Emergencia Mujer y Familia en 2025, por provincia: filtros por periodo y departamento, tarjetas por tipo de violencia, distribución por sexo y grupo etario, mapa por nivel de prioridad y ranking de provincias. Solo contiene datos agregados; las cifras menores a 5 se muestran como «menos de 5». Los registros administrativos muestran casos atendidos, no la prevalencia de la violencia.
 
@@ -142,7 +142,7 @@ python3 -m http.server 8000
 ├── servicios.html                  Servicios del MIMP en tres niveles
 ├── tablero.html                    Indicadores (Power BI incrustado)
 ├── fuentes.html                    Fuentes externas de datos
-├── territorios-prioritarios.html   Tablero de territorios prioritarios (CEM 2025)
+├── territorios/                    Sitio aparte de Territorios Prioritarios (otro proyecto de Vercel)
 ├── banco.css                       Estilos compartidos
 ├── data/estudios.json              Investigaciones publicadas
 ├── data/soluciones.json            Programas evaluados

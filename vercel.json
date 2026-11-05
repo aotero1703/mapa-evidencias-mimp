@@ -1,3 +1,8 @@
 {
-  "outputDirectory": "."
+  "outputDirectory": ".",
+  "redirects": [
+    { "source": "/territorios-prioritarios.html", "destination": "https://territorios-prioritarios-mimp.vercel.app/", "permanent": true },
+    { "source": "/territorios-prioritarios", "destination": "https://territorios-prioritarios-mimp.vercel.app/", "permanent": true },
+    { "source": "/territorios/:path*", "destination": "https://territorios-prioritarios-mimp.vercel.app/", "permanent": true }
+  ]
 }
