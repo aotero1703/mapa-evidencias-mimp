@@ -118,8 +118,8 @@ def _abstracta():
         x0,y0=cx+r*math.cos(a0),cy+r*math.sin(a0);x1,y1=cx+r*math.cos(a1),cy+r*math.sin(a1)
         large=1 if (a1-a0)%(2*math.pi)>math.pi else 0
         d=f'M{x0:.1f} {y0:.1f}A{r} {r} 0 {large} 1 {x1:.1f} {y1:.1f}'
-        s+=f'<g filter="url(#shA)"><path d="{d}" stroke="{c}" stroke-width="{w}" stroke-linecap="round" fill="none" opacity="{o}"/></g>'
-        s+=f'<path d="{d}" stroke="url(#htA)" stroke-width="{w}" stroke-linecap="round" fill="none"/>'
+        s+=f'<g class="rg r{i}"><g filter="url(#shA)"><path d="{d}" stroke="{c}" stroke-width="{w}" stroke-linecap="round" fill="none" opacity="{o}"/></g>'
+        s+=f'<path d="{d}" stroke="url(#htA)" stroke-width="{w}" stroke-linecap="round" fill="none"/></g>'
     s+=f'<circle cx="{cx}" cy="{cy}" r="44" fill="#f3ead6"/><circle cx="{cx}" cy="{cy}" r="44" fill="url(#htA)"/><circle cx="{cx}" cy="{cy}" r="18" fill="#1d2552"/>'
     # red de nodos sobre los anillos
     nodes=[]
@@ -131,8 +131,9 @@ def _abstracta():
         near=sorted(range(len(nodes)),key=lambda j:(nodes[j][0]-x)**2+(nodes[j][1]-y)**2)[1:3]
         for j in near:
             if j>i: lines+=f'<path d="M{x:.0f} {y:.0f}L{nodes[j][0]:.0f} {nodes[j][1]:.0f}"/>'
-    s+=f'<g stroke="#fff" stroke-opacity=".45" stroke-width="1.6" stroke-dasharray="3 5">{lines}</g>'
-    s+=''.join(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{rnd.choice((5,6,8))}" fill="#fff"/><circle cx="{x:.0f}" cy="{y:.0f}" r="{rnd.choice((11,14))}" fill="#fff" opacity=".14"/>' for x,y in nodes)
+    s+=f'<g class="net"><g stroke="#fff" stroke-opacity=".45" stroke-width="1.6" stroke-dasharray="3 5" class="netl">{lines}</g>'
+    s+=''.join(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{rnd.choice((5,6,8))}" fill="#fff"/><circle class="halo" style="--k:{i}" cx="{x:.0f}" cy="{y:.0f}" r="{rnd.choice((11,14))}" fill="#fff" opacity=".14"/>' for i,(x,y) in enumerate(nodes))
+    s+='</g>'
     s+='</svg>'
     return s
 ABSTRACTA=_abstracta()

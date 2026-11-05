@@ -979,3 +979,16 @@ html.poom .doors .door:nth-child(2){animation-delay:.05s}html.poom .doors .door:
 @media (max-width:560px){.sc-bar{grid-template-columns:70px 1fr 64px}.sc-bar b{font-size:1.3rem}}
 @media (prefers-reduced-motion: reduce){.sc-bt i{width:var(--w)!important}}
 .sc-bar{grid-template-columns:90px 1fr 110px}.sc-bar b{white-space:nowrap}@media (max-width:560px){.sc-bar{grid-template-columns:66px 1fr 80px}}
+/* Logo del Observatorio en movimiento */
+.cover-art .rg,.cover-art .net{transform-box:view-box;transform-origin:330px 280px}
+.cover-art .r0{animation:spin 70s linear infinite}
+.cover-art .r1{animation:spin 52s linear infinite reverse}
+.cover-art .r2{animation:spin 38s linear infinite}
+.cover-art .r3{animation:spin 28s linear infinite reverse}
+.cover-art .net{animation:spin 120s linear infinite}
+.cover-art .netl{animation:dash 6s linear infinite}
+.cover-art .halo{transform-box:fill-box;transform-origin:center;animation:pulse 3.2s ease-in-out infinite;animation-delay:calc(var(--k) * -.4s)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes dash{to{stroke-dashoffset:-48}}
+@keyframes pulse{0%,100%{transform:scale(.7);opacity:.08}50%{transform:scale(1.5);opacity:.28}}
+@media (prefers-reduced-motion: reduce){.cover-art .rg,.cover-art .net,.cover-art .netl,.cover-art .halo{animation:none}}
