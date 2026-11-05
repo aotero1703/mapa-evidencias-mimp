@@ -104,3 +104,35 @@ COLLAGE=('<svg class="cover-art" viewBox="0 0 640 560" role="img" aria-label="Co
   +_sticker(452,478,82,'#f3ead6',R.amazonica(),6)
   +_sticker(252,500,60,'#b5d334',R.nina(),-4)
   +'</svg>')
+
+# Versión neutra de la portada: anillos del logo del Observatorio y una red de nodos (sin personajes).
+def _abstracta():
+    import math, random
+    rnd=random.Random(11);cx,cy=330,280
+    s='<svg class="cover-art" viewBox="0 0 640 560" role="img" aria-label="Ilustración abstracta: anillos con los colores del Observatorio Nacional y una red de puntos conectados" xmlns="http://www.w3.org/2000/svg">'
+    s+=('<defs><pattern id="htA" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="3.5" cy="3.5" r="1.3" fill="#fff" opacity=".18"/></pattern>'
+        '<filter id="shA" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#060a24" flood-opacity=".45"/></filter></defs>')
+    rings=[(250,'#2f3e8f',46,.95),(196,'#7ec4d4',40,.9),(146,'#e5463c',34,.92),(100,'#f2a93b',30,.95)]
+    for i,(r,c,w,o) in enumerate(rings):
+        a0=-1.9+i*.55;a1=a0+5.2
+        x0,y0=cx+r*math.cos(a0),cy+r*math.sin(a0);x1,y1=cx+r*math.cos(a1),cy+r*math.sin(a1)
+        large=1 if (a1-a0)%(2*math.pi)>math.pi else 0
+        d=f'M{x0:.1f} {y0:.1f}A{r} {r} 0 {large} 1 {x1:.1f} {y1:.1f}'
+        s+=f'<g filter="url(#shA)"><path d="{d}" stroke="{c}" stroke-width="{w}" stroke-linecap="round" fill="none" opacity="{o}"/></g>'
+        s+=f'<path d="{d}" stroke="url(#htA)" stroke-width="{w}" stroke-linecap="round" fill="none"/>'
+    s+=f'<circle cx="{cx}" cy="{cy}" r="44" fill="#f3ead6"/><circle cx="{cx}" cy="{cy}" r="44" fill="url(#htA)"/><circle cx="{cx}" cy="{cy}" r="18" fill="#1d2552"/>'
+    # red de nodos sobre los anillos
+    nodes=[]
+    for r in (250,196,146,100):
+        for k in range(rnd.randint(3,5)):
+            a=rnd.uniform(0,2*math.pi);nodes.append((cx+r*math.cos(a),cy+r*math.sin(a)))
+    lines=''
+    for i,(x,y) in enumerate(nodes):
+        near=sorted(range(len(nodes)),key=lambda j:(nodes[j][0]-x)**2+(nodes[j][1]-y)**2)[1:3]
+        for j in near:
+            if j>i: lines+=f'<path d="M{x:.0f} {y:.0f}L{nodes[j][0]:.0f} {nodes[j][1]:.0f}"/>'
+    s+=f'<g stroke="#fff" stroke-opacity=".45" stroke-width="1.6" stroke-dasharray="3 5">{lines}</g>'
+    s+=''.join(f'<circle cx="{x:.0f}" cy="{y:.0f}" r="{rnd.choice((5,6,8))}" fill="#fff"/><circle cx="{x:.0f}" cy="{y:.0f}" r="{rnd.choice((11,14))}" fill="#fff" opacity=".14"/>' for x,y in nodes)
+    s+='</svg>'
+    return s
+ABSTRACTA=_abstracta()

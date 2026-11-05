@@ -960,3 +960,8 @@ html.poom .doors .door:nth-child(2){animation-delay:.05s}html.poom .doors .door:
 @media (max-width:760px){.aula{grid-template-columns:1fr;grid-template-areas:"board" "alum"}.aula-profe{display:none}}
 .rb-body.sola{grid-template-columns:1fr}
 .rb-body.sola .rb-svcs{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+/* Portada neutra */
+.cover{background:radial-gradient(110% 90% at 78% 45%,#2a3784 0%,#1d2552 50%,#141a3a 100%)}
+.cover-eye{color:#9fd3e0}
+.strip.s3{background:#7ec4d4}
+.cover-art{filter:none}

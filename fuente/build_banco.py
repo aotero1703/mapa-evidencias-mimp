@@ -1,7 +1,7 @@
 # Paso 3: genera las páginas del Banco de Evidencias (portada, tablero y fuentes) con la misma cabecera y pie.
 # Uso: python3 fuente/build_banco.py   (desde la raíz del repositorio)
 import sys as _sys0,os as _os0; _sys0.path.insert(0,_os0.path.dirname(_os0.path.abspath(__file__)))
-from portada import COLLAGE
+from portada import COLLAGE, ABSTRACTA
 import anotado as _an
 import tutorial as _tu
 import aula as _aula
@@ -98,7 +98,7 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
       <p class="cover-p">Estudios, cifras y servicios sobre la violencia contra las mujeres y los integrantes del grupo familiar, reunidos para decidir mejor.</p>
       <div class="cover-cta"><a class="btn-a cover-open" href="#tipo-modalidad">Abrir el banco <span aria-hidden="true">→</span></a></div>
     </div>
-    <div class="cover-a">{COLLAGE}</div>
+    <div class="cover-a">{ABSTRACTA}</div>
   </div>
 </section>
 <section class="tm-screen tm-video" id="tipo-modalidad" aria-label="Introducción: por qué distinguir tipo y modalidad">
