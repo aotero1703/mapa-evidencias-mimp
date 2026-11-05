@@ -817,3 +817,4 @@ a.sv-lvl{text-decoration:none;color:inherit;transition:transform .15s,border-col
 .cv-cta-in{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between}
 .cv-cta-in p{margin:0;font-size:1.15rem}
 .cv-fuentes{margin:22px 0 0;font-size:.8rem;color:#c9c5ee}.cv-fuentes a{color:#fff}
+@media (max-width:1180px) and (min-width:861px){.site-nav{gap:12px}.site-nav a{font-size:.8rem}.brand img{height:34px}.brand .sep{margin:0 10px}}
