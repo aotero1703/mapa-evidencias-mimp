@@ -4,6 +4,7 @@ import sys as _sys0,os as _os0; _sys0.path.insert(0,_os0.path.dirname(_os0.path.
 from portada import COLLAGE
 import anotado as _an
 import tutorial as _tu
+import aula as _aula
 POWERBI="https://app.powerbi.com/view?r=eyJrIjoiZTdiNmUwZGItN2QzOS00OTY0LWExYWMtZWE1MzlhMTg1MjFmIiwidCI6IjY4MTljNDYzLTVkZWItNDA3MC1hY2I2LTlmZGQzY2FhZTk4NCJ9"
 SITE="https://banco-evidencias-mimp.vercel.app/"
 ICON="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='26' fill='none' stroke='%232f3e8f' stroke-width='8'/%3E%3Ccircle cx='32' cy='32' r='11' fill='%23f2a93b' stroke='%23e5463c' stroke-width='4'/%3E%3C/svg%3E"
@@ -253,7 +254,7 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
       <div id="solDet" hidden></div>
     </div>
     <div id="tabE" role="tabpanel" aria-labelledby="tE">
-      <div class="guide-panel" role="note"><div class="guide-mark" aria-hidden="true">?</div><div class="guide-copy"><strong>¿Tipo o modalidad de violencia? No son lo mismo.</strong><p>El <b>tipo</b> describe qué daño se produce; la <b>modalidad</b>, en qué relación o contexto ocurre. Puedes filtrar por cada uno por separado.</p></div><a class="guide-action" href="comprender-violencia.html">Ver la guía <span aria-hidden="true">→</span></a></div><p class="filter-context">Solo se incluyen estudios sobre la violencia que comprende la Ley N.° 30364. La clasificación de cada estudio es orientativa.</p><div class="filt f5">
+      <div class="guide-panel" role="note"><div class="guide-mark" aria-hidden="true">?</div><div class="guide-copy"><strong>¿Tipo o modalidad de violencia? No son lo mismo.</strong><p>El <b>tipo de violencia</b> (física, psicológica, sexual o económica) y la <b>modalidad</b> (por ejemplo, acoso político o violencia por redes sociales) son conceptos distintos de la Ley N.° 30364. Puedes filtrar por cada uno.</p></div><a class="guide-action" href="comprender-violencia.html">Ver la guía <span aria-hidden="true">→</span></a></div><p class="filter-context">Solo se incluyen estudios sobre la violencia que comprende la Ley N.° 30364. La clasificación de cada estudio es orientativa.</p><div class="filt f5">
         <label>Tema de investigación<select id="fTema"></select></label>
         <label>Tipo de violencia<select id="fTipo"></select></label>
         <label>Modalidad de violencia<select id="fMod"></select></label>
@@ -562,7 +563,7 @@ _MODS={1:('Violencia en relación de pareja','Violencia de una pareja o expareja
  20:('Acoso a través del proceso judicial','Presentar denuncias y demandas en serie contra una expareja para hostigarla y desgastarla.','mod',None),
  21:('Desaparición por particulares','Desaparición de mujeres, a menudo vinculada al feminicidio, la trata o la violencia sexual.','mod',None)}
 _DONDE={'vinc':'En la Ficha CEM: vínculo con la persona agresora','fem':'En la Ficha CEM: sección de tentativa de feminicidio','sex':'En la Ficha CEM: forma de violencia sexual','mod':'En la Ficha CEM: «otras modalidades»','otro':''}
-_FAM=[('En las relaciones cercanas',[1,2,20,21]),('Violencia sexual y explotación',[3,4,5,8]),('En instituciones y en la vida pública',[6,7,9,18]),('Según el contexto o el medio',[10,11,12]),('Cuando se suma otra discriminación',[13,14,15,16,17,19])]
+_FAM=[('En las relaciones cercanas',[1,2,20,21]),('Violencia sexual y explotación',[3,4,5,8]),('En instituciones y en la vida pública',[6,7,9,18]),('Según la situación o el medio',[10,11,12]),('Cuando se suma otra discriminación',[13,14,15,16,17,19])]
 # Casos: (situación, tipos, formas según la Ficha CEM, vínculo, detalle del vínculo, modalidad en la ficha, explicación de la modalidad, fila del mapa, fuentes)
 _CASOS=[('Su conviviente la empuja, la tira al suelo y le da bofetadas.',['fis'],['Empujones, tirar al suelo','Bofetadas'],'Pareja','Conviviente','Ninguna otra modalidad',
   'Al ser su pareja, el Reglamento lo describe como «violencia en relación de pareja». La ficha ya lo recoge en el vínculo, por eso en «otras modalidades» marca «ninguna».','ning',[('Ley N.° 30364, arts. 7 y 8',L30364),('Reglamento, art. 8.1',REGL)]),
@@ -573,7 +574,7 @@ _CASOS=[('Su conviviente la empuja, la tira al suelo y le da bofetadas.',['fis']
  ('Su jefe la amenaza con despedirla si no accede a sus propuestas sexuales.',['sex'],['Hostigamiento sexual'],'Sin vínculo de pareja ni familiar','Empleador','Ninguna otra modalidad',
   'El hostigamiento sexual es una de las 21 modalidades del Reglamento, pero la ficha lo registra como una forma de violencia sexual. Por eso en «otras modalidades» va «ninguna».','ning',[('Ley N.° 27942 y su Reglamento (D.S. 014-2019-MIMP)','https://www.minedu.gob.pe/reforma-magisterial/pdf/disciplinario/2024/ley27942_ley_de_prevencion_y_sancion_del_hostigamiento_sexual.pdf')]),
  ('Su exnovio publica en redes sociales fotos íntimas de ella, sin su autorización.',['sex'],['Difusión de imágenes o audios con contenido sexual'],'Pareja','Exnovio','Violencia a través de las tecnologías de la información y comunicación',
-  'El daño ocurre a través de redes sociales. El Código Penal lo sanciona como delito, con más pena si hubo relación de pareja o se usaron redes sociales.','tic',[('Código Penal, art. 154-B',DL1410),('Reglamento, art. 8.1',REGL)]),
+  'La violencia ocurre a través de redes sociales. El Código Penal lo sanciona como delito, con más pena si hubo relación de pareja o se usaron redes sociales.','tic',[('Código Penal, art. 154-B',DL1410),('Reglamento, art. 8.1',REGL)]),
  ('En el concejo municipal, un regidor insulta y humilla a una regidora para que no ejerza su cargo.',['psi'],['Gritos e insultos','Desvalorización y humillación'],'Sin vínculo de pareja ni familiar','Compañero de trabajo','Acoso político',
   'Busca impedir que una autoridad electa ejerza sus derechos políticos. Los CEM registran la mayoría de estos casos como violencia psicológica.','pol',[('Ley N.° 31155, arts. 2 y 3',L31155)]),
  ('Un vecino insulta a una mujer indígena con expresiones racistas por su origen y su lengua.',['psi'],['Insulto étnico-racial'],'Sin vínculo de pareja ni familiar','Vecino','Violencia contra mujeres indígenas u originarias',
@@ -608,25 +609,25 @@ CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Cómo se desc
   <div class="wrap">
     <a class="crumb" href="./">← Banco de Evidencias</a>
     <h1>Tipo y modalidad de violencia</h1>
-    <p>Un mismo hecho se describe respondiendo tres preguntas. Míralo en colores.</p>
+    <p>Un mismo hecho se describe con tres conceptos de la ley: vínculo, tipo de violencia y modalidad.</p>
   </div>
 </section>
-<section class="section tm">
-  <div class="wrap tm-in">
-    <div class="tm-t">
-      <span class="tm-k">Lee un caso</span>
-      <h2>Vínculo, tipo de violencia y modalidad</h2>
-      <p>Así se describe cada caso. Pasa los ejemplos.</p>
+<section class="section aula-sec">
+  <div class="wrap">
+    <div class="aula-t"><span class="tm-k">En clase</span><h2>Vínculo, tipo de violencia y modalidad</h2><p>Así se describe cada caso. Pasa los ejemplos en la pizarra.</p></div>
+    <div class="aula">
+      <div class="aula-board">'''+_an.componente([0,1,2],'anGuia')+f'''</div>
+      <div class="aula-profe">'''+_aula.profesora()+f'''</div>
+      <div class="aula-alumnas">'''+_aula.alumnas()+f'''</div>
     </div>
-    '''+_an.componente([0,1,2],'anGuia')+f'''
   </div>
 </section>
 <section class="section cv-soft" id="referencia">
   <div class="wrap">
     <div class="rf-tabs" role="tablist" aria-label="Consulta">
-      <button type="button" role="tab" aria-selected="true" data-t="tipos"><b>Tipo de violencia</b><span>4 tipos · ¿qué daño se produce?</span></button>
-      <button type="button" role="tab" aria-selected="false" data-t="vinculo"><b>Vínculo</b><span>3 grupos · ¿quién la ejerce?</span></button>
-      <button type="button" role="tab" aria-selected="false" data-t="modalidades"><b>Modalidad</b><span>21 · ¿hay un contexto particular?</span></button>
+      <button type="button" role="tab" aria-selected="true" data-t="tipos"><b>Tipo de violencia</b><span>Física, psicológica, sexual o económica</span></button>
+      <button type="button" role="tab" aria-selected="false" data-t="vinculo"><b>Vínculo</b><span>Quién la ejerce</span></button>
+      <button type="button" role="tab" aria-selected="false" data-t="modalidades"><b>Modalidad</b><span>21 modalidades en el Reglamento</span></button>
     </div>
     <div class="rf-p" id="tipos" data-t="tipos"><p class="rf-src">Ley N.° 30364, art. 8</p><div class="tls">{_tipos}</div></div>
     <div class="rf-p" id="vinculo" data-t="vinculo" hidden><p class="rf-src">Ley N.° 30364, art. 7</p><div class="vls">{_vinc}</div></div>

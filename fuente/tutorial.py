@@ -14,14 +14,14 @@ ESCENAS=[
   <p class="sc-src">ENDES 2025, primer semestre (INEI) · <a href="{MICRO}" target="_blank" rel="noopener">Microinforme del MIMP ↗</a></p></div>'''),
  ('porque','''<div class="sc-mid"><p class="sc-lead">Detrás de cada cifra hay historias distintas.</p>
   <div class="sc-cards"><span>La controla y no la deja salir</span><span>Le quita su sueldo</span><span>Difunde sus fotos en redes</span></div>
-  <p class="sc-big">Para registrarlas, atenderlas y estudiarlas, la <b>Ley N.° 30364</b> nos da un lenguaje común. Se basa en tres preguntas.</p></div>'''),
- ('tipo',f'''<div class="sc-q"><span class="sc-qn t">1</span><p class="sc-qt">¿Qué daño se produce?</p><p class="sc-qa">Es el <b>tipo</b> de violencia</p>
+  <p class="sc-big">Para registrarlas, atenderlas y estudiarlas, la <b>Ley N.° 30364</b> nos da un lenguaje común, con tres conceptos.</p></div>'''),
+ ('tipo',f'''<div class="sc-q"><span class="sc-qn t">1</span><p class="sc-qt">Tipo de violencia</p><p class="sc-qa">¿Qué violencia se ejerció?</p>
   <div class="sc-tipos"><span>{_i('fis')}Física</span><span>{_i('psi')}Psicológica</span><span>{_i('sex')}Sexual</span><span>{_i('eco')}Económica</span></div>
   <p class="sc-src">Ley N.° 30364, artículo 8</p></div>'''),
- ('vinculo','''<div class="sc-q"><span class="sc-qn v">2</span><p class="sc-qt">¿Quién la ejerce?</p><p class="sc-qa">Es el <b>vínculo</b> con quien agrede</p>
+ ('vinculo','''<div class="sc-q"><span class="sc-qn v">2</span><p class="sc-qt">Vínculo</p><p class="sc-qa">¿Quién la ejerce?</p>
   <div class="sc-vin"><span>Pareja o expareja</span><span>Un familiar</span><span>Otra persona</span></div>
   <p class="sc-src">Ley N.° 30364, artículo 7</p></div>'''),
- ('modalidad','''<div class="sc-q"><span class="sc-qn m">3</span><p class="sc-qt">¿Hay un contexto particular?</p><p class="sc-qa">Es la <b>modalidad</b></p>
+ ('modalidad','''<div class="sc-q"><span class="sc-qn m">3</span><p class="sc-qt">Modalidad</p><p class="sc-qa">¿Ocurre en una situación particular?</p>
   <div class="sc-mods"><span>Por redes sociales</span><span>En la vida política</span><span>Contra mujeres indígenas</span><span>Contra mujeres migrantes</span><span>En el trabajo</span><span>…y más</span></div>
   <p class="sc-src">21 modalidades en el Reglamento de la Ley N.° 30364, artículo 8.1</p></div>'''),
  ('ejemplo','''<div class="sc-ex"><p class="sc-lead">Juntas describen un caso:</p>
