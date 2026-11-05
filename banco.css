@@ -631,3 +631,42 @@ a.sv-lvl{text-decoration:none;color:inherit;transition:transform .15s,border-col
 .gx-note{margin:14px 0 0;font-size:.84rem;color:var(--ink-soft)}
 @media (max-width:900px){.gx{grid-template-columns:1fr}.gx-panel{position:static}.mp{grid-template-columns:1fr}}
 @media (max-width:520px){.mp-row{grid-template-columns:repeat(4,minmax(0,1fr))}.mp-m{grid-column:1/-1}.mp-hd .mp-m{display:none}}
+
+/* ===== Servicios: portada ilustrada, territorio y ruta con color ===== */
+.sv-hero{padding-bottom:0;overflow:hidden}
+.sv-hero-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:24px;align-items:end}
+.sv-hero-t{padding-bottom:44px}
+.sv-hero-a{align-self:end;margin-bottom:-2px}
+.sv-art{display:block;width:100%;height:auto}
+@media (max-width:900px){.sv-hero-in{grid-template-columns:1fr}.sv-hero-t{padding-bottom:8px}.sv-hero-a{margin:0 -16px -2px}}
+.pais{background:#fff}
+.pais-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.pz{display:flex;flex-direction:column;background:var(--bg);border-radius:16px;padding:14px 14px 18px}
+.pz-a svg{display:block;width:100%;height:auto;border-radius:12px;margin-bottom:12px}
+.pz-k{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--sky-700)}
+.pz h3{font-size:1.05rem;margin:4px 0 6px}
+.pz p{margin:0 0 10px;font-size:.9rem;color:var(--ink-soft)}
+.pz a{margin-top:auto;font-weight:800;font-size:.88rem;color:var(--blue-600);text-decoration:none}
+@media (max-width:1000px){.pais-g{grid-template-columns:1fr 1fr}}@media (max-width:520px){.pais-g{grid-template-columns:1fr}}
+/* colores de cada paso */
+.c1{--c:#2f3e8f;--cs:#e9ecf8}.c2{--c:#1d7489;--cs:#e4f3f6}.c3{--c:#6a4fb0;--cs:#efeaf9}.c4{--c:#2e7d5b;--cs:#e6f3ec}
+.c5{--c:#5c6378;--cs:#eef0f4}.c6{--c:#b4572a;--cs:#fbede5}.c7{--c:#c0392b;--cs:#fbe9e7}
+.rt{position:relative}
+.rt li{position:relative}
+.rt li:not(:last-child)::after{content:'';position:absolute;top:31px;left:calc(50% + 24px);right:calc(-50% + 24px);border-top:2px dashed #cdd3e3;z-index:0}
+.rt-i{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--cs);color:var(--c)}
+.rt a{color:var(--ink-soft)}
+.rt a:hover{background:var(--cs);color:var(--c)}
+.rt a.on{background:var(--cs);color:var(--c)}
+.rt a.on .rt-i{background:var(--c);color:#fff}
+@media (max-width:900px){.rt li:not(:last-child)::after{display:none}}
+.rb-i{background:var(--cs);color:var(--c);width:56px;height:56px;flex-basis:56px}
+.rb-k{color:var(--c)}
+.rb{border-top:0;position:relative}
+.rb::before{content:'';position:absolute;left:27px;top:96px;bottom:0;border-left:2px dashed #d5dae6}
+.rb:last-of-type::before{display:none}
+.rb-body{padding-left:72px}
+.rs{border-top:4px solid var(--c)}
+.rx{background:var(--cs)}
+.rx-k{color:var(--c)}
+@media (max-width:700px){.rb-body{padding-left:0}.rb::before{display:none}}

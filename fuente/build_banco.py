@@ -393,6 +393,7 @@ Promise.all([fetch('data/estudios.json').then(r=>r.json()),fetch('data/solucione
 # ---------- Servicios del MIMP (Catálogo de Servicios 2026), en lenguaje sencillo ----------
 import sys as _s,os as _o; _s.path.insert(0,_o.path.dirname(_o.path.abspath(__file__)))
 from servicios_data import NIVELES,S as SERVS
+from ilustraciones import RED_APOYO,ESC_CIUDAD,ESC_SIERRA,ESC_RIO,ESC_FONO
 _P={'a':'<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',
  'b':'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
  'c':'<path d="M4 5h16v11H9l-5 4z"/><path d="M12 13.5c-2.2-1.4-3.2-2.4-3.2-3.6 0-.9.7-1.6 1.6-1.6.7 0 1.2.4 1.6 1 .4-.6.9-1 1.6-1 .9 0 1.6.7 1.6 1.6 0 1.2-1 2.2-3.2 3.6z"/>',
@@ -461,7 +462,7 @@ def _svc(n,ev):
     _,t,name,d,para,prog,v=_SV[n]
     link=f'<a class="rs-ev" href="evidencia.html?n={",".join(map(str,ev))}">{len(ev)} {"estudio" if len(ev)==1 else "estudios"} sobre este servicio →</a>' if ev else ''
     return f'<article class="rs"><span class="rs-prog">{PROGN[prog]}</span><h4>{_e(name)}</h4><p>{_e(d)}</p><p class="rs-para"><b>Población objetivo:</b> {_e(para)}</p>{link}</article>'
-steps=''.join(f'<li><a href="#r-{k}"><span class="rt-i">{_ico(ic)}</span><span class="rt-t"><small>{i}</small>{t}</span></a></li>' for i,(k,t,tema,art,d,L,EV,ST,ic) in enumerate(RUTA,1))
+steps=''.join(f'<li class="c{i}"><a href="#r-{k}"><span class="rt-i">{_ico(ic)}</span><span class="rt-t"><small>{i}</small>{t}</span></a></li>' for i,(k,t,tema,art,d,L,EV,ST,ic) in enumerate(RUTA,1))
 bloques=''
 for i,(k,t,tema,art,d,L,EV,ST,ic) in enumerate(RUTA,1):
     n=_TCOUNT.get(tema,0)
@@ -470,16 +471,31 @@ for i,(k,t,tema,art,d,L,EV,ST,ic) in enumerate(RUTA,1):
         ev=f'<ul class="rx-list">{"".join(_study(x) for x in ST)}</ul><a class="rx-all" href="evidencia.html?tema={_q(tema)}">Ver los {n} estudios sobre {tema[0].lower()+tema[1:]} →</a>'
     else:
         ev='<p class="rx-none">El banco aún no tiene estudios sobre este tema. Es un vacío de evidencia que conviene cubrir.</p>'
-    bloques+=f'''<section class="rb{' ext' if not L else ''}" id="r-{k}"><div class="rb-h"><span class="rb-i">{_ico(ic)}</span><div><span class="rb-k">Paso {i} · {art}</span><h3>{t}</h3><p>{d}</p></div></div>
+    bloques+=f'''<section class="rb c{i}{' ext' if not L else ''}" id="r-{k}"><div class="rb-h"><span class="rb-i">{_ico(ic)}</span><div><span class="rb-k">Paso {i} · {art}</span><h3>{t}</h3><p>{d}</p></div></div>
 <div class="rb-body"><div class="rb-svcs">{svcs}</div><aside class="rx"><span class="rx-k">Qué dice la evidencia</span>{ev}</aside></div></section>'''
 SERV=head('Servicios frente a la violencia · Banco de Evidencias','Los servicios del MIMP para prevenir, atender, proteger y reparar frente a la violencia, ordenados según la Ley N.° 30364 y vinculados con la evidencia disponible.','servicios.html')+header('sv')+f'''
 <main>
-<section class="page-hero sv">
-  <div class="wrap">
+<section class="page-hero sv sv-hero">
+  <div class="wrap sv-hero-in">
+   <div class="sv-hero-t">
     <a class="crumb" href="./">← Banco de Evidencias</a>
     <h1>Servicios frente a la violencia</h1>
-    <p>Qué hace el Estado en cada momento, desde prevenir la violencia hasta reparar el daño. Cada paso sigue las acciones de la Ley N.° 30364 y muestra los estudios que existen sobre esos servicios.</p>
+    <p>Nadie debería enfrentar la violencia sola. El Estado tiene servicios para cada momento, desde prevenirla hasta reparar el daño, en la ciudad, en el campo y en la Amazonía.</p>
     <div class="help"><span class="help-k">¿Necesitas ayuda?</span><a href="tel:100"><b>Línea 100</b><span>Llamada gratuita, las 24 horas</span></a><a href="https://www.gob.pe/institucion/warmi%C3%B1an/tema/nuestros-servicios" target="_blank" rel="noopener"><b>Chat 100</b><span>Por internet o WhatsApp</span></a><a href="tel:105"><b>105</b><span>Emergencias, Policía Nacional</span></a></div>
+   </div>
+   <div class="sv-hero-a">'''+RED_APOYO+f'''</div>
+  </div>
+</section>
+<section class="section pais">
+  <div class="wrap">
+    <div class="sv-intro"><h2>Servicios que llegan a todo el país</h2><p>La atención se adapta al territorio y a la cultura de cada comunidad.</p></div>
+    <div class="pais-g">
+      <article class="pz"><div class="pz-a">'''+ESC_CIUDAD+f'''</div><span class="pz-k">En las ciudades</span><h3>Centros Emergencia Mujer y Familia</h3><p>439 centros en todo el país, con atención legal, psicológica y social gratuita.</p><a href="#r-atender">Ver en la ruta →</a></article>
+      <article class="pz"><div class="pz-a">'''+ESC_SIERRA+f'''</div><span class="pz-k">En el campo</span><h3>Servicio de Atención Rural</h3><p>Atiende en zonas rurales respetando la cultura local y trabajando junto con las autoridades comunales.</p><a href="#r-atender">Ver en la ruta →</a></article>
+      <article class="pz"><div class="pz-a">'''+ESC_RIO+f'''</div><span class="pz-k">Por los ríos amazónicos</span><h3>Atención en las PIAS</h3><p>Orientación y primera atención a bordo de las Plataformas Itinerantes que llegan por río a comunidades alejadas.</p><a href="#r-atender">Ver en la ruta →</a></article>
+      <article class="pz"><div class="pz-a">'''+ESC_FONO+f'''</div><span class="pz-k">Desde cualquier lugar</span><h3>Línea 100 y Chat 100</h3><p>Llamada gratuita y chat por internet o WhatsApp para pedir orientación o apoyo, sin moverte de casa.</p><a href="#r-ayuda">Ver en la ruta →</a></article>
+    </div>
+    <p class="sv-src">Número de centros: Sexto Informe de avance de la Ley N.° 31155 (MIMP, 2026). Descripciones: Catálogo de Servicios del Sector 2026.</p>
   </div>
 </section>
 <section class="section ruta">
