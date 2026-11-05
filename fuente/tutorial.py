@@ -26,7 +26,7 @@ ESCENAS=[
   <p class="sc-src">21 modalidades en el Reglamento de la Ley N.° 30364, artículo 8.1</p></div>'''),
  ('ejemplo','''<div class="sc-ex"><p class="sc-lead">Juntas describen un caso:</p>
   <p class="sc-sent"><mark class="x v">Su expareja</mark> <mark class="x t">comparte fotos íntimas de ella sin su permiso</mark> <mark class="x m">en redes sociales</mark>.</p>
-  <div class="sc-tags"><span class="v">¿Quién? Pareja</span><span class="t">¿Qué daño? Sexual</span><span class="m">¿Contexto? Tecnologías</span></div></div>'''),
+  <div class="sc-tags"><span class="v">Vínculo: Pareja</span><span class="t">Tipo de violencia: Sexual</span><span class="m">Modalidad: Tecnologías (TIC)</span></div></div>'''),
  ('fin','''<div class="sc-mid"><p class="sc-lead">Con este mismo lenguaje se ordena la evidencia de este banco.</p>
   <p class="sc-big">Así puedes buscar estudios por tipo, por modalidad o por población.</p>
   <div class="sc-end"><a class="btn-a tm-go2" href="#banco">Entrar al banco →</a><a class="sc-guia" href="comprender-violencia.html">Ver la guía completa</a></div></div>'''),

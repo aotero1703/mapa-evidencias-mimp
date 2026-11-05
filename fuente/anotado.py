@@ -13,14 +13,14 @@ CASOS=[
  ([('Su pareja','v','Pareja'),(' ',None,''),('la lastima físicamente durante las discusiones','t','Física'),('.',None,'')],'Ninguna adicional','Ley N.° 30364, arts. 7 y 8, lit. a'),
 ]
 ROL={'v':'Quién','t':'Tipo','m':'Modalidad'}
-_NOTA={'v':'quién','t':'qué daño','m':'contexto'}
+_NOTA={'v':'vínculo','t':'tipo de violencia','m':'modalidad'}
 def _frase(c):
     tramos,sinmod,base=c
     s=''.join((f'<mark class="ch-{r}">{_h.escape(t)}</mark>' if r else _h.escape(t)) for t,r,l in tramos)
     lab={r:l for t,r,l in tramos if r}
     notas=(f'<span class="nt v">↑ {_NOTA["v"]}: <b>{_h.escape(lab["v"].lower())}</b></span>'
            f'<span class="nt t">↑ {_NOTA["t"]}: <b>{_h.escape(lab["t"].lower())}</b></span>'
-           +(f'<span class="nt m">↑ {_NOTA["m"]}: <b>{_h.escape(lab["m"].lower())}</b></span>' if 'm' in lab else '<span class="nt n">contexto: <b>ninguno en especial</b></span>'))
+           +(f'<span class="nt m">↑ {_NOTA["m"]}: <b>{_h.escape(lab["m"].lower())}</b></span>' if 'm' in lab else '<span class="nt n">modalidad: <b>ninguna adicional</b></span>'))
     return f'<p class="pz-s">{s}</p><div class="pz-n">{notas}</div><span class="pz-i" tabindex="0" title="Base legal: {_h.escape(base)}" aria-label="Base legal: {_h.escape(base)}">ⓘ</span>'
 def componente(idx,uid,titulo=True):
     tabs=''.join(f'<button type="button" role="tab" aria-selected="{str(j==0).lower()}" data-i="{j}">{j+1}</button>' for j,_ in enumerate(idx))

@@ -615,7 +615,7 @@ CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Cómo se desc
   <div class="wrap tm-in">
     <div class="tm-t">
       <span class="tm-k">Lee un caso</span>
-      <h2>¿Quién? ¿Qué daño? ¿En qué contexto?</h2>
+      <h2>Vínculo, tipo de violencia y modalidad</h2>
       <p>Así se describe cada caso. Pasa los ejemplos.</p>
     </div>
     '''+_an.componente([0,1,2],'anGuia')+f'''
@@ -624,9 +624,9 @@ CV=head('Tipos y modalidades de violencia · Banco de Evidencias','Cómo se desc
 <section class="section cv-soft" id="referencia">
   <div class="wrap">
     <div class="rf-tabs" role="tablist" aria-label="Consulta">
-      <button type="button" role="tab" aria-selected="true" data-t="tipos"><b>¿Qué daño?</b><span>4 tipos</span></button>
-      <button type="button" role="tab" aria-selected="false" data-t="vinculo"><b>¿Quién?</b><span>3 vínculos</span></button>
-      <button type="button" role="tab" aria-selected="false" data-t="modalidades"><b>¿Contexto?</b><span>21 modalidades</span></button>
+      <button type="button" role="tab" aria-selected="true" data-t="tipos"><b>Tipo de violencia</b><span>4 tipos · ¿qué daño se produce?</span></button>
+      <button type="button" role="tab" aria-selected="false" data-t="vinculo"><b>Vínculo</b><span>3 grupos · ¿quién la ejerce?</span></button>
+      <button type="button" role="tab" aria-selected="false" data-t="modalidades"><b>Modalidad</b><span>21 · ¿hay un contexto particular?</span></button>
     </div>
     <div class="rf-p" id="tipos" data-t="tipos"><p class="rf-src">Ley N.° 30364, art. 8</p><div class="tls">{_tipos}</div></div>
     <div class="rf-p" id="vinculo" data-t="vinculo" hidden><p class="rf-src">Ley N.° 30364, art. 7</p><div class="vls">{_vinc}</div></div>
