@@ -98,7 +98,8 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
     <div class="cover-a">{COLLAGE}</div>
   </div>
 </section>
-<section class="section tm" id="tipo-modalidad">
+<section class="section tm tm-screen" id="tipo-modalidad" aria-label="Tipo y modalidad">
+  <a class="tm-skip" href="#banco">Omitir <span aria-hidden="true">→</span></a>
   <div class="wrap tm-in">
     <div class="tm-t">
       <span class="tm-k">Para empezar</span>
@@ -108,9 +109,10 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
     </div>
     {_an.componente([0,1,2],'anHome')}
   </div>
+  <div class="wrap tm-next"><a class="btn-a tm-go2" href="#banco">Ir al banco <span aria-hidden="true">↓</span></a></div>
 </section>
 
-<section class="doors" aria-label="Elige por dónde empezar">
+<section class="doors" id="banco" aria-label="Elige por dónde empezar">
   <div class="wrap">
     <a class="door ev" href="evidencia.html">
       <div class="top">{ART_EV}<span class="kicker">Evidencia científica</span></div>
@@ -173,6 +175,10 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
   const fin=()=>{c.classList.add('closed');scrollTo(0,0);const h=t.querySelector('h2');h.setAttribute('tabindex','-1');h.focus({preventScroll:true})};
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)return fin();
   c.classList.add('opening');setTimeout(fin,950)}})();
+(function(){const s=document.getElementById('tipo-modalidad'),d=document.getElementById('banco');if(!s||!d)return;
+ const ir=e=>{e.preventDefault();const fin=()=>{s.classList.add('closed');const c=document.getElementById('hero');if(c)c.classList.add('closed');scrollTo(0,0);d.setAttribute('tabindex','-1');d.focus({preventScroll:true})};
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return fin();s.classList.add('leaving');setTimeout(fin,600)};
+ s.querySelectorAll('.tm-skip,.tm-go2').forEach(a=>a.onclick=ir)})();
 </script>
 </body>
 </html>
