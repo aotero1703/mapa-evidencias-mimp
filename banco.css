@@ -992,3 +992,4 @@ html.poom .doors .door:nth-child(2){animation-delay:.05s}html.poom .doors .door:
 @keyframes dash{to{stroke-dashoffset:-48}}
 @keyframes pulse{0%,100%{transform:scale(.7);opacity:.08}50%{transform:scale(1.5);opacity:.28}}
 @media (prefers-reduced-motion: reduce){.cover-art .rg,.cover-art .net,.cover-art .netl,.cover-art .halo{animation:none}}
+.cover-q{max-width:540px}
