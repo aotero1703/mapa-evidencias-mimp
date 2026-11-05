@@ -95,7 +95,7 @@ INDEX=head('Banco de Evidencias · Observatorio Nacional','Evidencia científica
     <div class="cover-t">
       <span class="cover-eye">Observatorio Nacional · MIMP</span>
       <h1 class="cover-h"><span class="strip s1">Banco de</span><span class="strip s2">Evidencias</span><span class="strip s3">para una vida libre de violencia</span></h1>
-      <p class="cover-q">¿Cómo puede un banco de evidencias ayudar a prevenir la violencia contra las mujeres y los integrantes del grupo familiar?</p><p class="cover-p">Reúne estudios, cifras y servicios para que las políticas y decisiones se basen en lo que de verdad funciona.</p>
+      <p class="cover-q">¿Cómo puede un banco de evidencias ayudar a prevenir la violencia contra las mujeres y los integrantes del grupo familiar?</p><ul class="cover-l"><li>Mostrando qué funciona para prevenirla</li><li>Señalando dónde y a quiénes afecta más</li><li>Acercando los servicios que existen</li></ul>
       <div class="cover-cta"><a class="btn-a cover-open" href="#tipo-modalidad">Abrir el banco <span aria-hidden="true">→</span></a></div>
     </div>
     <div class="cover-a">{ABSTRACTA}</div>
