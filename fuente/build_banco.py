@@ -383,17 +383,17 @@ from servicios_data import NIVELES,S as SERVS
 from portada import COLLAGE
 import anotado as _an
 from ilustraciones import RED_APOYO,ESC_CIUDAD,ESC_SIERRA,ESC_RIO,ESC_FONO
-_P={'a':'<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>',
+_P={'a':'<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M12 16.5s-3.5-2.2-3.5-4.8a1.9 1.9 0 0 1 3.5-1 1.9 1.9 0 0 1 3.5 1c0 2.6-3.5 4.8-3.5 4.8z"/>',
  'b':'<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',
  'c':'<path d="M4 5h16v11H9l-5 4z"/><path d="M12 13.5c-2.2-1.4-3.2-2.4-3.2-3.6 0-.9.7-1.6 1.6-1.6.7 0 1.2.4 1.6 1 .4-.6.9-1 1.6-1 .9 0 1.6.7 1.6 1.6 0 1.2-1 2.2-3.2 3.6z"/>',
  'd':'<circle cx="12" cy="12" r="8.5"/><path d="M12 6.5v11"/><path d="M15 9.3c-.3-1-1.4-1.6-3-1.6-1.7 0-3 .8-3 2.1s1.1 1.8 3 2.2 3 1 3 2.3-1.3 2.1-3 2.1-2.8-.7-3.1-1.7"/>',
  'e':'<path d="M3 10v4h3l8 5V5L6 10z"/><path d="M18 9a4.5 4.5 0 0 1 0 6"/>',
- 'f':'<circle cx="12" cy="12" r="8.5"/><path d="M8.3 12.2l2.6 2.6 4.8-5.3"/>',
+ 'f':'<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M7.5 12h9"/>',
  'g':'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3.5 2.3 8.5 2.3 12 0v-5"/><path d="M22 9v5"/>',
  'h':'<path d="M4 20h16"/><path d="M7 16v-5"/><path d="M12 16V6"/><path d="M17 16V9"/>',
  'i':'<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.4-4.4"/>',
  '1':'<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.7-6 6-6s6 2.6 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16.5 14.2c2.6.2 4.5 2.4 4.5 5.3"/>',
- '2':'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9z"/><path d="M9 13l2 2 4-4.5"/>',
+ '2':'<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 3h6v3H9z"/><path d="M9 12h6M9 16h4"/>',
  '3':'<path d="M3 10l9-6 9 6"/><path d="M5 10v8M10 10v8M14 10v8M19 10v8"/><path d="M3 20h18"/>'}
 def ICO(k): return f'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{_P[k]}</svg>'
 EMO={k:ICO(k) for k in 'abcdefghi'}
@@ -423,7 +423,7 @@ _SV={x[0]:x for x in SERVS}
 # (clave, paso, tema de evidencia, base legal, descripción, servicios del catálogo, estudios por servicio, estudios destacados, ícono)
 RUTA=[
  ('prev','Prevenir','Prevención de la violencia','Ley N.° 30364, arts. 1 y 27','Trabajar con varones, adolescentes, familias y colegios para que la violencia no ocurra.',[2,3,4,6,8],{2:[217]},[217,134,92],
-  '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/>'),
+  '<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M12 16.5s-3.5-2.2-3.5-4.8a1.9 1.9 0 0 1 3.5-1 1.9 1.9 0 0 1 3.5 1c0 2.6-3.5 4.8-3.5 4.8z"/>'),
  ('ayuda','Pedir ayuda','Atención y recuperación de las víctimas','Ley N.° 30364, art. 10','Canales gratuitos para pedir información, orientación o apoyo emocional ante un caso de violencia.',[23,26],{23:[75,203,136]},[203,75,136],
   '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/>'),
  ('atender','Atender y acompañar','Atención y recuperación de las víctimas','Ley N.° 30364, arts. 10 y 27 al 29','Atención legal, psicológica y social para que las víctimas estén protegidas y se recuperen.',[21,22,25,27,1],{21:[201,228,205]},[201,228,205],

@@ -1005,3 +1005,4 @@ html.poom .doors .door:nth-child(2){animation-delay:.05s}html.poom .doors .door:
 .cover-l li:nth-child(1)::before{transform:rotate(-4deg)}
 .cover-l li:nth-child(2)::before{transform:rotate(3deg) translateY(1px)}
 .cover-l li:nth-child(3)::before{transform:rotate(-1deg) scale(.95)}
+.cover-l li::before{content:none}.cover-l{gap:6px}.cover-l li{padding-left:14px;border-left:3px solid #f2a93b}
