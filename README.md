@@ -43,7 +43,7 @@ Es un sitio **estático** (HTML, CSS y archivos JSON) publicado en Vercel. No ne
 | Sección | Qué contiene |
 |---|---|
 | **[Tipos y modalidades](https://banco-evidencias-mimp.vercel.app/comprender-violencia.html)** | Guía con casos de ejemplo: los 4 tipos del art. 8 de la Ley N.° 30364 y las 21 modalidades del marco conceptual del MIMP |
-| **[Evidencia científica](https://banco-evidencias-mimp.vercel.app/evidencia.html)** | 117 investigaciones sobre la violencia que comprende la Ley N.° 30364 y 11 programas evaluados |
+| **[Evidencia científica](https://banco-evidencias-mimp.vercel.app/evidencia.html)** | 121 investigaciones sobre la violencia que comprende la Ley N.° 30364 y 11 programas evaluados |
 | **[Indicadores](https://banco-evidencias-mimp.vercel.app/tablero.html)** | Tablero de Power BI con las cifras principales del Observatorio |
 | **[Fuentes externas](https://banco-evidencias-mimp.vercel.app/fuentes.html)** | ENDES, ENARES, Warmi Ñan, Ministerio Público, Poder Judicial y MIMP |
 | **[Servicios](https://banco-evidencias-mimp.vercel.app/servicios.html)** | Ruta frente a la violencia en siete pasos (acciones de la Ley N.° 30364), con los estudios del banco sobre cada servicio, y el catálogo completo del sector 2026 |
