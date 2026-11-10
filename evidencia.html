@@ -86,15 +86,23 @@
     </div>
     <p class="fine">Banco de Evidencias del Observatorio Nacional de la Violencia contra las Mujeres y los Integrantes del Grupo Familiar, en el marco del artículo 43 de la Ley N.° 30364 y de los Lineamientos aprobados por la R.M. N.° 027-2025-MIMP.</p>
     <p class="fine">¿Consultas? <a href="https://www.gob.pe/institucion/mimp/tema/observatorio-nacional-de-la-violencia-contra-las-mujeres-y-los-integrantes-del-grupo-familiar" target="_blank" rel="noopener">Observatorio Nacional</a> · observatorioviolencia@mimp.gob.pe · (01) 626-1600, anexo 8503</p>
-    <p class="visits" id="visits" hidden><span class="vdot" aria-hidden="true"></span><span><b id="visitsN"></b> visitas al banco de evidencias</span></p>
+    <div class="visits" id="visits" hidden>
+      <p><span class="vdot" aria-hidden="true"></span><span><b id="visitsP"></b> visitas a esta página · <b id="visitsN"></b> al banco en total</span></p>
+      <details class="vrank"><summary>Ver las secciones más visitadas</summary><ol id="visitsR"></ol></details>
+    </div>
   </div>
 </footer>
 <script>
 (async()=>{try{
-  let nueva=true;try{nueva=!sessionStorage.getItem('bancoVisita');sessionStorage.setItem('bancoVisita','1')}catch(e){}
-  const r=await fetch('/api/visitas',{method:nueva?'POST':'GET',cache:'no-store'});if(!r.ok)return;
-  const {total}=await r.json();if(!total)return;
-  document.getElementById('visitsN').textContent=total.toLocaleString('es-PE');document.getElementById('visits').hidden=false;
+  const NOM={'inicio':'Inicio','tipos-modalidades':'Tipos y modalidades','evidencia':'Evidencia científica','indicadores':'Indicadores','fuentes':'Fuentes externas','servicios':'Servicios','mapa':'Mapa de brechas'};
+  const f=(location.pathname.split('/').pop()||'index.html').replace('.html','');
+  const pag={'index':'inicio','':'inicio','comprender-violencia':'tipos-modalidades','evidencia':'evidencia','tablero':'indicadores','fuentes':'fuentes','servicios':'servicios','mapa':'mapa'}[f]||'inicio';
+  let nueva=true;try{const k='bancoVisita:'+pag;nueva=!sessionStorage.getItem(k);sessionStorage.setItem(k,'1')}catch(e){}
+  const r=await fetch('/api/visitas?p='+pag,{method:nueva?'POST':'GET',cache:'no-store'});if(!r.ok)return;
+  const d=await r.json();if(!d.total)return;const n=x=>Number(x||0).toLocaleString('es-PE');
+  document.getElementById('visitsN').textContent=n(d.total);document.getElementById('visitsP').textContent=n(d.pagina);
+  document.getElementById('visitsR').innerHTML=Object.entries(d.paginas||{}).filter(([k])=>NOM[k]).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`<li><span>${NOM[k]}</span><b>${n(v)}</b></li>`).join('');
+  document.getElementById('visits').hidden=false;
 }catch(e){}})();
 </script>
 <script>

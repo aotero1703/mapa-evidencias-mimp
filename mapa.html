@@ -454,7 +454,7 @@ addEventListener('scroll',tipHide,{passive:true});
 /* contador de visitas: suma 1 por sesión del navegador y muestra el total */
 (async()=>{try{
   let nueva=true;try{nueva=!sessionStorage.getItem('bancoVisita');sessionStorage.setItem('bancoVisita','1')}catch(e){}
-  const r=await fetch('/api/visitas',{method:nueva?'POST':'GET',cache:'no-store'});if(!r.ok)return;
+  const r=await fetch('/api/visitas?p=mapa',{method:nueva?'POST':'GET',cache:'no-store'});if(!r.ok)return;
   const {total}=await r.json();if(!total)return;
   $('visitsN').textContent=total.toLocaleString('es-PE');$('visits').hidden=false;
 }catch(e){}})();
