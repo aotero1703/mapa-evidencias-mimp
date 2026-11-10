@@ -1059,3 +1059,5 @@ html.poom .doors .door:nth-child(2){animation-delay:.05s}html.poom .doors .door:
 .cb-in button{border:0;background:#f2a93b;color:#1b1430;width:40px;border-radius:50%;font-weight:800;cursor:pointer}
 .cb-hl{outline:3px solid #f2a93b!important;outline-offset:3px;border-radius:8px;transition:outline .2s}
 @media (max-width:560px){.cb-fl small{display:none}.cb-fab{padding-right:14px}}
+/* deja espacio al botón flotante del asistente para que no tape el contador */
+@media (max-width:760px){body:has(.cb-fab) .site-footer{padding-bottom:96px}}
