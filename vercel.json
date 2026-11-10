@@ -1,8 +1,25 @@
 {
   "outputDirectory": ".",
   "redirects": [
-    { "source": "/territorios-prioritarios.html", "destination": "https://territorios-prioritarios-mimp.vercel.app/", "permanent": true },
-    { "source": "/territorios-prioritarios", "destination": "https://territorios-prioritarios-mimp.vercel.app/", "permanent": true },
-    { "source": "/territorios/:path*", "destination": "https://territorios-prioritarios-mimp.vercel.app/", "permanent": true }
+    {
+      "source": "/territorios-prioritarios.html",
+      "destination": "https://territorios-prioritarios-mimp.vercel.app/",
+      "permanent": true
+    },
+    {
+      "source": "/territorios-prioritarios",
+      "destination": "https://territorios-prioritarios-mimp.vercel.app/",
+      "permanent": true
+    },
+    {
+      "source": "/territorios/:path*",
+      "destination": "https://territorios-prioritarios-mimp.vercel.app/",
+      "permanent": true
+    },
+    {
+      "source": "/matriz/Matriz_evidencias_MIMP_revisada.xlsx",
+      "destination": "/matriz/Banco_de_Evidencias_MIMP.xlsx",
+      "permanent": false
+    }
   ]
 }

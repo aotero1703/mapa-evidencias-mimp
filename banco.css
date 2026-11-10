@@ -1061,3 +1061,9 @@ html.poom .doors .door:nth-child(2){animation-delay:.05s}html.poom .doors .door:
 @media (max-width:560px){.cb-fl small{display:none}.cb-fab{padding-right:14px}}
 /* deja espacio al botón flotante del asistente para que no tape el contador */
 @media (max-width:760px){body:has(.cb-fab) .site-footer{padding-bottom:96px}}
+/* botón de descarga de la matriz en la cabecera de Evidencia científica */
+.dl-btn{display:inline-flex;align-items:center;gap:12px;margin-top:16px;padding:11px 18px 11px 14px;border-radius:12px;background:#fff;color:var(--blue-900,#1b2560);text-decoration:none;font-weight:700;font-size:.95rem;box-shadow:0 6px 18px rgba(20,30,80,.18);transition:transform .15s,box-shadow .15s}
+.dl-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(20,30,80,.25)}
+.dl-btn svg{width:30px;height:30px;flex:none;padding:5px;border-radius:8px;background:#1f8a4c;color:#fff}
+.dl-btn span{display:flex;flex-direction:column;line-height:1.25}
+.dl-btn small{font-weight:500;font-size:.78rem;color:#5b6483}

@@ -245,6 +245,7 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
     <h1>Evidencia científica</h1>
     <p>Lo que se ha investigado sobre la violencia contra las mujeres y los integrantes del grupo familiar, organizado según la Ley N.° 30364.</p>
     <div class="hsearch"><input type="search" id="q" placeholder="Buscar en todo el banco: CEM, Línea 100, feminicidio, adolescentes…" aria-label="Buscar en todo el banco"></div>
+    <a class="dl-btn" href="matriz/Banco_de_Evidencias_MIMP.xlsx" download><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 19h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Descargar la matriz completa en Excel<small>__NMATRIZ__ investigaciones · se actualiza con el banco</small></span></a>
   </div>
 </section>
 <section class="section">
@@ -277,7 +278,7 @@ EVID=head('Evidencia científica · Banco de Evidencias','Estudios nacionales e 
       </div>
       <div class="cards" id="cards"></div>
       <button type="button" class="more" id="more" hidden>Ver más estudios</button>
-      <p class="dl-note">¿Necesitas toda la base? <a href="matriz/Matriz_evidencias_MIMP_revisada.xlsx" download>Descarga la matriz completa en Excel</a>.</p>
+      <p class="dl-note">¿Necesitas toda la base? <a href="matriz/Banco_de_Evidencias_MIMP.xlsx" download>Descarga la matriz completa en Excel</a>.</p>
     </div>
   </div>
 </section>
@@ -665,6 +666,11 @@ document.querySelectorAll('.mg').forEach(g=>{const d=g.querySelector('.mg-d'),B=
 
 import chatbot as _cb
 EVID=EVID.replace('</body>',_cb.HTML+_cb.JS+'\n</body>',1)
+# Matriz descargable generada desde la misma base que usa la web
+import matriz_excel as _mx, subprocess as _sp0
+_mx.generar()
+if _os0.path.exists('/mnt/skills/public/xlsx/scripts/recalc.py'):_sp0.run(['python3','/mnt/skills/public/xlsx/scripts/recalc.py',_mx.SALIDA,'60'],capture_output=True)
+EVID=EVID.replace('__NMATRIZ__',str(_mx.generar.__defaults__ and len(__import__('json').load(open('data/estudios.json',encoding='utf-8'))['rows'])))
 for name,html in (('evidencia.html',EVID),('index.html',INDEX),('tablero.html',TABLERO),('fuentes.html',FUENTES),('servicios.html',SERV),('comprender-violencia.html',CV)):
     # Vercel Web Analytics: visitas por página en el panel privado del proyecto (sin cookies)
     VA='<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script><script defer src="/_vercel/insights/script.js"></script>\n'
