@@ -1,8 +1,10 @@
 // Contador de visitas del Banco de Evidencias (Vercel Function + Upstash Redis, sin dependencias).
 // Cuenta el total y cada página por separado. Usa claves propias ("mapa-evidencias:*") para poder
 // compartir la misma base de datos con otros sitios del Observatorio.
-const URL_REDIS = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-const TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+// Busca las credenciales de Upstash con cualquier prefijo (KV_, UPSTASH_REDIS_ o el que asigne Vercel al conectar).
+const env = (re) => { const k = Object.keys(process.env).find((n) => re.test(n) && !/READ_ONLY/.test(n)); return k ? process.env[k] : undefined; };
+const URL_REDIS = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || env(/REST_(API_)?URL$/);
+const TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || env(/REST_(API_)?TOKEN$/);
 const TOTAL = 'mapa-evidencias:visitas';
 const PAGINAS = 'mapa-evidencias:paginas';   // hash: página -> visitas
 // Solo se aceptan estas páginas, para que nadie pueda llenar la base con claves inventadas.
