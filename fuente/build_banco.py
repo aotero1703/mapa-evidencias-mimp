@@ -658,5 +658,8 @@ document.querySelectorAll('.mg').forEach(g=>{const d=g.querySelector('.mg-d'),B=
 import chatbot as _cb
 EVID=EVID.replace('</body>',_cb.HTML+_cb.JS+'\n</body>',1)
 for name,html in (('evidencia.html',EVID),('index.html',INDEX),('tablero.html',TABLERO),('fuentes.html',FUENTES),('servicios.html',SERV),('comprender-violencia.html',CV)):
+    # Vercel Web Analytics: visitas por página en el panel privado del proyecto (sin cookies)
+    VA='<script>window.va=window.va||function(){(window.vaq=window.vaq||[]).push(arguments)};</script><script defer src="/_vercel/insights/script.js"></script>\n'
+    if '/_vercel/insights/' not in html:html=html.replace('</head>',VA+'</head>',1)
     open(name,'w',encoding='utf-8').write(html)
 print('ok')
